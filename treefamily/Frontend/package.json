@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "next": "13.3.0",
+    "next-auth": "^4.22.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-haiku": "^2.0.3",
+    "react-hook-form": "^7.43.9"
   },
   "devDependencies": {
     "eslint": "8.38.0",
