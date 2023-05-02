@@ -15,9 +15,9 @@ module.exports = {
           fig: "#363740",
           logText: "#9FA2B4",
         },
-        height: {
-          "80vh": "80vh",
-        },
+      },
+      height: {
+        "80vh": "80vh",
       },
     },
   },
