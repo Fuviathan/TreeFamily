@@ -48,8 +48,7 @@ export default function Sidebar() {
           </nav>
         </div>
         <Profile />        
-      </div>
-      <div className="bg-white">abcd</div>
+      </div>      
     </div>
   );
 }
