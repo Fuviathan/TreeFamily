@@ -1,10 +1,12 @@
 import React, { Fragment, useState } from "react";
 import { If } from "react-haiku";
+
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "./UI/Input";
 import SelectInput from "./UI/SelectInput";
 import SelectInputFamily from "./UI/SelectInputFamily";
 import CheckBoxInput from "./UI/CheckBoxInput";
+
 
 // Demo nhập chọn thông tin bố mẹ gửi id form
 const DUMMY_DATA = [
@@ -30,14 +32,14 @@ const DUMMY_DATA = [
   },
 ];
 export default function AddMember() {
+
   const method = useForm();
 
   const [isCheckedMarital, setIsCheckedMarital] = useState("single");
-  const [isCheckedStatus, setIsCheckedStatus] = useState(false);
-  const [isCheckedJob, setIsCheckedJob] = useState("Nông Dân");
 
   const handleChangeMarital = (event) => {
     setIsCheckedMarital(event.target.value);
+
   };
 
   const handleCheckboxChangeStatus = (event) => {
@@ -45,6 +47,7 @@ export default function AddMember() {
   };
 
   const changeJob = (event) => {
+
     setIsCheckedJob(event.target.value);
   };
 
@@ -53,6 +56,7 @@ export default function AddMember() {
   return (
     <Fragment>
       <div className="fixed h-screen w-full top-0 bg-slate-200 fixed bg-gray-700"></div>
+
       <FormProvider {...method}>
         <form
           className="flex flex-col items-center py-4 max-w-3xl border-solid border-2 border-slate-300 mt-16 mx-auto  z-20 relative bg-white h-80vh"
@@ -316,5 +320,6 @@ export default function AddMember() {
         </form>
       </FormProvider>
     </Fragment>
+
   );
 }
