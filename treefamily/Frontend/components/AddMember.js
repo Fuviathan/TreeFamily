@@ -1,6 +1,10 @@
 import React, { Fragment, useState } from "react";
 import { If } from "react-haiku";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
+import Input from "./UI/Input";
+import SelectInput from "./UI/SelectInput";
+import SelectInputFamily from "./UI/SelectInputFamily";
+import CheckBoxInput from "./UI/CheckBoxInput";
 
 // Demo nhập chọn thông tin bố mẹ gửi id form
 const DUMMY_DATA = [
@@ -26,18 +30,14 @@ const DUMMY_DATA = [
   },
 ];
 export default function AddMember() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const [isCheckedMarital, setIsCheckedMarital] = useState("");
+  const method = useForm();
+
+  const [isCheckedMarital, setIsCheckedMarital] = useState("single");
   const [isCheckedStatus, setIsCheckedStatus] = useState(false);
   const [isCheckedJob, setIsCheckedJob] = useState("Nông Dân");
 
   const handleChangeMarital = (event) => {
     setIsCheckedMarital(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleCheckboxChangeStatus = (event) => {
@@ -45,7 +45,6 @@ export default function AddMember() {
   };
 
   const changeJob = (event) => {
-    console.log(isCheckedJob);
     setIsCheckedJob(event.target.value);
   };
 
@@ -54,550 +53,268 @@ export default function AddMember() {
   return (
     <Fragment>
       <div className="fixed h-screen w-full top-0 bg-slate-200 fixed bg-gray-700"></div>
-      <form
-        className="flex flex-col items-center py-4 max-w-3xl border-solid border-2 border-slate-300 mt-16 mx-auto  z-20 relative bg-white h-80vh"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className="space-y-12  overflow-y-scroll px-10 w-full">
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Thông tin cá nhân
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
-              Thành viên nhập thông tin của bản thân
-            </p>
+      <FormProvider {...method}>
+        <form
+          className="flex flex-col items-center py-4 max-w-3xl border-solid border-2 border-slate-300 mt-16 mx-auto  z-20 relative bg-white h-80vh"
+          onSubmit={method.handleSubmit(onSubmit)}
+        >
+          <div className="space-y-12  overflow-y-scroll px-10 w-full">
+            <div className="border-b border-gray-900/10 pb-12">
+              <h2 className="text-base font-semibold leading-7 text-gray-900">
+                Thông tin cá nhân
+              </h2>
 
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Họ Tên
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    autoComplete="name"
-                    placeholder="Nhập họ và tên"
-                    {...register("name", {
-                      required: true,
-                      minLength: 5,
-                      pattern:
-                        /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/,
-                    })}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
-                  />
-                  <If isTrue={errors.name?.type === "minLength"}>
-                    <span className="text-red-500 text-sm">
-                      Độ dài tối thiểu là 5
-                    </span>
-                  </If>
-                  <If isTrue={errors.name?.type === "required"}>
-                    <span className="text-red-500 text-sm">
-                      Vui lòng nhập thông tin
-                    </span>
-                  </If>
-                  <If isTrue={errors.name?.type === "pattern"}>
-                    <span className="text-red-500 text-sm">
-                      Vui lòng nhập đúng định dạng tên
-                    </span>
-                  </If>
-                </div>
-              </div>
+              <p className="mt-1 text-sm leading-6 text-gray-600">
+                Thành viên nhập thông tin của bản thân
+              </p>
 
-              <div className="sm:col-span-1">
-                <label
-                  htmlFor="sex"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Giới tính
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="sex"
-                    name="sex"
-                    autoComplete="sex"
-                    {...register("sex")}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 px-4"
-                  >
-                    <option>Nam</option>
-                    <option>Nữ</option>
-                  </select>
-                </div>
-              </div>
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <Input
+                  {...{
+                    className: "sm:col-span-3",
+                    title: "Họ Tên",
+                    type: "text",
+                    name: "name",
+                    minLength: 6,
+                    pattern:
+                      /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/,
+                    message: "Vui lòng nhập đúng định dạng tên",
+                  }}
+                ></Input>
 
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="role"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Vai trò
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="role"
-                    name="role"
-                    autoComplete="role"
-                    {...register("role")}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 px-4"
-                  >
-                    <option>Trưởng họ</option>
-                    <option>Thành viên</option>
-                  </select>
-                </div>
-              </div>
+                <SelectInput
+                  {...{
+                    className: "sm:col-span-1",
+                    name: "gender",
+                    title: "Giới tính",
+                    dataOption: [{ value: "Nam" }, { value: "Nữ" }],
+                  }}
+                ></SelectInput>
 
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="birth-date"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Ngày sinh
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="birth-date"
-                    name="birth-date"
-                    type="date"
-                    autoComplete="date"
-                    pattern="\d{2}/\d{2}/\d{4}"
-                    {...register("birtDate", { required: true })}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
-                  />
-                  <If isTrue={errors.birtDate?.type === "required"}>
-                    <span className="text-red-500 text-sm">
-                      Vui lòng nhập thông tin
-                    </span>
-                  </If>
-                </div>
-              </div>
+                <SelectInput
+                  {...{
+                    className: "sm:col-span-2",
+                    name: "role",
+                    title: "Vai trò",
+                    dataOption: [
+                      { value: "Trưởng họ" },
+                      { value: "Thành viên" },
+                    ],
+                  }}
+                ></SelectInput>
 
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="phone-number"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Số điện thoại
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="phone-number"
-                    name="phone-number"
-                    type="tel"
-                    autoComplete="tel"
-                    {...register("tel", {
-                      required: true,
-                      pattern: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/,
-                      minLength: 10,
-                    })}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
-                  />
-                  <If isTrue={errors.tel?.type === "minLength"}>
-                    <span className="text-red-500 text-sm">
-                      Độ dài tối thiểu là 10
-                    </span>
-                  </If>
-                  <If isTrue={errors.tel?.type === "required"}>
-                    <span className="text-red-500 text-sm">
-                      Vui lòng nhập thông tin
-                    </span>
-                  </If>
-                  <If isTrue={errors.tel?.type === "pattern"}>
-                    <span className="text-red-500 text-sm">
-                      Vui lòng nhập đúng định dạng số điện thoại
-                    </span>
-                  </If>
-                </div>
-              </div>
+                <Input
+                  {...{
+                    className: "sm:col-span-3",
+                    title: "Ngày sinh",
+                    type: "date",
+                    name: "birthDay",
+                    pattern:
+                      /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
+                    message: "Vui lòng nhập đúng định dạng ngày sinh",
+                  }}
+                ></Input>
 
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="job"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Nghề nghiệp
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="job"
-                    name="job"
-                    autoComplete="text"
-                    {...register("job")}
-                    value={isCheckedJob}
-                    onChange={changeJob}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 px-4"
-                  >
-                    <option>Nông Dân</option>
-                    <option>Kinh Doanh</option>
-                    <option>Giáo Viên</option>
-                    <option>Học Sinh</option>
-                    <option>Khác*</option>
-                  </select>
-                </div>
-              </div>
+                <Input
+                  {...{
+                    className: "sm:col-span-3",
+                    title: "Số điện thoại",
+                    type: "tel",
+                    name: "tel",
+                    pattern: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/,
+                    minLength: 10,
+                    message: "Vui lòng nhập đúng định dạng số điện thoại",
+                  }}
+                ></Input>
 
-              <If isTrue={isCheckedJob === "Khác*"}>
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="job"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Nghề nghiệp
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="job"
-                      name="job"
-                      type="text"
-                      // value={setIsCheckedJob}
-                      placeholder="Nhập tên nghề"
-                      {...register("job")}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
-                    />
+                <SelectInput
+                  {...{
+                    className: "sm:col-span-3",
+                    title: "Nghề nghiệp",
+                    dataOption: [
+                      { value: "Giáo viên" },
+                      { value: "Học Sinh" },
+                      { value: "Bác sĩ" },
+                      { value: "Nông Dân" },
+                      { value: "Khác*" },
+                    ],
+                    name: "job",
+                    // value1: { isCheckedJob },
+                    onChange: changeJob,
+                  }}
+                ></SelectInput>
+
+                <If isTrue={isCheckedJob === "Khác*"}>
+                  <Input
+                    {...{
+                      className: "sm:col-span-3",
+                      title: "Nhập tên Nghề",
+                      name: "job",
+                      type: "text",
+                    }}
+                  ></Input>
+                </If>
+
+                <If isTrue={isCheckedJob === "Học Sinh"}>
+                  <SelectInput
+                    {...{
+                      className: "sm:col-span-3",
+                      title: "Học Vấn",
+                      name: "education",
+                      dataOption: [
+                        { value: "Khá" },
+                        { value: "Giỏi" },
+                        { value: "Yếu" },
+                        { value: "Trung bình" },
+                      ],
+                    }}
+                  ></SelectInput>
+                </If>
+
+                <div className="sm:col-span-4"></div>
+
+                <SelectInputFamily
+                  {...{
+                    className: "sm:col-span-3",
+                    name: "fatherID",
+                    title: "Họ tên cha",
+                    dataOption: DUMMY_DATA,
+                  }}
+                ></SelectInputFamily>
+
+                <SelectInputFamily
+                  {...{
+                    className: "sm:col-span-3",
+                    name: "motherID",
+                    title: "Họ tên mẹ",
+                    dataOption: DUMMY_DATA,
+                  }}
+                ></SelectInputFamily>
+
+                <fieldset className="sm:col-span-6 ">
+                  <div className="mt-6 space-x-40 flex">
+                    <legend className="text-sm font-semibold leading-6 text-gray-900">
+                      Tình trạng hôn nhân
+                    </legend>
+                    <CheckBoxInput
+                      {...{
+                        className: "flex items-center gap-x-3",
+                        title: "Độc thân",
+                        type: "radio",
+                        name: "single",
+                        checked: isCheckedMarital === "single",
+                        onChange: handleChangeMarital,
+                      }}
+                    ></CheckBoxInput>
+                    <CheckBoxInput
+                      {...{
+                        className: "flex items-center gap-x-3",
+                        title: "Đã kết hôn",
+                        type: "radio",
+                        name: "married",
+                        checked: isCheckedMarital === "married",
+                        onChange: handleChangeMarital,
+                      }}
+                    ></CheckBoxInput>
                   </div>
+                </fieldset>
+
+                <If isTrue={isCheckedMarital === "married"}>
+                  <SelectInputFamily
+                    {...{
+                      className: "sm:col-span-3",
+                      name: "partnerId",
+                      title: "Họ tên vợ/chồng",
+                      dataOption: DUMMY_DATA,
+                    }}
+                  ></SelectInputFamily>
+                </If>
+
+                <CheckBoxInput
+                  {...{
+                    className: "sm:col-span-4 flex  gap-10",
+                    title: "Trạng thái",
+                    type: "checkbox",
+                    name: "status",
+                    checked: isCheckedStatus,
+                    onChange: handleCheckboxChangeStatus,
+                  }}
+                ></CheckBoxInput>
+
+                <If isTrue={isCheckedStatus}>
+                  <>
+                    <Input
+                      {...{
+                        className: "sm:col-span-3",
+                        title: "Ngày mất",
+                        type: "date",
+                        name: "deadthDate",
+                      }}
+                    ></Input>
+
+                    <Input
+                      {...{
+                        className: "sm:col-span-3",
+                        title: "Nơi mất",
+                        type: "text",
+                        name: "deadthAdress",
+                      }}
+                    ></Input>
+                  </>
+                </If>
+
+                <div className="sm:col-span-4 mt-6">
+                  <h2 className="text-base font-semibold leading-7 text-gray-900">
+                    Thông tin tài khoản đăng nhập
+                  </h2>
                 </div>
-              </If>
 
-              <If isTrue={isCheckedJob === "Học Sinh"}>
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="education"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Học vấn
-                  </label>
-                  <div className="mt-2">
-                    <select
-                      id="education"
-                      name="education"
-                      autoComplete="text"
-                      {...register("education")}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 px-4"
-                    >
-                      <option>Yếu</option>
-                      <option>Trung bình</option>
-                      <option>Khá</option>
-                      <option>Giởi</option>
-                    </select>
-                  </div>
-                </div>
-              </If>
+                <Input
+                  {...{
+                    className: "sm:col-span-3",
+                    title: "Tên đăng nhập",
+                    type: "text",
+                    name: "userName",
+                    minLength: 5,
+                    pattern:
+                      /^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
+                    message: "Vui lòng không chứa ký tự đặc biệt",
+                  }}
+                ></Input>
 
-              <div className="sm:col-span-4"></div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="father"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Họ tên cha
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="father"
-                    name="father"
-                    // value={"1"}
-                    {...register("father")}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 px-4"
-                  >
-                    {DUMMY_DATA.map((data) => {
-                      return (
-                        <option key={data.id} value={data.id}>
-                          {data.name}
-                        </option>
-                      );
-                    })}
-                    {/* <option>Chọn</option>
-                    <option>Nguyễn Văn A</option>
-                    <option>Khác</option> */}
-                  </select>
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="mother"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Họ tên mẹ
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="mother"
-                    name="mother"
-                    {...register("mother")}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 px-4"
-                  >
-                    <option>Chọn</option>
-                    <option>Phạm Thị B</option>
-                    <option>Khác</option>
-                  </select>
-                </div>
-              </div>
-
-              <fieldset className="sm:col-span-6 ">
-                <div className="mt-6 space-x-40 flex">
-                  <legend className="text-sm font-semibold leading-6 text-gray-900">
-                    Tình trạng hôn nhân
-                  </legend>
-                  <div className="flex items-center gap-x-3 ">
-                    <input
-                      id="single"
-                      name="marital-status"
-                      type="radio"
-                      value="single"
-                      {...register("checkMarital")}
-                      checked={isCheckedMarital === "single"}
-                      onChange={handleChangeMarital}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                    <label
-                      htmlFor="single"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Độc thân
-                    </label>
-                  </div>
-
-                  <div className="flex items-center gap-x-3">
-                    <input
-                      id="married"
-                      name="marital-status"
-                      type="radio"
-                      value="married"
-                      {...register("checkMarital")}
-                      checked={isCheckedMarital === "married"}
-                      onChange={handleChangeMarital}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                    <label
-                      htmlFor="married"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Đã kết hôn
-                    </label>
-                  </div>
-                </div>
-              </fieldset>
-
-              {/* {isCheckedMarital === "married" && (
-                <div className="sm:col-span-4">
-                  <label
-                    htmlFor="mylove"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Họ tên vợ/chồng
-                  </label>
-                  <div className="mt-2">
-                    <select
-                      id="mylove"
-                      name="mylove"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                    >
-                      <option>Chọn</option>
-                      <option>Nguyễn Văn A</option>
-                      <option>Khác</option>
-                    </select>
-                  </div>
-                </div>
-              )} */}
-
-              <If isTrue={isCheckedMarital === "married"}>
-                <div className="sm:col-span-4">
-                  <label
-                    htmlFor="mylove"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Họ tên vợ/chồng
-                  </label>
-                  <div className="mt-2">
-                    <select
-                      id="mylove"
-                      name="mylove"
-                      {...register("mylove")}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 px-4"
-                    >
-                      <option>Chọn</option>
-                      <option>Nguyễn Văn A</option>
-                      <option>Khác</option>
-                    </select>
-                  </div>
-                </div>
-              </If>
-
-              <div className="sm:col-span-4">
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="status"
-                      name="status"
-                      type="checkbox"
-                      {...register("status")}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      checked={isCheckedStatus}
-                      onChange={handleCheckboxChangeStatus}
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label
-                      htmlFor="status"
-                      className="font-medium text-gray-900"
-                    >
-                      Trạng thái
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <If isTrue={isCheckedStatus}>
-                <>
-                  <div className="sm:col-span-3">
-                    <label
-                      htmlFor="death-date"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Ngày mất
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="death-date"
-                        name="death-date"
-                        type="date"
-                        autoComplete="date"
-                        {...register("death-date")}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
-                      />
-                    </div>
-                  </div>
-                  <div className="sm:col-span-3">
-                    <label
-                      htmlFor="death-address"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Nơi mất:
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="death-address"
-                        name="death-address"
-                        type="text"
-                        {...register("death-address")}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
-                      />
-                    </div>
-                  </div>
-                </>
-              </If>
-
-              <div className="sm:col-span-4 mt-6">
-                <h2 className="text-base font-semibold leading-7 text-gray-900">
-                  Thông tin tài khoản đăng nhập
-                </h2>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="username"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Tên đăng nhập
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="username"
-                    id="username"
-                    autoComplete="username"
-                    placeholder="Nhập tên đăng nhập"
-                    {...register("username", {
-                      required: true,
-                      minLength: 5,
-                      pattern:
-                        /^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
-                    })}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
-                  />
-                  <If isTrue={errors.username?.type === "minLength"}>
-                    <span className="text-red-500 text-sm">
-                      Độ dài tối thiểu là 5
-                    </span>
-                  </If>
-                  <If isTrue={errors.username?.type === "required"}>
-                    <span className="text-red-500 text-sm">
-                      Vui lòng nhập thông tin
-                    </span>
-                  </If>
-                  <If isTrue={errors.username?.type === "pattern"}>
-                    <span className="text-red-500 text-sm">
-                      Vui lòng không chứa ký tự đặc biệt
-                    </span>
-                  </If>
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Mật khẩu
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    autoComplete="password"
-                    placeholder="Nhập tên đăng nhập"
-                    {...register("password", {
-                      required: true,
-                      minLength: 8,
-                      pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                    })}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
-                  />
-                  {/* <If isTrue={errors.password?.type === "required"}>
-                    <span className="text-red-500 text-sm">
-                      Vui lòng nhập thông tin
-                    </span>
-                  </If> */}
-                  <If isTrue={errors.password?.type === "required"}>
-                    <span className="text-red-500 text-sm">
-                      Vui lòng nhập thông tin
-                    </span>
-                  </If>
-                  <If isTrue={errors.password?.type === "pattern"}>
-                    <span className="text-red-500 text-sm">
-                      Mật khẩu có độ dài 8 ký tự chứa ít nhất 1 chữ và 1 số
-                    </span>
-                  </If>
-                </div>
+                <Input
+                  {...{
+                    className: "sm:col-span-3",
+                    title: "Mật khẩu",
+                    type: "password",
+                    name: "password",
+                    minLength: 8,
+                    pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                    message:
+                      " Mật khẩu có độ dài 8 ký tự chứa ít nhất 1 chữ và 1 số",
+                  }}
+                ></Input>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="mt-6 flex items-center justify-end self-end gap-x-6 mr-20">
-          <button
-            type="button"
-            // className="text-sm font-semibold leading-6 text-gray-900 bg-indigo-600 rounded-md"
-            className="rounded-md bg-black  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 "
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Save
-          </button>
-        </div>
-      </form>
+          <div className="mt-6 flex items-center justify-end self-end gap-x-6 mr-20">
+            <button
+              type="button"
+              // className="text-sm font-semibold leading-6 text-gray-900 bg-indigo-600 rounded-md"
+              className="rounded-md bg-black  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 "
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </FormProvider>
     </Fragment>
-    // <div className="flex flex-col items-center bg-slate-900 h-screen ">
-
-    // </div>
   );
 }
