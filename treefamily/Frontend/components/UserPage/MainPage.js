@@ -1,4 +1,4 @@
-import UserTable from "./UserItem";
+import UserTable from "./UserTable";
 import BaseTemplate from "../BaseTemplate";
 
 export default function MainPage() {

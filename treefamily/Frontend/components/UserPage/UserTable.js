@@ -31,7 +31,6 @@ const people = [
 ];
 
 export default function UserTable() {
-  console.log(people)
   return (
     <div className="flex flex-col mt-8">
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
