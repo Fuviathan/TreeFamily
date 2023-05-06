@@ -1,0 +1,9 @@
+.divFamily {
+  background-color: red;
+}
+.divFamily > #div__fixBar {
+  background-color: black;
+}
+/* .divFamily div#input__Search {
+  color: black;
+} */
