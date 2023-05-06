@@ -1,5 +1,5 @@
+import AddMember from "../components/AddMember";
 
-
-export default function login() {
-
+export default function addmember() {
+  return <AddMember></AddMember>;
 }
