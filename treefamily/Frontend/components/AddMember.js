@@ -94,7 +94,26 @@ export default function AddMember() {
                     dataOption: [{ value: "Nam" }, { value: "Nữ" }],
                   }}
                 ></SelectInput>
+                <SelectInput
+                  {...{
+                    className: "sm:col-span-1",
+                    name: "gender",
+                    title: "Giới tính",
+                    dataOption: [{ value: "Nam" }, { value: "Nữ" }],
+                  }}
+                ></SelectInput>
 
+                <SelectInput
+                  {...{
+                    className: "sm:col-span-2",
+                    name: "role",
+                    title: "Vai trò",
+                    dataOption: [
+                      { value: "Trưởng họ" },
+                      { value: "Thành viên" },
+                    ],
+                  }}
+                ></SelectInput>
                 <SelectInput
                   {...{
                     className: "sm:col-span-2",
@@ -118,7 +137,29 @@ export default function AddMember() {
                     message: "Vui lòng nhập đúng định dạng ngày sinh",
                   }}
                 ></Input>
+                <Input
+                  {...{
+                    className: "sm:col-span-3",
+                    title: "Ngày sinh",
+                    type: "date",
+                    name: "birthDay",
+                    pattern:
+                      /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
+                    message: "Vui lòng nhập đúng định dạng ngày sinh",
+                  }}
+                ></Input>
 
+                <Input
+                  {...{
+                    className: "sm:col-span-3",
+                    title: "Số điện thoại",
+                    type: "tel",
+                    name: "tel",
+                    pattern: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/,
+                    minLength: 10,
+                    message: "Vui lòng nhập đúng định dạng số điện thoại",
+                  }}
+                ></Input>
                 <Input
                   {...{
                     className: "sm:col-span-3",
@@ -147,7 +188,33 @@ export default function AddMember() {
                     onChange: changeJob,
                   }}
                 ></SelectInput>
+                <SelectInput
+                  {...{
+                    className: "sm:col-span-3",
+                    title: "Nghề nghiệp",
+                    dataOption: [
+                      { value: "Giáo viên" },
+                      { value: "Học Sinh" },
+                      { value: "Bác sĩ" },
+                      { value: "Nông Dân" },
+                      { value: "Khác*" },
+                    ],
+                    name: "job",
+                    // value1: { isCheckedJob },
+                    onChange: changeJob,
+                  }}
+                ></SelectInput>
 
+                <If isTrue={isCheckedJob === "Khác*"}>
+                  <Input
+                    {...{
+                      className: "sm:col-span-3",
+                      title: "Nhập tên Nghề",
+                      name: "job",
+                      type: "text",
+                    }}
+                  ></Input>
+                </If>
                 <If isTrue={isCheckedJob === "Khác*"}>
                   <Input
                     {...{
@@ -174,7 +241,23 @@ export default function AddMember() {
                     }}
                   ></SelectInput>
                 </If>
+                <If isTrue={isCheckedJob === "Học Sinh"}>
+                  <SelectInput
+                    {...{
+                      className: "sm:col-span-3",
+                      title: "Học Vấn",
+                      name: "education",
+                      dataOption: [
+                        { value: "Khá" },
+                        { value: "Giỏi" },
+                        { value: "Yếu" },
+                        { value: "Trung bình" },
+                      ],
+                    }}
+                  ></SelectInput>
+                </If>
 
+                <div className="sm:col-span-4"></div>
                 <div className="sm:col-span-4"></div>
 
                 <SelectInputFamily
@@ -185,7 +268,23 @@ export default function AddMember() {
                     dataOption: DUMMY_DATA,
                   }}
                 ></SelectInputFamily>
+                <SelectInputFamily
+                  {...{
+                    className: "sm:col-span-3",
+                    name: "fatherID",
+                    title: "Họ tên cha",
+                    dataOption: DUMMY_DATA,
+                  }}
+                ></SelectInputFamily>
 
+                <SelectInputFamily
+                  {...{
+                    className: "sm:col-span-3",
+                    name: "motherID",
+                    title: "Họ tên mẹ",
+                    dataOption: DUMMY_DATA,
+                  }}
+                ></SelectInputFamily>
                 <SelectInputFamily
                   {...{
                     className: "sm:col-span-3",
@@ -222,6 +321,7 @@ export default function AddMember() {
                     ></CheckBoxInput>
                   </div>
                 </fieldset>
+                </fieldset>
 
                 <If isTrue={isCheckedMarital === "married"}>
                   <SelectInputFamily
@@ -233,7 +333,49 @@ export default function AddMember() {
                     }}
                   ></SelectInputFamily>
                 </If>
+                <If isTrue={isCheckedMarital === "married"}>
+                  <SelectInputFamily
+                    {...{
+                      className: "sm:col-span-3",
+                      name: "partnerId",
+                      title: "Họ tên vợ/chồng",
+                      dataOption: DUMMY_DATA,
+                    }}
+                  ></SelectInputFamily>
+                </If>
 
+                <CheckBoxInput
+                  {...{
+                    className: "sm:col-span-4 flex  gap-10",
+                    title: "Trạng thái",
+                    type: "checkbox",
+                    name: "status",
+                    checked: isCheckedStatus,
+                    onChange: handleCheckboxChangeStatus,
+                  }}
+                ></CheckBoxInput>
+
+                <If isTrue={isCheckedStatus}>
+                  <>
+                    <Input
+                      {...{
+                        className: "sm:col-span-3",
+                        title: "Ngày mất",
+                        type: "date",
+                        name: "deadthDate",
+                      }}
+                    ></Input>
+
+                    <Input
+                      {...{
+                        className: "sm:col-span-3",
+                        title: "Nơi mất",
+                        type: "text",
+                        name: "deadthAdress",
+                      }}
+                    ></Input>
+                  </>
+                </If>
                 <CheckBoxInput
                   {...{
                     className: "sm:col-span-4 flex  gap-10",
@@ -285,7 +427,31 @@ export default function AddMember() {
                     message: "Vui lòng không chứa ký tự đặc biệt",
                   }}
                 ></Input>
+                <Input
+                  {...{
+                    className: "sm:col-span-3",
+                    title: "Tên đăng nhập",
+                    type: "text",
+                    name: "userName",
+                    minLength: 5,
+                    pattern:
+                      /^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
+                    message: "Vui lòng không chứa ký tự đặc biệt",
+                  }}
+                ></Input>
 
+                <Input
+                  {...{
+                    className: "sm:col-span-3",
+                    title: "Mật khẩu",
+                    type: "password",
+                    name: "password",
+                    minLength: 8,
+                    pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                    message:
+                      " Mật khẩu có độ dài 8 ký tự chứa ít nhất 1 chữ và 1 số",
+                  }}
+                ></Input>
                 <Input
                   {...{
                     className: "sm:col-span-3",
