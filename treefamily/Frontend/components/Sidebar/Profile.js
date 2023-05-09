@@ -1,13 +1,14 @@
 import React from "react";
+import Link from 'next/link';
 
 export default function Profile() {
   return (
-    <div className="flex-shrink-0 flex bg-gray-700 p-4">
-      <a href="#" className="flex-shrink-0 w-full group block">
+    <div className="flex flex-shrink-0 p-4 bg-gray-700">
+      <Link href="/test" className="flex-shrink-0 block w-full group">
         <div className="flex items-center">
           <div>
             <img
-              className="inline-block h-9 w-9 rounded-full"
+              className="inline-block rounded-full h-9 w-9"
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
               alt=""
             />
@@ -19,7 +20,7 @@ export default function Profile() {
             </p>
           </div>
         </div>
-      </a>
+      </Link>
     </div>
   );
 }
