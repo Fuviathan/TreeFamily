@@ -16,11 +16,11 @@ export default function DropDownTypeDisplay(props) {
           as="div"
           onMouseEnter={() => setIsOpen(true)}
           onMouseLeave={() => setIsOpen(false)}
-          className="inline-flex w-full justify-center rounded-md bg-black bg-indigo-600  px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 "
+          className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 "
         >
           Kiểu xem
           <ChevronDownIcon
-            className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
+            className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
             aria-hidden="true"
           />
         </Menu.Button>
@@ -39,9 +39,9 @@ export default function DropDownTypeDisplay(props) {
         <Menu.Items
           onMouseEnter={() => setIsOpen(true)}
           onMouseLeave={() => setIsOpen(false)}
-          className="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 pfocus:outline-none z-20 "
+          className="absolute left-0 z-20 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 pfocus:outline-none "
         >
-          <div className="py-1 flex flex-col">
+          <div className="flex flex-col py-1">
             <Menu.Item>
               {({ active }) => (
                 <a

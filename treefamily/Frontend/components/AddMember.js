@@ -53,7 +53,7 @@ export default function AddMember() {
 
   return (
     <Fragment>
-      <div className="fixed top-0 w-full h-screen bg-gray-700 bg-slate-200"></div>
+      <div className="fixed top-0 w-full h-screen bg-gray-700"></div>
       <form
         className="relative z-20 flex flex-col items-center max-w-3xl py-4 mx-auto mt-16 bg-white border-2 border-solid border-slate-300 h-80vh"
         onSubmit={handleSubmit(onSubmit)}

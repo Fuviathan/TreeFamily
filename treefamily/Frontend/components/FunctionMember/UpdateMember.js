@@ -74,15 +74,15 @@ export default function UpdateMember() {
 
   return (
     <Fragment>
-      <div className="fixed h-screen w-full top-0 bg-slate-200 fixed bg-gray-700"></div>
+      <div className="fixed top-0 w-full h-screen bg-gray-700"></div>
 
       <FormProvider {...method}>
         <form
-          className="flex flex-col items-center py-4 max-w-3xl border-solid border-2 border-slate-300 mt-16 mx-auto  z-20 relative bg-white h-80vh"
+          className="relative z-20 flex flex-col items-center max-w-3xl py-4 mx-auto mt-16 bg-white border-2 border-solid border-slate-300 h-80vh"
           onSubmit={method.handleSubmit(onSubmit)}
         >
-          <div className="space-y-12  overflow-y-scroll px-10 w-full">
-            <div className="border-b border-gray-900/10 pb-12">
+          <div className="w-full px-10 space-y-12 overflow-y-scroll">
+            <div className="pb-12 border-b border-gray-900/10">
               <h2 className="text-base font-semibold leading-7 text-gray-900">
                 Chỉnh Sửa thông tin thành viên
               </h2>
@@ -91,7 +91,7 @@ export default function UpdateMember() {
                 Nhập các thông tin cần sửa
               </p>
 
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <Input
                   {...{
                     data: DUMMY_DATA.name,
@@ -224,7 +224,7 @@ export default function UpdateMember() {
                 ></SelectInputFamily>
 
                 <fieldset className="sm:col-span-6 ">
-                  <div className="mt-6 space-x-40 flex">
+                  <div className="flex mt-6 space-x-40">
                     <legend className="text-sm font-semibold leading-6 text-gray-900">
                       Tình trạng hôn nhân
                     </legend>
@@ -237,7 +237,7 @@ export default function UpdateMember() {
                         {...method.register("checkMarital")}
                         defaultChecked={DUMMY_DATA.single === "single"}
                         onChange={handleChangeMarital}
-                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-600"
                       />
                       <label
                         htmlFor="single"
@@ -257,7 +257,7 @@ export default function UpdateMember() {
                         // checked={isCheckedMarital === "married"}
                         defaultChecked={DUMMY_DATA.married === "married"}
                         onChange={handleChangeMarital}
-                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-600"
                       />
                       <label
                         htmlFor="married"
@@ -281,8 +281,8 @@ export default function UpdateMember() {
                   ></SelectInputFamily>
                 </If>
                 {/* <div className="sm:col-span-4">Trạng thái</div> */}
-                <div className=" flex sm:col-span-4">
-                  <div className="flex text-sm leading-6 pr-8">
+                <div className="flex sm:col-span-4">
+                  <div className="flex pr-8 text-sm leading-6">
                     <label
                       htmlFor="status"
                       className="font-medium text-gray-900"
@@ -291,14 +291,14 @@ export default function UpdateMember() {
                     </label>
                   </div>
                   <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
+                    <div className="flex items-center h-6">
                       <input
                         id="status"
                         name="status"
                         type="checkbox"
                         defaultChecked={DUMMY_DATA.status}
                         {...method.register("status")}
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-600"
                         onChange={handleCheckboxChangeStatus}
                       />
                     </div>
@@ -333,7 +333,7 @@ export default function UpdateMember() {
                   }}
                 ></Input>
 
-                <div className="sm:col-span-4 mt-6">
+                <div className="mt-6 sm:col-span-4">
                   <h2 className="text-base font-semibold leading-7 text-gray-900">
                     Thông tin tài khoản đăng nhập
                   </h2>
@@ -371,17 +371,17 @@ export default function UpdateMember() {
             </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-end self-end gap-x-6 mr-20">
+          <div className="flex items-center self-end justify-end mt-6 mr-20 gap-x-6">
             <button
               type="button"
               // className="text-sm font-semibold leading-6 text-gray-900 bg-indigo-600 rounded-md"
-              className="rounded-md bg-black  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 "
+              className="px-3 py-2 text-sm font-semibold text-white bg-black rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 "
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Save
             </button>
