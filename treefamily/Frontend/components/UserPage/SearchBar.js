@@ -1,4 +1,4 @@
-import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/outline";
 export default function SearchBar() {
   return (
     <div class="relative mx-auto text-gray-600">
@@ -9,8 +9,8 @@ export default function SearchBar() {
         placeholder="Search"
       ></input>
 
-      <button type="submit" class="absolute right-0 top-0">
-        <MagnifyingGlassCircleIcon className="w-auto h-10 text-indigo-500 rounded-lg color-red bg-violet-200 hover:text-indigo-700"></MagnifyingGlassCircleIcon>
+      <button type="submit" class="absolute right-0 top-0 mr-1">
+        <MagnifyingGlassCircleIcon className="w-auto h-10 text-gray-400 rounded-lg hover:text-gray-600"></MagnifyingGlassCircleIcon>
       </button>
     </div>
   );
