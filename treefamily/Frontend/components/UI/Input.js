@@ -5,6 +5,10 @@ export default function Input(props) {
     register,
     formState: { errors },
   } = useFormContext();
+
+  if (props.disabled) {
+  }
+
   return (
     <div className={props.className}>
       <label
@@ -15,6 +19,8 @@ export default function Input(props) {
       </label>
       <div className="mt-2">
         <input
+          defaultValue={props.data}
+          readOnly={props.disabled}
           type={props.type}
           name={props.name}
           id={props.name}
@@ -22,7 +28,7 @@ export default function Input(props) {
           autoComplete="on"
           // placeholder=
           {...register(props.name, {
-            required: true,
+            required: props.disabled ? false : true,
             minLength: props.minLength,
             pattern: props.pattern,
             // /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/,

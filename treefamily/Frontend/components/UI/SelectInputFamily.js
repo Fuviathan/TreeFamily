@@ -13,6 +13,7 @@ export default function SelectInputFamily(props) {
       </label>
       <div className="mt-2">
         <select
+          defaultValue={props.data}
           id={props.name}
           name={props.name}
           autoComplete={props.name}
