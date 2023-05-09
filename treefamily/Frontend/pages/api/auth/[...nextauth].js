@@ -16,7 +16,6 @@ export default NextAuth({
           placeholder: "Password",
         },
       },
-      authorize,
     }),
   ],
 });
