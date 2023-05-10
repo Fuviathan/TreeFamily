@@ -317,15 +317,15 @@ export default function AddMember({ isVisible, onClose }) {
                 type="button"
                 onClick={() => onClose()}
                 // className="text-sm font-semibold leading-6 text-gray-900 bg-indigo-600 rounded-md"
-                className="px-3 py-2 text-sm font-semibold text-white bg-black rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 "
+                className="px-3 py-2 text-sm font-semibold text-red-500 bg-white border border-red-500 rounded-md shadow-sm hover:bg-red-500 hover:text-white "
               >
-                Cancel
+                Hủy bỏ
               </button>
               <button
                 type="submit"
                 className="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Save
+                Lưu
               </button>
             </div>
           </form>
