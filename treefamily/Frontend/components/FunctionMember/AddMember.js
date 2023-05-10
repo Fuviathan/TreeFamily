@@ -66,7 +66,7 @@ export default function AddMember({ isVisible, onClose }) {
             onSubmit={method.handleSubmit(onSubmit)}
           >
             <div className="w-full px-10 space-y-12 overflow-y-scroll">
-              <div className="pb-12 border-b border-gray-900/10">
+              <div className="pb-12 border-gray-900/10">
                 <Dialog.Title
                   as="h2"
                   className="text-base font-semibold leading-7 text-gray-900"
@@ -311,7 +311,7 @@ export default function AddMember({ isVisible, onClose }) {
                 </div>
               </div>
             </div>
-
+            <div className="w-full border-t"></div>
             <div className="flex items-center self-end justify-end mt-6 mr-20 gap-x-6">
               <button
                 type="button"
