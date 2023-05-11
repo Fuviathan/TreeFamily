@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import DropDownTypeDisplay from "../components/UserPage/DropDownTypeDisplay";
 
 // import classes from "./tree.module.css";
 const FamilyTreeChart = () => {
@@ -122,7 +121,7 @@ const FamilyTreeChart = () => {
     <div>
       {/* <DropDownTypeDisplay></DropDownTypeDisplay> */}
 
-      <div id="divFamily" className="bg-black h-screen"></div>
+      <div id="divFamily" className="h-screen bg-black"></div>
     </div>
   );
 };
