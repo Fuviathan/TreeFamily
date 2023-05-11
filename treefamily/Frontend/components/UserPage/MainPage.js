@@ -1,16 +1,12 @@
 import UserTable from "./UserTable";
 import BaseTemplate from "../BaseTemplate";
-import DropDownTypeDisplay from "./DropDownTypeDisplay";
 import SearchBar from "./SearchBar";
 import { If } from "react-haiku";
 import { useState } from "react";
-import AddMember from "../FunctionMember/AddMember";
+import AddMember from "./Modal/AddMember";
 
 export default function MainPage() {
   const [addMember, setAddMember] = useState(false);
-  const addMemberHandler = () => {
-    setAddMember(true);
-  };
   return (
     <>
       <BaseTemplate>
@@ -24,7 +20,6 @@ export default function MainPage() {
                 </h1>
 
                 <button
-                  onClick={addMemberHandler}
                   type="button"
                   className="inline-flex items-center justify-center px-4 py-2 ml-12 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                 >
@@ -37,7 +32,7 @@ export default function MainPage() {
 
               <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 <button
-                  onClick={addMemberHandler}
+                  onClick={() => setAddMember(true)}
                   type="button"
                   className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                 >
@@ -54,8 +49,12 @@ export default function MainPage() {
           </If> */}
           </div>
         </div>
-      <AddMember onClose={() => setAddMember(false)} isVisible={addMember}/>
-
+        <If isTrue={addMember}>
+          <AddMember
+            onClose={() => setAddMember(false)}
+            isVisible={addMember}
+          />
+        </If>
       </BaseTemplate>
     </>
   );
