@@ -4,6 +4,7 @@ import SearchBar from "./SearchBar";
 import { If } from "react-haiku";
 import { useState } from "react";
 import AddMember from "./Modal/AddMember";
+import Link from 'next/link'
 
 export default function MainPage() {
   const [addMember, setAddMember] = useState(false);
@@ -23,9 +24,8 @@ export default function MainPage() {
                   type="button"
                   className="inline-flex items-center justify-center px-4 py-2 ml-12 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                 >
-                  <a href="/displayTypeTree">Xem dạng cây</a>
+                  <Link href="/displayTypeTree">Xem dạng cây</Link>
                 </button>
-                {/* <DropDownTypeDisplay></DropDownTypeDisplay> */}
               </div>
 
               <SearchBar></SearchBar>
