@@ -119,9 +119,8 @@ const FamilyTreeChart = () => {
 
   return (
     <div>
-      {/* <DropDownTypeDisplay></DropDownTypeDisplay> */}
 
-      <div id="divFamily" className="h-screen bg-black"></div>
+      <div id="divFamily" className="h-screen bg-white"></div>
     </div>
   );
 };
