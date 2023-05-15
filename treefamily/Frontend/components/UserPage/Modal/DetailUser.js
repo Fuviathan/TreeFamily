@@ -27,28 +27,7 @@ const DUMMY_DATA1 = [
   },
 ];
 
-const DUMMY_DATA = {
-  id: 1,
-  name: "Le thi Tam",
-  gender: "Nữ",
-  role: "Trưởng họ",
-  tel: "12321421312",
-  birthDate: "2002-05-05",
-  job: "Học Sinh",
-  education: "Giỏi",
-  fatherID: "2",
-  motherID: "5",
-  single: "",
-  marital: "Kết hôn",
-  married: "married",
-  partnerId: "4",
-  status: true,
-  deadthAdress: "Sài Gòn",
-  deaththDate: "2100-01-01",
-  username: "trungvu",
-  password: "trung12124",
-};
-export default function DetailUser({ isVisible, onClose }) {
+export default function DetailUser({ isVisible, onClose, person }) {
   function getNameFromId(id) {
     let name = "";
     DUMMY_DATA1.map((data) => {
@@ -81,7 +60,7 @@ export default function DetailUser({ isVisible, onClose }) {
             <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
               <InputLine
                 {...{
-                  data: DUMMY_DATA.name,
+                  data: person.fullName,
                   className: "sm:col-span-3",
                   title: "Họ Tên",
                 }}
@@ -89,14 +68,14 @@ export default function DetailUser({ isVisible, onClose }) {
 
               <InputLine
                 {...{
-                  data: DUMMY_DATA.gender,
+                  data: person.gender,
                   className: "sm:col-span-1",
                   title: "Giới tính",
                 }}
               ></InputLine>
               <InputLine
                 {...{
-                  data: DUMMY_DATA.role,
+                  data: person.role,
                   className: "sm:col-span-2",
                   title: "Vai trò",
                 }}
@@ -104,7 +83,7 @@ export default function DetailUser({ isVisible, onClose }) {
 
               <InputLine
                 {...{
-                  data: DUMMY_DATA.birthDate,
+                  data: person.dateOfBirth,
                   className: "sm:col-span-3",
                   title: "Ngày sinh",
                 }}
@@ -112,7 +91,7 @@ export default function DetailUser({ isVisible, onClose }) {
 
               <InputLine
                 {...{
-                  data: DUMMY_DATA.tel,
+                  data: person.mobilePhoneNumber,
                   className: "sm:col-span-3",
                   title: "Số điện thoại",
                 }}
@@ -120,7 +99,7 @@ export default function DetailUser({ isVisible, onClose }) {
 
               <InputLine
                 {...{
-                  data: DUMMY_DATA.job,
+                  data: person.career,
                   className: "sm:col-span-3",
                   title: "Nghề nghiệp",
                 }}
@@ -128,7 +107,7 @@ export default function DetailUser({ isVisible, onClose }) {
 
               <InputLine
                 {...{
-                  data: DUMMY_DATA.education,
+                  data: person.education,
                   className: "sm:col-span-3",
                   title: "Học vấn",
                 }}
@@ -138,7 +117,7 @@ export default function DetailUser({ isVisible, onClose }) {
 
               <InputLine
                 {...{
-                  data: getNameFromId(DUMMY_DATA.fatherID),
+                  data: getNameFromId(person.fatherID),
                   className: "sm:col-span-3",
                   title: "Họ tên cha",
                 }}
@@ -146,7 +125,7 @@ export default function DetailUser({ isVisible, onClose }) {
 
               <InputLine
                 {...{
-                  data: getNameFromId(DUMMY_DATA.motherID),
+                  data: getNameFromId(person.motherID),
                   className: "sm:col-span-3",
                   title: "Họ tên mẹ",
                 }}
@@ -154,7 +133,7 @@ export default function DetailUser({ isVisible, onClose }) {
 
               <InputLine
                 {...{
-                  data: DUMMY_DATA.marital,
+                  data: person.maritalStatus,
                   className: "sm:col-span-3",
                   title: "Tình trạng hôn nhân",
                 }}
@@ -170,7 +149,7 @@ export default function DetailUser({ isVisible, onClose }) {
 
               <InputLine
                 {...{
-                  data: DUMMY_DATA.status === true ? "Đã mất" : "",
+                  data: person.status === true ? "Đã mất" : "",
                   className: "sm:col-span-3",
                   title: "Trạng thái",
                 }}
@@ -178,7 +157,7 @@ export default function DetailUser({ isVisible, onClose }) {
 
               <InputLine
                 {...{
-                  data: DUMMY_DATA.deaththDate,
+                  data: person.dateOfDeath,
                   className: "sm:col-span-3",
                   title: "Ngày mất",
                 }}
@@ -186,7 +165,7 @@ export default function DetailUser({ isVisible, onClose }) {
 
               <InputLine
                 {...{
-                  data: DUMMY_DATA.deadthAdress,
+                  data: person.burialPlace,
                   className: "sm:col-span-6",
                   title: "Nơi an táng",
                 }}

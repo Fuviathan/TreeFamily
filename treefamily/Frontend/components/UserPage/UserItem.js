@@ -33,7 +33,7 @@ export default function UserItem({ person }) {
       </td>
       <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
         <a href="#" className="text-indigo-600 hover:text-indigo-900">
-          <DropDownUser></DropDownUser>
+          <DropDownUser person={person}/>
           <span className="sr-only">, {person.name}</span>
         </a>
       </td>

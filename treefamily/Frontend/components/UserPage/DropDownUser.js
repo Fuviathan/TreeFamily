@@ -9,7 +9,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DropDownUser() {
+export default function DropDownUser({ person }) {
   const [showDetail, setShowDetail] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false)
   return (
@@ -63,8 +63,8 @@ export default function DropDownUser() {
           </Menu.Items>
         </Transition>
       </Menu>
-      <DetailUser isVisible={showDetail} onClose={() => setShowDetail(false)} />
-      <UpdateMember isVisible={showUpdateModal} onClose={() => setShowUpdateModal(false)} />
+      <DetailUser isVisible={showDetail} onClose={() => setShowDetail(false)} person={person}/>
+      <UpdateMember isVisible={showUpdateModal} onClose={() => setShowUpdateModal(false)} person={person} />
     </>
   );
 }
