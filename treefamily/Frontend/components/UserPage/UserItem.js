@@ -4,29 +4,29 @@ import DropDownUser from "./DropDownUser";
 export default function UserItem({ person }) {
   return (
     <tr>
-      <td className="py-4 text-center pr-10 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6 ">
-        {person.life}
+      <td className="py-4 pr-10 text-sm font-medium text-center text-gray-900 whitespace-nowrap sm:pl-6 ">
+        {person.generation}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {person.name}
+        {person.fullName}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
         {person.gender}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {person.birthDate}
+        {person.dateOfBirth}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
         {person.status}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {person.tel}
+        {person.mobilePhoneNumber}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {person.job}
+        {person.career}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {person.marital}
+        {person.maritalStatus}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
         {person.role}
