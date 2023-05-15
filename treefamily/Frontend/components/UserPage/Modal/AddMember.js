@@ -255,7 +255,7 @@ export default function AddMember({ isVisible, onClose }) {
                               name="maritalStatus"
                               value="Độc thân"
                               checked="true"
-                              {...method.register("marital")}
+                              {...method.register("maritalStatus")}
                               onChange={handleChangeMarital}
                               className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-600"
                               type="radio"
@@ -272,9 +272,9 @@ export default function AddMember({ isVisible, onClose }) {
                           <div className="mt-2 ">
                             <input
                               id="married"
-                              name="marital"
+                              name="maritalStatus"
                               value="Đã kết hôn"
-                              {...method.register("marital")}
+                              {...method.register("maritalStatus")}
                               onChange={handleChangeMarital}
                               className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-600"
                               type="radio"
