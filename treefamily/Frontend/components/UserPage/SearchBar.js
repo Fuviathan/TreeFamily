@@ -3,7 +3,7 @@ export default function SearchBar() {
   return (
     <div class="relative mx-auto text-gray-600">
       <input
-        class="border-2 border-gray-300 bg-white h-10 px-5 pr-10 rounded-lg text-base focus:outline-none"
+        className="h-10 px-5 pr-10 text-base bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
         type="search"
         name="search"
         placeholder="Search"

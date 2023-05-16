@@ -58,7 +58,6 @@ export default function AddMember({ isVisible, onClose }) {
     data.momId = Number(data.momId)
     data.dadId = Number(data.dadId)
     data.partnerId = Number(data.partnerId)
-    console.log(data)
     const JSONdata = JSON.stringify(data)
     const endpoint = 'http://localhost:8080/member/create-member'
     const options = {
@@ -78,11 +77,6 @@ export default function AddMember({ isVisible, onClose }) {
       alert(result.message)
     }
   }
-  // const onSubmit = data => {
-  //   data.momId = Number(data.momId)
-  //   data.dadId = Number(data.dadId)
-  //   console.log(data)
-  // }
   if (!isVisible) return <></>;
   return (
     <Dialog

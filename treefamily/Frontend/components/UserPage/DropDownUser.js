@@ -4,6 +4,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import DetailUser from "./Modal/DetailUser";
 import UpdateMember from "./Modal/UpdateMember";
+import { If } from 'react-haiku'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -63,8 +64,12 @@ export default function DropDownUser({ person }) {
           </Menu.Items>
         </Transition>
       </Menu>
-      <DetailUser isVisible={showDetail} onClose={() => setShowDetail(false)} person={person}/>
-      <UpdateMember isVisible={showUpdateModal} onClose={() => setShowUpdateModal(false)} person={person} />
+      <If isTrue={showDetail}>
+        <DetailUser isVisible={showDetail} onClose={() => setShowDetail(false)} person={person} />
+      </If>
+      <If isTrue={showUpdateModal}>
+        <UpdateMember isVisible={showUpdateModal} onClose={() => setShowUpdateModal(false)} person={person} />
+      </If>
     </>
   );
 }
