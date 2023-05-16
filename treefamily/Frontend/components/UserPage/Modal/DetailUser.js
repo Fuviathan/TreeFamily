@@ -141,7 +141,7 @@ export default function DetailUser({ isVisible, onClose, person }) {
 
               <InputLine
                 {...{
-                  data: getNameFromId(DUMMY_DATA.partnerId),
+                  data: getNameFromId(person.partnerId),
                   className: "sm:col-span-3",
                   title: "Họ tên vợ/chồng",
                 }}
