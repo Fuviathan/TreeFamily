@@ -48,7 +48,7 @@ export default function DetailUser({ isVisible, onClose, person }) {
       onClose={onClose}
     >
       <div className="fixed inset-0 px-4 pt-4 pb-20 bg-gray-500 bg-opacity-75 sm:block sm:p-0">
-        <div className="relative z-20 flex flex-col items-center w-full max-w-6xl px-10 py-4 mx-auto mt-16 space-y-12 overflow-y-scroll bg-white border-2 border-solid border-slate-300 h-[80vh]">
+        <div className="relative z-20 flex flex-col items-center w-full max-w-6xl px-10 py-4 mx-auto mt-16 space-y-12 overflow-y-scroll bg-white border-2 border-solid border-slate-300 h-80vh">
           <div className="pb-12 border-gray-900/10">
             <Dialog.Title
               as="h2"
