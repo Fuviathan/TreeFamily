@@ -128,7 +128,7 @@ export default function AddMember({ isVisible, onClose }) {
                         dataOption: [
                           { value: "Trưởng họ" },
                           { value: "Thành viên" },
-                          { value: "Cụ Tổ" },
+                          { value: "Ông Tổ" },
                         ],
                       }}
                     ></SelectInput>
