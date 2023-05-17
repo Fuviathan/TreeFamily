@@ -90,11 +90,11 @@ export default function AddMember({ isVisible, onClose }) {
                     as="h2"
                     className="text-base font-semibold leading-7 text-gray-900"
                   >
-                    Thông tin cá nhân
+                    Thêm thành viên
                   </Dialog.Title>
 
                   <div className="mt-1 text-sm leading-6 text-gray-600">
-                    Thành viên nhập thông tin của bản thân
+                    Nhập thông tin của thành viên mới
                   </div>
 
                   <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
