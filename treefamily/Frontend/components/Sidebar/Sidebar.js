@@ -4,7 +4,7 @@ import SidebarItem from "./SidebarItem";
 import Profile from "./Profile";
 
 const navigation = [
-  { name: "Trang chủ", href: "/userpage", current: true },
+  { name: "Quản lý gia phả", href: "/userpage", current: true },
 ];
 
 const adminNavigation = [
