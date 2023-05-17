@@ -16,6 +16,10 @@ module.exports = {
           logText: '#9FA2B4',
         },
       },
+      height: {
+        '80vh': '80vh',
+        '90vh': '90vh'
+      }
     },
   },
   plugins: [],
