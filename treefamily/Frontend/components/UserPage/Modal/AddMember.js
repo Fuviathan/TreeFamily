@@ -5,31 +5,9 @@ import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../UI/Input";
 import SelectInput from "../../UI/SelectInput";
 import SelectInputFamily from "../../UI/SelectInputFamily";
-import CheckBoxInput from "../../UI/CheckBoxInput";
+import useSWR from "swr";
+import ComboBoxFamily from "./miniComponents/ComboBoxFamily";
 
-// Demo nhập chọn thông tin bố mẹ gửi id form
-const DUMMY_DATA = [
-  {
-    id: 1,
-    name: "trung",
-  },
-  {
-    id: 4,
-    name: "anh",
-  },
-  {
-    id: 2,
-    name: "nga",
-  },
-  {
-    id: 3,
-    name: "hưng",
-  },
-  {
-    id: 5,
-    name: "híu",
-  },
-];
 export default function AddMember({ isVisible, onClose }) {
   const method = useForm({
     defaultValues: {
@@ -43,6 +21,7 @@ export default function AddMember({ isVisible, onClose }) {
 
   const handleChangeMarital = (event) => {
     setIsCheckedMarital(event.target.value);
+    console.log(event.target.value);
   };
 
   const handleCheckboxChangeStatus = (event) => {
@@ -54,27 +33,40 @@ export default function AddMember({ isVisible, onClose }) {
     setIsCheckedJob(event.target.value);
   };
 
+  const { data, error } = useSWR("http://localhost:8080/member/get-all");
+  const dataMember = data.members;
+  if (!data) {
+    return (
+      <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>
+    );
+  }
   async function onSubmit(data) {
-    data.momId = Number(data.momId)
-    data.dadId = Number(data.dadId)
-    data.partnerId = Number(data.partnerId)
-    const JSONdata = JSON.stringify(data)
-    const endpoint = 'http://localhost:8080/member/create-member'
+    // console.log(data);
+    if (data.status === true) {
+      data.status = "Đã mất";
+    } else {
+      data.status = "";
+    }
+    data.momId = Number(data.momId);
+    data.dadId = Number(data.dadId);
+    data.partnerId = Number(data.partnerId);
+    const JSONdata = JSON.stringify(data);
+    const endpoint = "http://localhost:8080/member/create-member";
     const options = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        "Accept": 'application/json'
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSONdata,
-    }
+    };
     const response = await fetch(endpoint, options);
-    const result = await response.json()
-    console.log(result)
+    const result = await response.json();
+    console.log(result);
     if (response.status == 200) {
-      alert('abcd')
+      alert("abcd");
     } else {
-      alert(result.message)
+      alert(result.message);
     }
   }
   if (!isVisible) return <></>;
@@ -109,7 +101,7 @@ export default function AddMember({ isVisible, onClose }) {
                     <Input
                       {...{
                         className: "sm:col-span-3",
-                        title: "Họ Tên",
+                        title: "Họ Tên (*)",
                         type: "text",
                         name: "fullName",
                         minLength: 6,
@@ -136,6 +128,7 @@ export default function AddMember({ isVisible, onClose }) {
                         dataOption: [
                           { value: "Trưởng họ" },
                           { value: "Thành viên" },
+                          { value: "Cụ Tổ" },
                         ],
                       }}
                     ></SelectInput>
@@ -193,43 +186,61 @@ export default function AddMember({ isVisible, onClose }) {
                       ></Input>
                     </If>
 
-                    <If isTrue={isCheckedJob === "Học Sinh"}>
-                      <SelectInput
-                        {...{
-                          className: "sm:col-span-3",
-                          title: "Học Vấn",
-                          name: "education",
-                          dataOption: [
-                            { value: "Khá" },
-                            { value: "Giỏi" },
-                            { value: "Yếu" },
-                            { value: "Trung bình" },
-                          ],
-                        }}
-                      ></SelectInput>
-                    </If>
-
-                    <div className="sm:col-span-4"></div>
-
-                    <SelectInputFamily
+                    {/* <If isTrue={isCheckedJob === "Học Sinh"}> */}
+                    <SelectInput
                       {...{
                         className: "sm:col-span-3",
-                        type: 'number',
+                        title: "Học Vấn",
+                        name: "education",
+                        dataOption: [
+                          { value: "Khá" },
+                          { value: "Giỏi" },
+                          { value: "Yếu" },
+                          { value: "Trung bình" },
+                        ],
+                      }}
+                    ></SelectInput>
+                    {/* </If> */}
+
+                    <div className="sm:col-span-6"></div>
+
+                    {/* <SelectInputFamily
+                      {...{
+                        className: "sm:col-span-3",
+                        type: "number",
                         name: "dadId",
                         title: "Họ tên cha",
-                        dataOption: DUMMY_DATA,
+                        dataOption: dataMember,
                       }}
-                    ></SelectInputFamily>
+                    ></SelectInputFamily> */}
 
-                    <SelectInputFamily
+                    <ComboBoxFamily
+                      {...{
+                        title: "Họ tên cha",
+                        people: dataMember,
+                        className: "sm:col-span-3 z-20",
+                        name: "dadId",
+                      }}
+                    ></ComboBoxFamily>
+
+                    <ComboBoxFamily
+                      {...{
+                        title: "Họ tên mẹ",
+                        people: dataMember,
+                        className: "sm:col-span-3",
+                        name: "momId",
+                      }}
+                    ></ComboBoxFamily>
+
+                    {/* <SelectInputFamily
                       {...{
                         className: "sm:col-span-3",
                         name: "momId",
-                        type: 'number',
+                        type: "number",
                         title: "Họ tên mẹ",
-                        dataOption: DUMMY_DATA,
+                        dataOption: dataMember,
                       }}
-                    ></SelectInputFamily>
+                    ></SelectInputFamily> */}
 
                     <fieldset className="sm:col-span-6 ">
                       <div className="flex mt-6 space-x-40">
@@ -248,11 +259,11 @@ export default function AddMember({ isVisible, onClose }) {
                               id="single"
                               name="maritalStatus"
                               value="Độc thân"
-                              checked="true"
+                              defaultChecked="true"
                               {...method.register("maritalStatus")}
-                              onChange={handleChangeMarital}
                               className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-600"
                               type="radio"
+                              onChange={handleChangeMarital}
                             />
                           </div>
                         </div>
@@ -279,15 +290,23 @@ export default function AddMember({ isVisible, onClose }) {
                     </fieldset>
 
                     <If isTrue={isCheckedMarital === "Đã kết hôn"}>
-                      <SelectInputFamily
+                      {/* <SelectInputFamily
                         {...{
                           className: "sm:col-span-3",
                           name: "partnerId",
-                          type: 'number',
+                          type: "number",
                           title: "Họ tên vợ/chồng",
-                          dataOption: DUMMY_DATA,
+                          dataOption: dataMember,
                         }}
-                      ></SelectInputFamily>
+                      ></SelectInputFamily> */}
+                      <ComboBoxFamily
+                        {...{
+                          title: "Họ tên vợ/chồng",
+                          people: dataMember,
+                          className: "sm:col-span-3",
+                          name: "partnerId",
+                        }}
+                      ></ComboBoxFamily>
                     </If>
 
                     <div className="flex mt-6 space-x-40 sm:col-span-6">
@@ -320,7 +339,7 @@ export default function AddMember({ isVisible, onClose }) {
                             name="status"
                             id="statusid"
                             checked={isCheckedStatus}
-                            value={isCheckedStatus ? "Đã mất" : ""}
+                            // value={isCheckedStatus ? "Đã mất" : ""}
                             {...method.register("status")}
                             onChange={handleCheckboxChangeStatus}
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
