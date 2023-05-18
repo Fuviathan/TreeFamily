@@ -199,7 +199,6 @@ export default function UpdateMember({ isVisible, onClose, person }) {
                         dataOption: [
                           { value: "Trưởng họ" },
                           { value: "Thành viên" },
-                          { value: "Ông tổ" },
                         ],
                       }}
                     ></SelectInput>
