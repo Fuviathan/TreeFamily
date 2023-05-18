@@ -1,43 +1,18 @@
 import React, { Fragment, useState } from "react";
 import { If } from "react-haiku";
 import { Dialog } from "@headlessui/react";
+import useSWR from "swr";
 
 import InputLine from "../../UI/InputLine";
 // Demo nhập chọn thông tin bố mẹ gửi id form
-const DUMMY_DATA1 = [
-  {
-    id: 1,
-    name: "trung",
-  },
-  {
-    id: 4,
-    name: "anh",
-  },
-  {
-    id: 2,
-    name: "nga",
-  },
-  {
-    id: 3,
-    name: "hưng",
-  },
-  {
-    id: 5,
-    name: "híu",
-  },
-];
 
 export default function DetailUser({ isVisible, onClose, person }) {
-  function getNameFromId(id) {
-    let name = "";
-    DUMMY_DATA1.map((data) => {
-      console.log(typeof data.id);
-      if (data.id === Number(id)) {
-        name = data.name;
-      }
-    });
-    console.log(name);
-    return name;
+  const findUserById = (Id) => {
+    if (Id === null || Id === "" || Id === 0) return null
+    else {
+      const { data, error } = useSWR(`http://localhost:8080/member/get-by-id-member?id=${Id}`)
+      return data?.fullName
+    }
   }
   if (!isVisible) return <></>;
   return (
@@ -109,7 +84,7 @@ export default function DetailUser({ isVisible, onClose, person }) {
                 {...{
                   data: person.education,
                   className: "sm:col-span-3",
-                  title: "Học vấn",
+                  title: "Bằng cấp",
                 }}
               ></InputLine>
 
@@ -117,7 +92,7 @@ export default function DetailUser({ isVisible, onClose, person }) {
 
               <InputLine
                 {...{
-                  data: getNameFromId(person.fatherID),
+                  data: findUserById(person.dadId),
                   className: "sm:col-span-3",
                   title: "Họ tên cha",
                 }}
@@ -125,7 +100,7 @@ export default function DetailUser({ isVisible, onClose, person }) {
 
               <InputLine
                 {...{
-                  data: getNameFromId(person.motherID),
+                  data: findUserById(person.momId),
                   className: "sm:col-span-3",
                   title: "Họ tên mẹ",
                 }}
@@ -141,7 +116,7 @@ export default function DetailUser({ isVisible, onClose, person }) {
 
               <InputLine
                 {...{
-                  data: getNameFromId(person.partnerId),
+                  data: findUserById(person.partnerId),
                   className: "sm:col-span-3",
                   title: "Họ tên vợ/chồng",
                 }}
@@ -149,7 +124,7 @@ export default function DetailUser({ isVisible, onClose, person }) {
 
               <InputLine
                 {...{
-                  data: person.status === true ? "Đã mất" : "",
+                  data: person.status === "Đã mất" ? "Đã mất" : "",
                   className: "sm:col-span-3",
                   title: "Trạng thái",
                 }}

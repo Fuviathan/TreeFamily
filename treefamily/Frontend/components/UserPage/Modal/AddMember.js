@@ -190,13 +190,14 @@ export default function AddMember({ isVisible, onClose }) {
                     <SelectInput
                       {...{
                         className: "sm:col-span-3",
-                        title: "Học Vấn",
+                        title: "Bằng cấp",
                         name: "education",
                         dataOption: [
-                          { value: "Khá" },
-                          { value: "Giỏi" },
-                          { value: "Yếu" },
-                          { value: "Trung bình" },
+                          { value: "Tiểu học" },
+                          { value: "Trung học cơ sở" },
+                          { value: "Trung học phổ thông" },
+                          { value: "Đại học" },
+                          { value: "Trên đại học" },
                         ],
                       }}
                     ></SelectInput>

@@ -72,7 +72,7 @@ export default function UpdateMember({ isVisible, onClose, person }) {
       formData.momId = person.momId;
     } else if (formData.momId != person.momId) {
       console.log(formData.momId);
-      method.setValue("momId", formData.momId);
+      formData.momId = person.momId;
     } else {
       console.log(formData.momId);
       formData.momId = person.momId;
@@ -81,7 +81,7 @@ export default function UpdateMember({ isVisible, onClose, person }) {
     if (formData.momId === "") {
       formData.dadId = person.dadId;
     } else if (formData.dadId != person.dadId) {
-      method.setValue("dadId", formData.dadId);
+      formData.dadId = person.dadId;
     } else {
       formData.dadId = person.dadId;
     }
@@ -89,7 +89,7 @@ export default function UpdateMember({ isVisible, onClose, person }) {
     if (formData.momId === "") {
       formData.partnerId = person.partnerId;
     } else if (formData.partnerId != person.partnerId) {
-      method.setValue("partnerId", formData.partnerId);
+      formData.partnerId = person.partnerId;
     } else {
       formData.partnerId = person.partnerId;
     }
@@ -264,14 +264,14 @@ export default function UpdateMember({ isVisible, onClose, person }) {
                       {...{
                         data: person.education,
                         className: "sm:col-span-3",
-                        title: "Học Vấn",
+                        title: "Bằng cấp",
                         name: "education",
                         dataOption: [
-                          { value: "Chọn" },
-                          { value: "Khá" },
-                          { value: "Giỏi" },
-                          { value: "Yếu" },
-                          { value: "Trung bình" },
+                          { value: "Tiểu học" },
+                          { value: "Trung học cơ sở" },
+                          { value: "Trung học phổ thông" },
+                          { value: "Đại học" },
+                          { value: "Trên đại học" },
                         ],
                       }}
                     ></SelectInput>
