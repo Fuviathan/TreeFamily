@@ -46,6 +46,7 @@ export default function AddMember({ isVisible, onClose }) {
     formData.momId = Number(formData.momId);
     formData.dadId = Number(formData.dadId);
     formData.partnerId = Number(formData.partnerId);
+    console.log(formData)
     const JSONdata = JSON.stringify(formData);
     const endpoint = "http://localhost:8080/member/create-member";
     const options = {
@@ -57,11 +58,13 @@ export default function AddMember({ isVisible, onClose }) {
       body: JSONdata,
     };
     const response = await fetch(endpoint, options);
-    const result = await response.json();
-    if (response) {
+    // const a = JSON.parse(result)
+    // console.log(a)
+    if (response.status === 200) {
       alert("Thêm thành viên thành công");
       onClose()
     } else {
+      const result = await response.json();
       alert(result.message);
     }
   }
@@ -123,7 +126,7 @@ export default function AddMember({ isVisible, onClose }) {
                         name: "role",
                         title: "Vai trò",
                         dataOption: [
-                          { value: "Ông Tổ" },
+                          { value: "Ông tổ" },
                           { value: "Trưởng họ" },
                           { value: "Thành viên" },
                         ],
