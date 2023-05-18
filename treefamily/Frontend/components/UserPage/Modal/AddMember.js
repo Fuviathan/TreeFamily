@@ -12,6 +12,8 @@ export default function AddMember({ isVisible, onClose }) {
   const method = useForm({
     defaultValues: {
       status: "",
+      momId: "",
+      dadId: "",
     },
   });
 
@@ -34,23 +36,17 @@ export default function AddMember({ isVisible, onClose }) {
   };
 
   const { data, error } = useSWR("http://localhost:8080/member/get-all");
-  const dataMember = data.members;
-  if (!data) {
-    return (
-      <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>
-    );
-  }
-  async function onSubmit(data) {
-    // console.log(data);
-    if (data.status === true) {
-      data.status = "Đã mất";
+
+  async function onSubmit(formData) {
+    if (formData.status === true) {
+      formData.status = "Đã mất";
     } else {
-      data.status = "";
+      formData.status = "";
     }
-    data.momId = Number(data.momId);
-    data.dadId = Number(data.dadId);
-    data.partnerId = Number(data.partnerId);
-    const JSONdata = JSON.stringify(data);
+    formData.momId = Number(formData.momId);
+    formData.dadId = Number(formData.dadId);
+    formData.partnerId = Number(formData.partnerId);
+    const JSONdata = JSON.stringify(formData);
     const endpoint = "http://localhost:8080/member/create-member";
     const options = {
       method: "POST",
@@ -62,13 +58,14 @@ export default function AddMember({ isVisible, onClose }) {
     };
     const response = await fetch(endpoint, options);
     const result = await response.json();
-    console.log(result);
-    if (response.status == 200) {
-      alert("abcd");
+    if (response) {
+      alert("Thêm thành viên thành công");
+      onClose()
     } else {
       alert(result.message);
     }
   }
+
   if (!isVisible) return <></>;
   return (
     <Dialog
@@ -203,42 +200,91 @@ export default function AddMember({ isVisible, onClose }) {
                     {/* </If> */}
 
                     <div className="sm:col-span-6"></div>
+                    <If isTrue={!data}>
+                      {/* <SelectInputFamily
+                        {...{
+                          className: "sm:col-span-3",
+                          type: "number",
+                          name: "dadId",
+                          title: "Họ tên cha",
+                          disabled: "disabled",
+                        }}
+                      ></SelectInputFamily> */}
+                      <div className='sm:col-span-3'>
+                        <label
+                          className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                          Họ tên cha
+                        </label>
+                        <div className="mt-2">
+                          <input
+                            disabled
+                            {...method.register("dadId")}
+                            className="block w-full rounded-md border-0 py-1.5 bg-gray-200  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-4"
+                          />
+                        </div>
+                      </div>
+                      {/* <SelectInputFamily
+                        {...{
+                          className: "sm:col-span-3",
+                          type: "number",
+                          name: "dadId",
+                          title: "Họ tên cha",
+                          disabled: "disabled",
+                        }}
+                      ></SelectInputFamily> */}
+                      <div className='sm:col-span-3'>
+                        <label
+                          className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                          Họ tên mẹ
+                        </label>
+                        <div className="mt-2">
+                          <input
+                            disabled
+                            {...method.register("momId")}
+                            className="block w-full rounded-md border-0 py-1.5 bg-gray-200  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-4"
+                          />
+                        </div>
+                      </div>
+                    </If>
+                    <If isTrue={data}>
+                      <ComboBoxFamily
+                        {...{
+                          title: "Họ tên cha",
+                          people: data?.members,
+                          className: "sm:col-span-3",
+                          name: "dadId",
+                        }}
+                      ></ComboBoxFamily>
+                      <ComboBoxFamily
+                        {...{
+                          title: "Họ tên mẹ",
+                          people: data?.members,
+                          className: "sm:col-span-3",
+                          name: "momId",
+                        }}
+                      ></ComboBoxFamily>
+                    </If>
 
+                    {/* <If isTrue={!data}>
+                      <SelectInputFamily
+                        {...{
+                          className: "sm:col-span-3",
+                          name: "momId",
+                          type: "number",
+                          title: "Họ tên mẹ",
+                          disabled: "disabled",
+                        }}
+                      ></SelectInputFamily>
+                    </If> */}
                     {/* <SelectInputFamily
                       {...{
                         className: "sm:col-span-3",
-                        type: "number",
-                        name: "dadId",
-                        title: "Họ tên cha",
-                        dataOption: dataMember,
-                      }}
-                    ></SelectInputFamily> */}
-
-                    <ComboBoxFamily
-                      {...{
-                        title: "Họ tên cha",
-                        people: dataMember,
-                        className: "sm:col-span-3 z-20",
-                        name: "dadId",
-                      }}
-                    ></ComboBoxFamily>
-
-                    <ComboBoxFamily
-                      {...{
-                        title: "Họ tên mẹ",
-                        people: dataMember,
-                        className: "sm:col-span-3",
-                        name: "momId",
-                      }}
-                    ></ComboBoxFamily>
-
-                    {/* <SelectInputFamily
-                      {...{
-                        className: "sm:col-span-3",
                         name: "momId",
                         type: "number",
                         title: "Họ tên mẹ",
-                        dataOption: dataMember,
+                        dataOption: data.members,
                       }}
                     ></SelectInputFamily> */}
 
@@ -296,13 +342,13 @@ export default function AddMember({ isVisible, onClose }) {
                           name: "partnerId",
                           type: "number",
                           title: "Họ tên vợ/chồng",
-                          dataOption: dataMember,
+                          dataOption: data.members,
                         }}
                       ></SelectInputFamily> */}
                       <ComboBoxFamily
                         {...{
                           title: "Họ tên vợ/chồng",
-                          people: dataMember,
+                          people: data?.members,
                           className: "sm:col-span-3",
                           name: "partnerId",
                         }}
@@ -336,7 +382,6 @@ export default function AddMember({ isVisible, onClose }) {
                         <div className="mt-1">
                           <input
                             type="checkbox"
-                            name="status"
                             id="statusid"
                             checked={isCheckedStatus}
                             // value={isCheckedStatus ? "Đã mất" : ""}
