@@ -12,7 +12,7 @@ export default function ComboBoxFamily(props) {
     .filter((index) => index !== -1);
 
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState(people[indices] || people[0]);
+  const [selected, setSelected] = useState(people[indices]);
 
   const filteredPeople =
     query === ""
