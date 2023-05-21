@@ -1,8 +1,11 @@
+import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 export default function LoginForm() {
+  const { callbackUrl } = useRouter().query
   const { register, handleSubmit } = useForm();
-  const onSubmit = data => console.log(data)
+  const onSubmit = data => signIn("credentials", {userName: data.username, password: data.password, callbackUrl: '/home'})
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-fig">
       <main className="flex items-center justify-center flex-1 h-screen px-20">
@@ -40,7 +43,7 @@ export default function LoginForm() {
             ></input>
 
             <button
-              className="w-full py-3 my-4 text-white rounded-lg shadow-md bg-blue-600 hover:bg-blue-700 bg-blue-original"
+              className="w-full py-3 my-4 text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 bg-blue-original"
               type="submit"
             >
               Login

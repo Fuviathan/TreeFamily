@@ -1,10 +1,5 @@
-import Head from 'next/head'
-import Image from 'next/image'
-
-export default function Home() {
+export default function index() {
   return (
-    <div className='mt-20'>
-      1
-    </div>
+    <div>Redirecting...</div>
   )
 }
