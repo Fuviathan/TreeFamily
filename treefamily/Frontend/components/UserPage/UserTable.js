@@ -2,8 +2,10 @@ import React from "react";
 import UserItem from "./UserItem";
 import { For } from "react-haiku";
 import useSWR from 'swr'
+import { useSession } from "next-auth/react"
 
 export default function UserTable() {
+  const { data: user, status } = useSession()
   const { data, error } = useSWR('http://localhost:8080/member/get-all')
   if (!data) {
     return (
@@ -11,7 +13,6 @@ export default function UserTable() {
       </div>
     )
   }
-  console.log(data.members)
   return (
     <div className="flex flex-col mt-8 overflow-y-scroll h-80vh">
       {/* <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8"> */}
