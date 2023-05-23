@@ -1,4 +1,4 @@
-export default function Input(props) {
+export default function InputLine(props) {
     return (
       <div className={props.className}>
         <label

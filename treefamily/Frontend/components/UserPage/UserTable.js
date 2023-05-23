@@ -2,10 +2,8 @@ import React from "react";
 import UserItem from "./UserItem";
 import { For } from "react-haiku";
 import useSWR from 'swr'
-import { useSession } from "next-auth/react"
 
 export default function UserTable() {
-  const { data: user, status } = useSession()
   const { data, error } = useSWR('http://localhost:8080/member/get-all')
   if (!data) {
     return (
