@@ -5,6 +5,7 @@ import Profile from "./Profile";
 
 const navigation = [
   { name: "Quản lý gia phả", href: "/home", current: true },
+  { name: "Quản lý tài chính", href: "/financialManagement", current: false }
 ];
 
 const adminNavigation = [
@@ -17,8 +18,8 @@ const adminNavigation = [
 ];
 
 
-
 export default function Sidebar() {
+
   return (
     <div className="flex flex-row w-1/6 h-full">
       <div className="flex flex-col flex-1 h-screen min-h-0 bg-gray-800">
