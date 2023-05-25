@@ -5,7 +5,6 @@ import useSWR from 'swr'
 
 export default function AnnualRevenuesTable() {
   const { data, error } = useSWR('http://localhost:8080/revenue-management/get-all')
-  console.log(data)
   if (!data) {
     return (
       <div className="flex flex-col mt-8 overflow-y-scroll h-80vh">
