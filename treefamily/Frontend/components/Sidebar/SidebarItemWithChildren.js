@@ -8,7 +8,6 @@ function classNames(...classes) {
 
 export default function SidebarItemWithChildren({ item }) {
     const { asPath } = useRouter()
-    console.log(asPath)
     if (asPath.startsWith(item.children.href)) {
         item.current = true
         item.children.current=true
