@@ -1,9 +1,14 @@
 import React from 'react'
 import DropDownRevenues from './DropDownRevenues'
+import { useRouter } from 'next/router'
 
 export default function RevenueItem({ item, index }) {
+  const router = useRouter()
+  const redirect = () => {
+    router.push(`revenueManagement/${index}`)
+  }
   return (
-    <tr>
+    <tr onClick={redirect}>
       <td className="py-4 pr-10 text-sm font-medium text-left text-gray-900 whitespace-nowrap sm:pl-6 ">
         {index + 1}
       </td>
