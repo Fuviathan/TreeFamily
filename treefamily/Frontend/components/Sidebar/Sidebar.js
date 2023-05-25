@@ -1,11 +1,18 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { For } from "react-haiku";
+import { For, If } from "react-haiku";
 import SidebarItem from "./SidebarItem";
 import Profile from "./Profile";
+import SidebarItemWithChildren from "./SidebarItemWithChildren";
+
 
 const navigation = [
   { name: "Quản lý gia phả", href: "/home", current: true },
-  { name: "Quản lý tài chính", href: "/financialManagement", current: false }
+  {
+    name: "Quản lý tài chính", href: "", current: false, children: [
+      { name: 'Quản lý thu', href: '/financialManagement/revenueManagement', current: false },
+      { name: 'Quản lý chi', href: '#', current: false },
+      { name: 'Báo cáo thu chi', href: '#', current: false },
+    ],
+  }
 ];
 
 const adminNavigation = [
@@ -19,7 +26,6 @@ const adminNavigation = [
 
 
 export default function Sidebar() {
-
   return (
     <div className="flex flex-row w-1/6 h-full">
       <div className="flex flex-col flex-1 h-screen min-h-0 bg-gray-800">
@@ -38,13 +44,20 @@ export default function Sidebar() {
             <For
               each={navigation}
               render={(item, index) => (
-                <SidebarItem item={item} />
+                <>
+                  <If isTrue={!item.children}>
+                    <SidebarItem item={item} />
+                  </If>
+                  <If isTrue={item.children}>
+                    <SidebarItemWithChildren item={item} />
+                  </If>
+                </>
               )}
             />
           </nav>
         </div>
-        <Profile />        
-      </div>      
+        <Profile />
+      </div>
     </div>
   );
 }
