@@ -26,6 +26,7 @@ export default function Input(props) {
           id={props.name}
           message={props.message}
           autoComplete="on"
+          disabled={props.disabled}
           // placeholder=
           {...register(props.name, {
             required: props.disabled ? false : true,
