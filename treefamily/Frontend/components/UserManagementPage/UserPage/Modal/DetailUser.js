@@ -3,7 +3,7 @@ import { If } from "react-haiku";
 import { Dialog } from "@headlessui/react";
 import useSWR from "swr";
 
-import InputLine from "../../UI/InputLine";
+import InputLine from "../../../UI/InputLine";
 // Demo nhập chọn thông tin bố mẹ gửi id form
 
 export default function DetailUser({ isVisible, onClose, person }) {
