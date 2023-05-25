@@ -41,6 +41,9 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
     }
     return (
         <Dialog
+            onClick={(e) => {
+                e.stopPropagation()
+            }}
             as="div"
             className="fixed inset-0 z-20"
             open={isVisible}

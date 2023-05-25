@@ -17,6 +17,9 @@ export default function DetailRevenue({ isVisible, onClose, item }) {
     });
     return (
         <Dialog
+            onClick={(e) => {
+                e.stopPropagation()
+            }}
             as="div"
             className="fixed inset-0 z-20"
             open={isVisible}
@@ -94,17 +97,10 @@ export default function DetailRevenue({ isVisible, onClose, item }) {
                             <div className="w-full border-t"></div>
                             <div className="flex items-center self-end justify-end mt-6 mr-10 gap-x-6">
                                 <button
-                                    type="button"
                                     onClick={() => onClose()}
-                                    className="px-3 py-2 text-sm font-semibold text-red-500 bg-white border border-red-500 rounded-md shadow-sm hover:bg-red-500 hover:text-white "
-                                >
-                                    Hủy bỏ
-                                </button>
-                                <button
-                                    type="submit"
                                     className="px-6 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    Lưu
+                                    Đóng
                                 </button>
                             </div>
                         </form>

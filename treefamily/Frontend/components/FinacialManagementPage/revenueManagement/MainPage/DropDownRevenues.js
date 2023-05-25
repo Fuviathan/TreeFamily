@@ -17,7 +17,7 @@ export default function DropDownRevenues({ item }) {
     <>
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="flex items-center text-gray-400 bg-white rounded-full hover:text-gray-600 focus:outline-none">
+          <Menu.Button onClick={(e) => { e.stopPropagation() }} className="flex items-center text-gray-400 bg-white rounded-full hover:text-gray-600 focus:outline-none">
             <span className="sr-only">Open options</span>
             <EllipsisVerticalIcon className="h-6 mt-1 w-7" aria-hidden="true" />
           </Menu.Button>
@@ -37,7 +37,7 @@ export default function DropDownRevenues({ item }) {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick={() => setShowDetail(true)}
+                    onClick={(e) => { setShowDetail(true); e.stopPropagation() }}
                     className={classNames(
                       active ? "bg-gray-300 text-gray-900" : "text-gray-700",
                       "block px-4 py-2 text-base"
@@ -50,7 +50,7 @@ export default function DropDownRevenues({ item }) {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick={() => setShowUpdateModal(true)}
+                    onClick={(e) => { setShowUpdateModal(true); e.stopPropagation() }}
                     className={classNames(
                       active ? "bg-gray-300 text-gray-900" : "text-gray-700",
                       "block px-4 py-2 text-base"
