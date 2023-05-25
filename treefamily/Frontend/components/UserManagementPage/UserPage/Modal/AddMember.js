@@ -2,9 +2,8 @@ import React, { Fragment, useState } from "react";
 import { If } from "react-haiku";
 import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
-import Input from "../../UI/Input";
-import SelectInput from "../../UI/SelectInput";
-import SelectInputFamily from "../../UI/SelectInputFamily";
+import Input from "../../../UI/Input";
+import SelectInput from "../../../UI/SelectInput";
 import useSWR from "swr";
 import ComboBoxFamily from "./miniComponents/ComboBoxFamily";
 

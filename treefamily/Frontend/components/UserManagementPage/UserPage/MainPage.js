@@ -1,5 +1,5 @@
 import UserTable from "./UserTable";
-import BaseTemplate from "../BaseTemplate";
+import BaseTemplate from "../../BaseTemplate";
 import SearchBar from "./SearchBar";
 import { If } from "react-haiku";
 import { useState } from "react";

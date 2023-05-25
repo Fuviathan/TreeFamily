@@ -1,5 +1,5 @@
 import BaseTemplate from "../components/BaseTemplate";
-import FamilyTreChart from "../components/FamilyTreeChart";
+import FamilyTreChart from "../components/UserManagementPage/FamilyTreeChart";
 export default function displayTypeTree() {
   // return <AddMember></AddMember>;
   return (
