@@ -8,7 +8,7 @@ export default function RevenueItem({ item, index }) {
     router.push(`revenueManagement/${item.id}`)
   }
   return (
-    <tr onClick={redirect}>
+    <tr className='hover:bg-gray-200 cursor-pointer' onClick={redirect}>
       <td className="py-4 pr-10 text-sm font-medium text-left text-gray-900 whitespace-nowrap sm:pl-6 ">
         {index + 1}
       </td>

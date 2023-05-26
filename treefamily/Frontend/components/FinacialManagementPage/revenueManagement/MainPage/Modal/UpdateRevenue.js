@@ -16,6 +16,7 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
         },
     });
     async function onSubmit(formData) {
+        formData.id = Number(formData.id)
         formData.year = Number(formData.year);
         formData.estimatedRevenue = Number(formData.estimatedRevenue);
         formData.realRevenue = Number(formData.realRevenue);
@@ -23,7 +24,7 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
         const JSONdata = JSON.stringify(formData);
         const endpoint = "http://localhost:8080/revenue-management/update";
         const options = {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
@@ -32,7 +33,7 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
         };
         const response = await fetch(endpoint, options);
         if (response.status === 200) {
-            alert("Thêm khoản thu thành công");
+            alert("Sửa khoản thu thành công");
             onClose()
         } else {
             const result = await response.json();

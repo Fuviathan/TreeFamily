@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import DetailRevenue from "./Modal/DetailRevenue";
 import UpdateRevenue from "./Modal/UpdateRevenue";
 import { If } from 'react-haiku'
@@ -17,7 +17,7 @@ export default function DropDownRevenues({ item }) {
     <>
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button onClick={(e) => { e.stopPropagation() }} className="flex items-center text-gray-400 bg-white rounded-full hover:text-gray-600 focus:outline-none">
+          <Menu.Button onClick={(e) => { e.stopPropagation() }} className="flex items-center text-gray-400 rounded-full hover:text-gray-600 focus:outline-none">
             <span className="sr-only">Open options</span>
             <EllipsisVerticalIcon className="h-6 mt-1 w-7" aria-hidden="true" />
           </Menu.Button>
