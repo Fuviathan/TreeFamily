@@ -6,6 +6,6 @@ export default function category() {
   console.log(router.query.id)
   const pid = router.query.id
   return (
-    <MainPage id={pid}/>
+    <MainPage pid={pid}/>
   )
 }
