@@ -13,6 +13,8 @@ function classNames(...classes) {
 export default function DropDownRevenues({ item }) {
   const [showDetail, setShowDetail] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+
   return (
     <>
       <Menu as="div" className="relative inline-block text-left">
@@ -57,6 +59,19 @@ export default function DropDownRevenues({ item }) {
                     )}
                   >
                     Sửa
+                  </div>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <div
+                    onClick={(e) => { setShowDeleteModal(true); e.stopPropagation() }}
+                    className={classNames(
+                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                      "block px-4 py-2 text-base"
+                    )}
+                  >
+                    Xóa
                   </div>
                 )}
               </Menu.Item>

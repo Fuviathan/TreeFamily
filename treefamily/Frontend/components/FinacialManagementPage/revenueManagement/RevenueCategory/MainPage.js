@@ -50,7 +50,7 @@ export default function MainPage({ pid }) {
                     // name={props.name}
                     // autoComplete={props.name}
                     onChange={changeFilterHandler}
-                    className="block w-full px-4 py-2 text-gray-900 border-0 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full p-2 font-semibold text-gray-900 border-0 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   >
                     <option>Tất cả</option>
                     <option>Chưa Đóng</option>
