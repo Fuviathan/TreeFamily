@@ -1,5 +1,5 @@
-import React from 'react'
-
+import React from "react";
+import DropDownCategory from "./DropDownCategory";
 export default function ItemInCategory({ item, index }) {
   return (
     <tr>
@@ -12,16 +12,17 @@ export default function ItemInCategory({ item, index }) {
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
         {item.money}
       </td>
-      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.typeOfRevenue}
-      </td>
+
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
         {item.date}
       </td>
-      {/* <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-        <DropDownRevenues item={item} />
+      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+        {item.status ? "Đã đóng" : "Chưa đóng"}
+      </td>
+      <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+        <DropDownCategory item={item} />
         <span className="sr-only">, {item.name}</span>
-      </td> */}
+      </td>
     </tr>
-  )
+  );
 }
