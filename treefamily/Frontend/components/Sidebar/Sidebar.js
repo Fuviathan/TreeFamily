@@ -3,18 +3,15 @@ import SidebarItem from "./SidebarItem";
 import Profile from "./Profile";
 import SidebarItemWithChildren from "./SidebarItemWithChildren";
 
-
 const navigation = [
   { name: "Quản lý gia phả", href: "/home", current: false },
   {
     name: "Quản lý tài chính", href: "", current: false, children: [
       { name: 'Quản lý thu', href: '/financialManagement/revenueManagement', current: false },
-      { name: 'Quản lý tiền tài trợ', href: '/financialManagement/sponsorshipManagement', current: false },
       { name: 'Quản lý chi', href: '#', current: false },
       { name: 'Báo cáo thu chi', href: '#', current: false },
-
     ],
-  }
+  },
 ];
 
 const adminNavigation = [
@@ -25,7 +22,6 @@ const adminNavigation = [
   { name: "Documents", href: "#", current: false },
   { name: "Reports", href: "#", current: false },
 ];
-
 
 export default function Sidebar() {
   return (
