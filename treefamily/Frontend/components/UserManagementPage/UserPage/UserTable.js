@@ -1,15 +1,14 @@
 import React from "react";
 import UserItem from "./UserItem";
 import { For } from "react-haiku";
-import useSWR from 'swr'
+import useSWR from "swr";
 
 export default function UserTable() {
-  const { data, error } = useSWR('http://localhost:8080/member/get-all')
+  const { data, error } = useSWR("http://localhost:8080/member/get-all");
   if (!data) {
     return (
-      <div className="flex flex-col mt-8 h-[80vh] overflow-y-scroll">
-      </div>
-    )
+      <div className="flex flex-col mt-8 h-[80vh] overflow-y-scroll"></div>
+    );
   }
   return (
     <div className="flex flex-col mt-8 overflow-y-scroll h-80vh">
@@ -79,10 +78,10 @@ export default function UserTable() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">
-              <For
+              {/* <For
                 each={data.members}
                 render={(person, index) => <UserItem person={person} />}
-              />
+              /> */}
             </tbody>
           </table>
         </div>

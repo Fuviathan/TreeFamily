@@ -1,15 +1,14 @@
 import React from "react";
-import RevenueItem from "./RevenueItem"
+import RevenueItem from "./RevenueItem";
 import { For } from "react-haiku";
-import useSWR from 'swr'
+import useSWR from "swr";
 
 export default function AnnualRevenuesTable() {
-  const { data, error } = useSWR('http://localhost:8080/revenue-management/get-all')
+  const { data, error } = useSWR(
+    "http://localhost:8080/revenue-management/get-all"
+  );
   if (!data) {
-    return (
-      <div className="flex flex-col mt-8 overflow-y-scroll h-80vh">
-      </div>
-    )
+    return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;
   }
   return (
     <div className="flex flex-col mt-8 overflow-y-scroll h-80vh">
@@ -35,13 +34,13 @@ export default function AnnualRevenuesTable() {
                   scope="col"
                   className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
                 >
-                  Số tiền thu dự tính
+                  Tên khoản thu
                 </th>
                 <th
                   scope="col"
                   className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
                 >
-                  Thực thu
+                  Mức thu/1 thành viên
                 </th>
                 <th
                   scope="col"
@@ -53,7 +52,7 @@ export default function AnnualRevenuesTable() {
                   scope="col"
                   className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
                 >
-                  Hạn thu
+                  Ngày hết hạn thu
                 </th>
                 <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                   <span className="sr-only">Edit</span>
@@ -63,7 +62,9 @@ export default function AnnualRevenuesTable() {
             <tbody className="bg-white divide-y divide-gray-200 ">
               <For
                 each={data}
-                render={(item, index) => <RevenueItem item={item} index={index} />}
+                render={(item, index) => (
+                  <RevenueItem item={item} index={index} />
+                )}
               />
             </tbody>
           </table>

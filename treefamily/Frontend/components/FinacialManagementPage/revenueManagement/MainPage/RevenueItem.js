@@ -1,14 +1,14 @@
-import React from 'react'
-import DropDownRevenues from './DropDownRevenues'
-import { useRouter } from 'next/router'
+import React from "react";
+import DropDownRevenues from "./DropDownRevenues";
+import { useRouter } from "next/router";
 
 export default function RevenueItem({ item, index }) {
-  const router = useRouter()
+  const router = useRouter();
   const redirect = () => {
-    router.push(`revenueManagement/${item.id}`)
-  }
+    router.push(`revenueManagement/${item.id}`);
+  };
   return (
-    <tr className='hover:bg-gray-200 cursor-pointer' onClick={redirect}>
+    <tr className="hover:bg-gray-200 cursor-pointer" onClick={redirect}>
       <td className="py-4 pr-10 text-sm font-medium text-left text-gray-900 whitespace-nowrap sm:pl-6 ">
         {index + 1}
       </td>
@@ -16,10 +16,10 @@ export default function RevenueItem({ item, index }) {
         {item.year}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.estimatedRevenue}
+        {item.revenueName}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.realRevenue}
+        {item.revenuePerPerson} VNĐ
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
         {item.status}
@@ -32,5 +32,5 @@ export default function RevenueItem({ item, index }) {
         <span className="sr-only">, {item.name}</span>
       </td>
     </tr>
-  )
+  );
 }

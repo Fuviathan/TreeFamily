@@ -15,7 +15,7 @@ export default function AddRevenue({ isVisible, onClose }) {
     formData.year = Number(formData.year);
     formData.estimatedRevenue = Number(formData.estimatedRevenue);
     formData.realRevenue = Number(formData.realRevenue);
-    console.log(formData)
+    console.log(formData);
     const JSONdata = JSON.stringify(formData);
     const endpoint = "http://localhost:8080/revenue-management/create";
     const options = {
@@ -29,7 +29,7 @@ export default function AddRevenue({ isVisible, onClose }) {
     const response = await fetch(endpoint, options);
     if (response.status === 200) {
       alert("Thêm khoản thu thành công");
-      onClose()
+      onClose();
     } else {
       const result = await response.json();
       alert(result.message);
@@ -67,21 +67,31 @@ export default function AddRevenue({ isVisible, onClose }) {
                   <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <Input
                       {...{
-                        className: "sm:col-span-3",
+                        className: "sm:col-span-2 ",
                         title: "Năm",
                         type: "text",
                         name: "year",
                         minLength: 4,
                       }}
                     ></Input>
+
+                    <Input
+                      {...{
+                        className: "sm:col-span-4",
+                        title: "Tên khoản thu",
+                        type: "text",
+                        name: "revenueName",
+                      }}
+                    ></Input>
                     <Input
                       {...{
                         className: "sm:col-span-3",
-                        title: "Số tiền thu dự tính",
+                        title: "Mức thu / 1 thành viên",
                         type: "number",
-                        name: "estimatedRevenue",
+                        name: "revenuePerPerson",
                       }}
                     ></Input>
+
                     <SelectInput
                       {...{
                         className: "sm:col-span-3",
@@ -101,7 +111,6 @@ export default function AddRevenue({ isVisible, onClose }) {
                         name: "dueDate",
                       }}
                     ></Input>
-
                   </div>
                 </div>
               </div>
