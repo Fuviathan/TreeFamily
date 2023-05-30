@@ -18,7 +18,7 @@ export default function UpdateMember({ isVisible, onClose, person }) {
       generation: person.generation,
       momId: person.momId,
       dadId: person.dadId,
-      partnerId: person.partnerId
+      partnerId: person.partnerId,
     },
   });
 
@@ -42,11 +42,10 @@ export default function UpdateMember({ isVisible, onClose, person }) {
     setIsCheckedJob(event.target.value);
   };
 
-
   const { data: data1, error: error1 } = useSWR(
     "http://localhost:8080/member/get-all"
   );
-  const dataMember = data1?.members;
+  const dataMember = data1;
   console.log(dataMember);
   if (!data1) {
     return (
@@ -114,7 +113,7 @@ export default function UpdateMember({ isVisible, onClose, person }) {
     // console.log(a)
     if (response.status === 200) {
       alert("Sửa thông tin thành công");
-      onClose()
+      onClose();
     } else {
       const result = await response.json();
       alert(result.message);
