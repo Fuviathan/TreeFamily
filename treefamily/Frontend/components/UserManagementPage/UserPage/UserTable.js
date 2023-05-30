@@ -78,10 +78,10 @@ export default function UserTable() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">
-              {/* <For
-                each={data.members}
+              <For
+                each={data}
                 render={(person, index) => <UserItem person={person} />}
-              /> */}
+              />
             </tbody>
           </table>
         </div>
