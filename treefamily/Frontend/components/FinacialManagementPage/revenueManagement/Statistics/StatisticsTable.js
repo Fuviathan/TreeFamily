@@ -5,12 +5,15 @@ import ItemRevenueStatistics from "./ItemRevenueStatistics";
 
 export default function StatisticsTable({ filterYear }) {
   const { data, error } = useSWR(
-    `http://localhost:8080/revenue-management/report?year=${filterYear}}`
+    `http://localhost:8080/revenue-management/report?year=${filterYear}`
   );
   if (!data) {
     return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>
   }
-  
+  const b = data?.revenueManagements
+  const a = b.filter((object) => {
+    return object.year == filterYear
+  });
   return (
     <div className="flex flex-col mt-8 overflow-y-scroll h-80vh">
       {/* <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8"> */}
@@ -53,9 +56,9 @@ export default function StatisticsTable({ filterYear }) {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">
-              <If isTrue={miniData}>
+              <If isTrue={a}>
                 <For
-                  each={miniData}
+                  each={a}
                   render={(item, index) => (
                     <ItemRevenueStatistics item={item} index={index} />
                   )}
