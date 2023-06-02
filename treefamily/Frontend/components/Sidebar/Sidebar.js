@@ -8,7 +8,8 @@ const navigation = [
   {
     name: "Quản lý tài chính", href: "", current: false, children: [
       { name: 'Quản lý thu', href: '/financialManagement/revenueManagement', current: false },
-      { name: 'Quản lý chi', href: '#', current: false },
+      { name: 'Quản lý tài trợ', href: '/financialManagement/sponsorManagement', current: false },
+      { name: 'Quản lý chi', href: '/financialManagement/expenseManagement', current: false },
       { name: 'Báo cáo thu chi', href: '#', current: false },
     ],
   },

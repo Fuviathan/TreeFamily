@@ -1,4 +1,4 @@
-import MainPage from '../../../components/FinacialManagementPage/revenueManagement/RevenueCategory/MainPage'
+import MainPage from '../../../components/FinacialManagementPage/expenseManagement/ExpenseCategory/MainPage'
 import { useRouter } from 'next/router'
 
 export default function category() {
