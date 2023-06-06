@@ -3,17 +3,20 @@ import { For, If } from "react-haiku";
 import useSWR from "swr";
 import ItemRevenueStatistics from "./ItemRevenueStatistics";
 
-export default function StatisticsTable({ filterYear }) {
+export default function StatisticsTable({ startDate, endDate }) {
   const { data, error } = useSWR(
-    `http://localhost:8080/revenue-management/report?year=${filterYear}`
+    `http://localhost:8080/revenue-management/report?effectiveStartDate=${startDate}&effectiveEndDate=${endDate}`
   );
   if (!data) {
-    return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>
+    return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;
   }
-  const b = data?.revenueManagements
-  const a = b.filter((object) => {
-    return object.year == filterYear
-  });
+
+  let totalRevenue = data?.totalRevenue;
+  let dataMember = data?.revenueDetails;
+  // const b = data?.revenueManagements;
+  // const a = b.filter((object) => {
+  //   return object.year == filterYear;
+  // });
   return (
     <div className="flex flex-col mt-8 overflow-y-scroll h-80vh">
       {/* <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8"> */}
@@ -32,7 +35,7 @@ export default function StatisticsTable({ filterYear }) {
                   scope="col"
                   className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
                 >
-                  Tên đợt thu
+                  Tên người đóng
                 </th>
                 <th
                   scope="col"
@@ -47,24 +50,31 @@ export default function StatisticsTable({ filterYear }) {
                 >
                   Ngày đóng
                 </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
-                >
-                  Trạng thái
-                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">
-              <If isTrue={a}>
+              <If isTrue={dataMember}>
                 <For
-                  each={a}
+                  each={dataMember}
                   render={(item, index) => (
                     <ItemRevenueStatistics item={item} index={index} />
                   )}
                 />
               </If>
             </tbody>
+            <tfoot>
+              <tr>
+                <td className="py-4 pr-10 text-sm font-medium text-left text-gray-900 whitespace-nowrap sm:pl-6 ">
+                  Tổng thu
+                </td>
+                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap"></td>
+                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                  {totalRevenue} VNĐ
+                </td>
+
+                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap"></td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>

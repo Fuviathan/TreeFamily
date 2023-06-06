@@ -6,17 +6,17 @@ export default function ItemExpenseStatistics({ item, index }) {
         {index + 1}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.revenueName}
+        {item.expenseName}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.revenuePerPerson}
+        {item.receiver}
       </td>
 
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.dueDate}
+        {item.dateOfPay}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.status ? "Đã đóng" : "Chưa đóng"}
+        {item.expenseMoney}
       </td>
     </tr>
   );

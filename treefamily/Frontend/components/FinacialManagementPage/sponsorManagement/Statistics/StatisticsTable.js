@@ -1,21 +1,21 @@
 import React from "react";
 import { For, If } from "react-haiku";
 import useSWR from "swr";
-import ItemRevenueStatistics from "./ItemExpenseStatistics";
+import ItemRevenueStatistics from "./ItemRevenueStatistics";
 
 export default function StatisticsTable({ startDate, endDate }) {
   const { data, error } = useSWR(
-    `http://localhost:8080/expense-management/report?effectiveStartDate=${startDate}&effectiveEndDate=${endDate}`
+    `http://localhost:8080/financial-sponorship/report?effectiveStartDate=${startDate}&effectiveEndDate=${endDate}`
   );
   if (!data) {
     return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;
   }
 
-  let totalExpense = data?.totalExpense;
-  let expenseDetails = data?.expenseDetails;
-  // const b = data?.revenueManagements
+  let totalMoney = data?.totalMoney;
+  let sponsorsipDetails = data?.sponsorsipDetails;
+  // const b = data?.revenueManagements;
   // const a = b.filter((object) => {
-  //   return object.year == filterYear
+  //   return object.year == filterYear;
   // });
   return (
     <div className="flex flex-col mt-8 overflow-y-scroll h-80vh">
@@ -35,33 +35,27 @@ export default function StatisticsTable({ startDate, endDate }) {
                   scope="col"
                   className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
                 >
-                  Tên khoản chi
+                  Tên nhà tài trợ
                 </th>
                 <th
                   scope="col"
                   className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
                 >
-                  Người nhận
+                  Ngày tài trợ
                 </th>
 
                 <th
                   scope="col"
                   className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
                 >
-                  Ngày nhận
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
-                >
-                  Số tiền
+                  Số tiền tài trợ
                 </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">
-              <If isTrue={expenseDetails}>
+              <If isTrue={sponsorsipDetails}>
                 <For
-                  each={expenseDetails}
+                  each={sponsorsipDetails}
                   render={(item, index) => (
                     <ItemRevenueStatistics item={item} index={index} />
                   )}
@@ -71,14 +65,13 @@ export default function StatisticsTable({ startDate, endDate }) {
             <tfoot>
               <tr>
                 <td className="py-4 pr-10 text-sm font-medium text-left text-gray-900 whitespace-nowrap sm:pl-6 ">
-                  Tổng chi
+                  Tổng tiền tài trợ
                 </td>
                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap"></td>
                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap"></td>
 
-                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap"></td>
                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                  {totalExpense} VNĐ
+                  {totalMoney} VNĐ
                 </td>
               </tr>
             </tfoot>

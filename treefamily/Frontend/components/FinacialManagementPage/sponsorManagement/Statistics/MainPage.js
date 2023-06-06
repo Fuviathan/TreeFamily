@@ -5,7 +5,6 @@ import useSWR from "swr";
 import { useEffect } from "react";
 
 import StatisticsTable from "./StatisticsTable";
-
 export default function MainPage() {
   // Khởi tạo năm bắt đầu trước năm hiện tại 2 năm
   const date = new Date();
@@ -48,7 +47,7 @@ export default function MainPage() {
             <div className="sm:flex sm:items-center">
               <div className="flex sm:flex-auto">
                 <h1 className="mt-1 text-xl font-semibold text-gray-900 pt-2">
-                  Báo cáo thu:
+                  Báo cáo tài trợ:
                 </h1>
                 <div className="ml-4">
                   {/* <select

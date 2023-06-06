@@ -13,6 +13,7 @@ export default function AddRevenue({ isVisible, onClose }) {
   });
   async function onSubmit(formData) {
     formData.year = Number(formData.year);
+    formData.status = formData.status === "Đang mở" ? true : false;
 
     console.log(formData);
     const JSONdata = JSON.stringify(formData);
@@ -105,9 +106,8 @@ export default function AddRevenue({ isVisible, onClose }) {
                         title: "Tình trạng",
                         name: "status",
                         dataOption: [
+                          { value: "Đang mở" },
                           { value: "Đã đóng" },
-                          { value: "Đang diễn ra" },
-                          { value: "Sắp diễn ra" },
                         ],
                       }}
                     ></SelectInput>

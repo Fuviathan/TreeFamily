@@ -3,6 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../../UI/Input";
 import SelectInput from "../../../../UI/SelectInput";
+import { If } from "react-haiku";
 
 export default function UpdateRevenue({ isVisible, onClose, item }) {
   const method = useForm({
@@ -19,6 +20,7 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
     formData.id = Number(formData.id);
     formData.year = Number(formData.year);
     formData.revenuePerPerson = Number(formData.revenuePerPerson);
+    formData.status = formData.status === "Đã đóng" ? true : false;
     console.log(formData);
     const JSONdata = JSON.stringify(formData);
     const endpoint = "http://localhost:8080/revenue-management/update";
@@ -104,17 +106,19 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
                         name: "revenuePerPerson",
                       }}
                     ></Input>
-                    <SelectInput
-                      {...{
-                        className: "sm:col-span-2",
-                        title: "Tình trạng",
-                        name: "status",
-                        dataOption: [
-                          { value: "Đã đóng" },
-                          { value: "Đang mở" },
-                        ],
-                      }}
-                    ></SelectInput>
+                    <If isTrue={item.status === true}>
+                      <SelectInput
+                        {...{
+                          className: "sm:col-span-2",
+                          title: "Tình trạng",
+                          name: "status",
+                          dataOption: [
+                            { value: "Đã đóng" },
+                            { value: "Đang mở" },
+                          ],
+                        }}
+                      ></SelectInput>
+                    </If>
                   </div>
                 </div>
               </div>

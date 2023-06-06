@@ -4,13 +4,17 @@ import useSWR from "swr";
 import ItemInCategory from "./ItemInCategory";
 
 export default function TableOfASingleCategory({ pid, year, filterMember }) {
+  console.log(pid);
   const { data, error } = useSWR(
     `http://localhost:8080/revenue-detail/get-all?idRevenueManagement=${pid}`
   );
   if (!data) {
-    return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>
+    return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;
   }
-  let miniData = data;
+  let miniData = [];
+  if (data.length > 0) {
+    miniData = data;
+  }
   // Check khi click lọc đã đóng trả về data đã đóng
   if (filterMember === "Đã đóng") {
     miniData = miniData.filter((object) => {
