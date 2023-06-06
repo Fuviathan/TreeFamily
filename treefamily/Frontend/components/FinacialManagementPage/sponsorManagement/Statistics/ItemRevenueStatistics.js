@@ -6,14 +6,14 @@ export default function ItemRevenueStatistics({ item, index }) {
         {index + 1}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.payer}
+        {item.sponsorsName}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.money}
+        {item.date}
       </td>
 
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.date}
+        {item.sponsorshipMoney}
       </td>
     </tr>
   );

@@ -8,12 +8,14 @@ import SelectInput from "../../../UI/SelectInput";
 
 export default function MainPage({ pid }) {
   const { data, error } = useSWR(
-    "http://localhost:8080/revenue-management/get-all"
+    `http://localhost:8080/revenue-detail/get-all?idRevenueManagement=${pid}`
   );
-  const miniData = data.filter((object) => {
-    return (object.id = { pid });
-  });
-  const year = miniData[0]?.year;
+  // if()
+
+  // const miniData = data.filter((object) => {
+  //   return (object.id = { pid });
+  // });
+  // const year = miniData[0]?.year;
   const [addNewRevenue, setAddNewRevenue] = useState(false);
   // Lọc Thành viên đã đóng và chưa đóng
   const [filterMember, setFilterMember] = useState("Tất cả");
@@ -22,6 +24,7 @@ export default function MainPage({ pid }) {
     setFilterMember(event.target.value);
     console.log(event.target.value);
   };
+
   return (
     <>
       <BaseTemplate>
@@ -31,7 +34,7 @@ export default function MainPage({ pid }) {
             <div className="sm:flex sm:items-center">
               <div className="flex sm:flex-auto">
                 <h1 className="mt-1 text-xl font-semibold text-gray-900">
-                  Danh sách các khoản thu năm {year}
+                  Danh sách các khoản thu năm
                 </h1>
               </div>
 
@@ -59,14 +62,18 @@ export default function MainPage({ pid }) {
                 </div>
               </div>
             </div>
-            <TableOfASingleCategory pid={pid} filterMember={filterMember} />
+            <TableOfASingleCategory
+              data={data}
+              pid={pid}
+              filterMember={filterMember}
+            />
           </div>
         </div>
         <If isTrue={addNewRevenue}>
           <AddItemInCategory
             onClose={() => setAddNewRevenue(false)}
             isVisible={addNewRevenue}
-            year={year}
+            // year={year}
             id={pid}
           />
         </If>

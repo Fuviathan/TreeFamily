@@ -15,6 +15,7 @@ export default function AddRevenue({ isVisible, onClose }) {
     formData.year = Number(formData.year);
     formData.estimatedRevenue = Number(formData.estimatedRevenue);
     formData.realRevenue = Number(formData.realRevenue);
+    formData.status = formData.status === "Đang mở" ? true : false;
     console.log(formData);
     const JSONdata = JSON.stringify(formData);
     const endpoint = "http://localhost:8080/revenue-management/create";

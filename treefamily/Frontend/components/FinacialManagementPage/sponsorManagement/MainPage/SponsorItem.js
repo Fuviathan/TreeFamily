@@ -25,7 +25,7 @@ export default function RevenueItem({ item, index }) {
         {item.endDate}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.status}
+        {item.status === true ? "Đang mở" : "Đã đóng"}
       </td>
       <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
         <DropDownSponsors item={item} />
