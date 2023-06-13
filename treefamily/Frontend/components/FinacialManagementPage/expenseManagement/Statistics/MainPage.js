@@ -4,7 +4,7 @@ import { useState } from "react";
 import useSWR from "swr";
 import StatisticsTable from "./StatisticsTable";
 
-export default function MainPage() {
+export default function MainPage({ sDate, eDate }) {
   // Khởi tạo năm bắt đầu trước năm hiện tại 2 năm
   const date = new Date();
   date.setFullYear(date.getFullYear() - 2);
@@ -12,8 +12,8 @@ export default function MainPage() {
   // Ngày hiện tại
   const currentDate = new Date().toISOString().split("T")[0];
 
-  const [startDate, setStartDate] = useState(lastDate);
-  const [endDate, setEndDate] = useState(currentDate);
+  const [startDate, setStartDate] = useState(sDate || lastDate);
+  const [endDate, setEndDate] = useState(eDate || currentDate);
 
   // Xử lý sự kiện thay đổi ngày
   const changeFilterStartDateHandler = (event) => {
