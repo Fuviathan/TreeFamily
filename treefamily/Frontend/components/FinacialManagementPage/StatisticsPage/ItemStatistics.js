@@ -107,7 +107,7 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
         >
           Đóng
         </button>
-        <div className="fixed top-0 left-0">
+        <div className="fixed  z-10 top-0 left-0">
           <MainPageSponsor sDate={startDate} eDate={endDate}></MainPageSponsor>
         </div>
       </If>
@@ -120,7 +120,7 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
         >
           Đóng
         </button>
-        <div className="fixed top-0 left-0">
+        <div className="fixed z-10 top-0 left-0">
           <MainPageRevenue sDate={startDate} eDate={endDate}></MainPageRevenue>
         </div>
       </If>
@@ -133,7 +133,7 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
         >
           Đóng
         </button>
-        <div className="fixed top-0 left-0">
+        <div className="fixed z-10  top-0 left-0">
           <MainPageExpense sDate={startDate} eDate={endDate}></MainPageExpense>
         </div>
       </If>
