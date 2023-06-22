@@ -255,7 +255,7 @@ export default function AddMember({ isVisible, onClose }) {
                       <ComboBoxFamily
                         {...{
                           title: "Họ tên cha",
-                          people: data?.members,
+                          people: data,
                           className: "sm:col-span-3",
                           name: "dadId",
                         }}
@@ -263,7 +263,7 @@ export default function AddMember({ isVisible, onClose }) {
                       <ComboBoxFamily
                         {...{
                           title: "Họ tên mẹ",
-                          people: data?.members,
+                          people: data,
                           className: "sm:col-span-3",
                           name: "momId",
                         }}
@@ -351,7 +351,7 @@ export default function AddMember({ isVisible, onClose }) {
                       <ComboBoxFamily
                         {...{
                           title: "Họ tên vợ/chồng",
-                          people: data?.members,
+                          people: data,
                           className: "sm:col-span-3",
                           name: "partnerId",
                         }}
@@ -423,37 +423,6 @@ export default function AddMember({ isVisible, onClose }) {
                         ></Input>
                       </>
                     </If>
-                    <div className="mt-6 sm:col-span-7">
-                      <h2 className="text-base font-semibold leading-7 text-center text-gray-900">
-                        Thông tin tài khoản đăng nhập
-                      </h2>
-                    </div>
-
-                    <Input
-                      {...{
-                        className: "sm:col-span-3",
-                        title: "Tên đăng nhập",
-                        type: "text",
-                        name: "userName",
-                        minLength: 5,
-                        pattern:
-                          /^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
-                        message: "Vui lòng không chứa ký tự đặc biệt",
-                      }}
-                    ></Input>
-
-                    <Input
-                      {...{
-                        className: "sm:col-span-3",
-                        title: "Mật khẩu",
-                        type: "password",
-                        name: "password",
-                        minLength: 8,
-                        pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                        message:
-                          " Mật khẩu có độ dài 8 ký tự chứa ít nhất 1 chữ và 1 số",
-                      }}
-                    ></Input>
                   </div>
                 </div>
               </div>
