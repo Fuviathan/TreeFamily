@@ -2,13 +2,13 @@ import React from "react";
 import DropDownRevenues from "./DropDownRevenues";
 import { useRouter } from "next/router";
 
-export default function RevenueItem({ item, index }) {
+export default function EventItem({ item, index }) {
   const router = useRouter();
   const redirect = () => {
     router.push(`eventManagement/${item.id}`);
   };
   return (
-    <tr className="hover:bg-gray-200 cursor-pointer">
+    <tr className="cursor-pointer hover:bg-gray-200">
       <td className="py-4 pr-10 text-sm font-medium text-left text-gray-900 whitespace-nowrap sm:pl-6 ">
         {index + 1}
       </td>
