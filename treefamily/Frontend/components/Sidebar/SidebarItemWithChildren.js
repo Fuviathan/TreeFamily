@@ -99,9 +99,16 @@ export default function SidebarItemWithChildren({ item }) {
               "group flex w-full items-center px-2 py-2 text-lg font-medium rounded-md relative"
             )}
           >
+            <item.icon
+              className={classNames(
+                item.current ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
+                'mr-3 flex-shrink-0 h-6 w-6'
+              )}
+              aria-hidden="true"
+            />
             {item.name}
             <Disclosure.Panel
-              className="mt-1 space-y-1 fixed bg-gray-500 z-50 rounded-md px-2 drop-shadow-xl"
+              className="fixed z-50 px-2 py-2 mt-1 space-y-1 bg-gray-500 rounded-md drop-shadow-xl"
               style={{ left: "16.6%" }}
             >
               <For
@@ -114,8 +121,8 @@ export default function SidebarItemWithChildren({ item }) {
                     className={classNames(
                       item.children[index].current
                         ? "bg-gray-900 text-white "
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "flex items-center w-full py-2 pl-10 pr-2 text-base font-medium rounded-md group "
+                        : "text-gray-200 hover:bg-gray-700 hover:text-white",
+                      "flex items-center w-full px-8 py-2 text-base text-center font-medium rounded-md group "
                     )}
                   >
                     {subItem.name}

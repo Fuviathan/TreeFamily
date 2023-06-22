@@ -6,7 +6,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function SidebarItem({item}) {
+export default function SidebarItem({ item }) {
   // const { asPath } = useRouter()
   // if (asPath.startsWith(item.href)) {
   //   item.current=true
@@ -24,6 +24,13 @@ export default function SidebarItem({item}) {
         "group flex items-center px-2 py-2 text-lg font-medium rounded-md"
       )}
     >
+      <item.icon
+        className={classNames(
+          item.current ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
+          'mr-3 flex-shrink-0 h-6 w-6'
+        )}
+        aria-hidden="true"
+      />
       <span className="flex-1">{item.name}</span>
     </Link>
   );

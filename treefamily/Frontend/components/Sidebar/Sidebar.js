@@ -2,17 +2,20 @@ import { For, If } from "react-haiku";
 import SidebarItem from "./SidebarItem";
 import Profile from "./Profile";
 import SidebarItemWithChildren from "./SidebarItemWithChildren";
+import { HomeIcon } from "@heroicons/react/24/outline";
 
 const navigation = [
-  { name: "Quản lý gia phả", href: "/home", current: false },
+  { name: "Quản lý gia phả", href: "/home", icon: HomeIcon, current: false },
   {
-    name: "Quản lý tài chính", href: "", current: false, children: [
+    name: "Quản lý tài chính", href: "", icon: HomeIcon, current: false, children: [
       { name: 'Quản lý thu', href: '/financialManagement/revenueManagement', current: false },
       { name: 'Quản lý tài trợ', href: '/financialManagement/sponsorManagement', current: false },
       { name: 'Quản lý chi', href: '/financialManagement/expenseManagement', current: false },
       { name: 'Báo cáo thu chi', href: '#', current: false },
     ],
   },
+  { name: "Quản lý sự kiện", href: "/eventManagement", icon: HomeIcon, current: false },
+  
 ];
 
 const adminNavigation = [
