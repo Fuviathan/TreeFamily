@@ -39,7 +39,7 @@ export default function MainPage() {
                 </button>
               </div>
 
-              <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+              <div className="mt-4 sm:mt-0 sm:ml-8 sm:flex-none">
                 <button
                   onClick={() => setAddMember(true)}
                   type="button"
