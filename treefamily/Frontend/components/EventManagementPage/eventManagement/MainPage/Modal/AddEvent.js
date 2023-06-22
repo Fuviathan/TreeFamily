@@ -12,55 +12,43 @@ export default function AddEvent({ isVisible, onClose }) {
   const { data, error } = useSWR(
     "http://localhost:8080/expense-management/get-all"
   );
-  if (!data) {
-    return [];
-  }
+
   const { data: user, error: userError } = useSWR("http://localhost:8080/member/get-all");
-  if (!user) {
-    return [];
-  }
+  
+
   const [showAddModal, setShowAddModal] = useState(false);
   const [organizer, setOrganizer] = useState("");
 
-  const method = useForm({
-    defaultValues: {
-      status: "Đang mở",
-      realRevenue: 0,
-    },
-  });
+  const method = useForm();
 
-
-  const getOrganizer = (organizerData) => {
-    setOrganizer(organizerData.toString());
-    console.log(organizerData);
-    return organizerData.toString();
-  };
-
+  if (!user) {
+    return [];
+  }
+  if (!data) {
+    return [];
+  }
   async function onSubmit(formData) {
-    formData.year = Number(formData.year);
-    const hours = formData.time.split("T");
-    formData.eventDate = hours[0];
-    formData.startTime = hours[1] + ":00";
-    formData.time = null;
+    formData.startTime = formData.startTime + ":00"
+    formData.endTime = formData.endTime + ":00"
     console.log(formData);
-    // const JSONdata = JSON.stringify(formData);
-    // const endpoint = "http://localhost:8080/event-management/create";
-    // const options = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //   },
-    //   body: JSONdata,
-    // };
-    // const response = await fetch(endpoint, options);
-    // if (response.status === 200) {
-    //   alert("Thêm khoản thu thành công");
-    //   onClose();
-    // } else {
-    //   const result = await response.json();
-    //   alert(result.message);
-    // }
+    const JSONdata = JSON.stringify(formData);
+    const endpoint = "http://localhost:8080/event-management/create";
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSONdata,
+    };
+    const response = await fetch(endpoint, options);
+    if (response.status === 200) {
+      alert("Thêm sự kiện thành công");
+      onClose();
+    } else {
+      const result = await response.json();
+      alert(result.message);
+    }
   }
 
   if (!isVisible) return <></>;
@@ -94,7 +82,7 @@ export default function AddEvent({ isVisible, onClose }) {
                   <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <Input
                       {...{
-                        className: "sm:col-span-3",
+                        className: "sm:col-span-4",
                         title: "Tên sự kiện",
                         type: "text",
                         name: "revenueName",
@@ -102,34 +90,48 @@ export default function AddEvent({ isVisible, onClose }) {
                     ></Input>
                     <ComboBoxFamily
                       {...{
-                        title: "Họ tên cha",
-                        people: user?.fullName,
-                        className: "sm:col-span-3",
-                        name: "dadId",
+                        title: "Người quản lý sự kiện",
+                        people: user,
+                        className: "sm:col-span-2",
+                        name: "memberId",
                       }}
                     ></ComboBoxFamily>
                     <Input
                       {...{
-                        className: "sm:col-span-3",
-                        title: "Thời gian",
-                        type: "datetime-local",
-                        name: "time",
+                        className: "sm:col-span-2",
+                        title: "Ngày bắt đầu",
+                        type: "date",
+                        name: "eventDate",
                       }}
                     ></Input>
-
                     <Input
                       {...{
-                        className: "sm:col-span-3",
-                        title: "Địa điểm",
+                        className: "sm:col-span-2",
+                        title: "Giờ bắt đầu",
+                        type: "time",
+                        name: "startTime",
+                      }}
+                    ></Input><Input
+                      {...{
+                        className: "sm:col-span-2",
+                        title: "Giờ kết thúc",
+                        type: "time",
+                        name: "endTime",
+                      }}
+                    ></Input>
+                    <Input
+                      {...{
+                        className: "sm:col-span-2",
+                        title: "Địa điểm tổ chức",
                         type: "text",
-                        name: "locate",
+                        name: "address",
                       }}
                     ></Input>
                     <SelectInput
                       {...{
-                        className: "sm:col-span-3",
+                        className: "sm:col-span-2",
                         title: "Loại sự kiện",
-                        name: "status",
+                        name: "eventType",
                         dataOption: [
                           { value: "Hội thảo" },
                           { value: "Lễ kỷ niệm" },
@@ -143,7 +145,7 @@ export default function AddEvent({ isVisible, onClose }) {
 
                     <SelectInput
                       {...{
-                        className: "sm:col-span-3",
+                        className: "sm:col-span-2",
                         title: "Tình trạng",
                         name: "status",
                         dataOption: [
@@ -152,15 +154,33 @@ export default function AddEvent({ isVisible, onClose }) {
                         ],
                       }}
                     ></SelectInput>
-                    <Input
-                      inputType="textarea"
-                      {...{
-                        className: "sm:col-span-6",
-                        title: "Chú thích",
-                        type: "text",
-                        name: "revenuePerPerson",
-                      }}
-                    ></Input>
+                    <div className='sm:col-span-3'>
+                      <label
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Chi tiết sự kiện
+                      </label>
+                      <div className="mt-2">
+                        <textarea
+                          {...method.register("contentEvent")}
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
+                        />
+                      </div>
+                    </div>
+                    <div className='sm:col-span-3'>
+                      <label
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Chú thích
+                      </label>
+                      <div className="mt-2">
+                        <textarea
+                          {...method.register("note")}
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
+                        />
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>

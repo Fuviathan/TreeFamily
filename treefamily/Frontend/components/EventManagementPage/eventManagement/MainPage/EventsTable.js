@@ -2,12 +2,13 @@ import React from "react";
 import RevenueItem from "./EventItem";
 import { For } from "react-haiku";
 import useSWR from "swr";
+import EventItem from "./EventItem";
 
 export default function EventsTable() {
   const { data, error } = useSWR("http://localhost:8080/event-management/get-all");
-  // if (!data) {
-  //   return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;
-  // }
+  if (!data) {
+    return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;
+  }
   return (
     <div className="flex flex-col mt-8 overflow-y-scroll h-80vh">
       {/* <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8"> */}
@@ -56,12 +57,6 @@ export default function EventsTable() {
                   scope="col"
                   className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
                 >
-                  Loại sự kiện
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
-                >
                   Trạng thái
                 </th>
                 <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -70,12 +65,12 @@ export default function EventsTable() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">
-              {/* <For
+              <For
                 each={data}
                 render={(item, index) => (
-                  <RevenueItem item={item} index={index} />
+                  <EventItem item={item} index={index} />
                 )}
-              /> */}
+              />
             </tbody>
           </table>
         </div>
