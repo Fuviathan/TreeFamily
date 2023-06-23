@@ -1,5 +1,5 @@
 import React from "react";
-import DropDownRevenues from "./DropDownEvent";
+import DropDownEvent from "./DropDownEvent";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
@@ -33,13 +33,12 @@ export default function EventItem({ item, index }) {
         loading
       </td>
       <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-        {/* <DropDownRevenues item={item} redirect={redirect} /> */}
         <span className="sr-only">, {item.name}</span>
       </td>
     </tr>
   )
   return (
-    <tr className="cursor-pointer hover:bg-gray-200">
+    <tr className="">
       <td className="py-4 pr-10 text-sm font-medium text-left text-gray-900 whitespace-nowrap sm:pl-6 ">
         {index + 1}
       </td>
@@ -62,7 +61,7 @@ export default function EventItem({ item, index }) {
         {item.status}
       </td>
       <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-        {/* <DropDownRevenues item={item} redirect={redirect} /> */}
+        <DropDownEvent item={item} redirect={redirect} />
         <span className="sr-only">, {item.name}</span>
       </td>
     </tr>

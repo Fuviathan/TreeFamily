@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 
-import DetailRevenue from "./Modal/DetailRevenue";
+import DetailEvent from "./Modal/DetailEvent";
 import UpdateEvent from "./Modal/UpdateEvent";
 import { If } from "react-haiku";
 
@@ -16,14 +16,26 @@ export default function DropDownEvent({ item, redirect }) {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  const removeEvent = async (number) => {
+    const endpoint = `http://localhost:8080/event-management/delete/${number}`;
+    const options = {
+      method: "DELETE",
+      redirect: "follow",
+    };
+    const response = await fetch(endpoint, options);
+    if (response.status === 200) {
+      alert("Xóa thành công");
+    } else {
+      // const result = await response.json();
+      // alert(result)
+    }
+  };
+
   return (
     <>
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
             className="flex items-center text-gray-400 rounded-full hover:text-gray-600 focus:outline-none"
           >
             <span className="sr-only">Open options</span>
@@ -40,19 +52,17 @@ export default function DropDownEvent({ item, redirect }) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 z-20 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ">
+          <Menu.Items className="absolute right-0 z-20 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="flex flex-col py-1">
               <Menu.Item>
                 {({ active }) => (
                   <div
                     onClick={(e) => {
                       redirect();
-                      // setShowDetail(true);
-                      // e.stopPropagation();
                     }}
                     className={classNames(
                       active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
+                      "block px-4 py-2 text-base cursor-pointer"
                     )}
                   >
                     Xem danh sách khách mời
@@ -62,13 +72,10 @@ export default function DropDownEvent({ item, redirect }) {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick={(e) => {
-                      setShowDetail(true);
-                      e.stopPropagation();
-                    }}
+                    onClick = {() => setShowDetail(true)}
                     className={classNames(
                       active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
+                      "block px-4 py-2 text-base cursor-pointer"
                     )}
                   >
                     Xem chi tiết sự kiện
@@ -78,13 +85,9 @@ export default function DropDownEvent({ item, redirect }) {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick={(e) => {
-                      setShowUpdateModal(true);
-                      e.stopPropagation();
-                    }}
                     className={classNames(
                       active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
+                      "block px-4 py-2 text-base cursor-pointer"
                     )}
                   >
                     Sửa
@@ -94,13 +97,10 @@ export default function DropDownEvent({ item, redirect }) {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick={(e) => {
-                      setShowDeleteModal(true);
-                      e.stopPropagation();
-                    }}
+                    onClick={(e) => removeEvent(item.id)}
                     className={classNames(
                       active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
+                      "block px-4 py-2 text-base cursor-pointer"
                     )}
                   >
                     Xóa
@@ -112,19 +112,19 @@ export default function DropDownEvent({ item, redirect }) {
         </Transition>
       </Menu>
       <If isTrue={showDetail}>
-        <DetailRevenue
+        <DetailEvent
           isVisible={showDetail}
           onClose={() => setShowDetail(false)}
           item={item}
         />
       </If>
-      <If isTrue={showUpdateModal}>
+      {/* <If isTrue={showUpdateModal}>
         <UpdateEvent
           isVisible={showUpdateModal}
           onClose={() => setShowUpdateModal(false)}
           item={item}
         />
-      </If>
+      </If> */}
     </>
   );
 }
