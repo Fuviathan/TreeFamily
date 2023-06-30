@@ -42,12 +42,12 @@ export default function AnnualExpenseTable() {
                 >
                   Người quản lý khoản chi
                 </th>
-                <th
+                {/* <th
                   scope="col"
                   className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
                 >
                   Thao tác
-                </th>
+                </th> */}
                 <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                   <span className="sr-only">Edit</span>
                 </th>
