@@ -20,7 +20,7 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
           Dư kỳ trước
         </td>
         <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-          {item.previousBalance}
+          {item.previousBalance.toLocaleString('en-US')} VNĐ
         </td>
 
         <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap"></td>
@@ -34,7 +34,7 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
           Thu theo định mức
         </td>
         <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-          {item.totalRevenue}
+          {item.totalRevenue.toLocaleString('en-US')} VNĐ
         </td>
 
         <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
@@ -43,7 +43,7 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
               setStatisticRevenue(true);
               e.stopPropagation();
             }}
-            className="text-blue-600 hover:text-blue-800 underline font-medium"
+            className="font-medium text-blue-600 underline hover:text-blue-800"
           >
             Xem chi tiết
           </button>
@@ -58,7 +58,7 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
           Số tiền được tài trợ
         </td>
         <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-          {item.totalSposorship}
+          {item.totalSposorship.toLocaleString('en-US')} VNĐ
         </td>
 
         <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
@@ -67,7 +67,7 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
               setStatisticSponsor(true);
               e.stopPropagation();
             }}
-            className="text-blue-600 hover:text-blue-800 underline font-medium"
+            className="font-medium text-blue-600 underline hover:text-blue-800"
           >
             Xem chi tiết
           </button>
@@ -82,7 +82,7 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
           Số tiền đã chi
         </td>
         <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-          {item.totalExpense}
+          {item.totalExpense.toLocaleString('en-US') }VNĐ
         </td>
 
         <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
@@ -92,7 +92,7 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
                 setStatisticExpense(true);
                 e.stopPropagation();
               }}
-              className="text-blue-600 hover:text-blue-800 underline font-medium"
+              className="font-medium text-blue-600 underline hover:text-blue-800"
             >
               Xem chi tiết
             </button>
@@ -103,11 +103,11 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
         <button
           onClick={() => setStatisticSponsor(false)}
           type="button"
-          className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto fixed z-20 top-0 right-10 top-5"
+          className="fixed top-0 z-20 inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto right-10 top-5"
         >
           Đóng
         </button>
-        <div className="fixed  z-10 top-0 left-0">
+        <div className="fixed top-0 left-0 z-10">
           <MainPageSponsor sDate={startDate} eDate={endDate}></MainPageSponsor>
         </div>
       </If>
@@ -116,11 +116,11 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
         <button
           onClick={() => setStatisticRevenue(false)}
           type="button"
-          className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto fixed z-20 top-0 right-10 top-5"
+          className="fixed top-0 z-20 inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto right-10 top-5"
         >
           Đóng
         </button>
-        <div className="fixed z-10 top-0 left-0">
+        <div className="fixed top-0 left-0 z-10">
           <MainPageRevenue sDate={startDate} eDate={endDate}></MainPageRevenue>
         </div>
       </If>
@@ -129,11 +129,11 @@ export default function ItemStatistics({ item, index, startDate, endDate }) {
         <button
           onClick={() => setStatisticExpense(false)}
           type="button"
-          className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto fixed z-20 top-0 right-10 top-5"
+          className="fixed top-0 z-20 inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto right-10 top-5"
         >
           Đóng
         </button>
-        <div className="fixed z-10  top-0 left-0">
+        <div className="fixed top-0 left-0 z-10">
           <MainPageExpense sDate={startDate} eDate={endDate}></MainPageExpense>
         </div>
       </If>

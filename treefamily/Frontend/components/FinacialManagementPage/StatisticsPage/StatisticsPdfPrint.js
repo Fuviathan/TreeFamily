@@ -9,13 +9,13 @@ export default function StatisticsPdfPrint({ pdf, item, startDate, endDate }) {
   });
   return (
     <div>
-      <div className="bg-gray-500 bg-opacity-75 top-0 left-0 fixed w-screen h-screen z-30"></div>
+      <div className="fixed top-0 left-0 z-30 w-screen h-screen bg-gray-500 bg-opacity-75"></div>
       <div
         ref={componentRef}
-        className="bg-white absolute top-0 z-40"
+        className="absolute top-0 z-40 bg-white"
         style={{ width: "100%", height: "100%" }}
       >
-        <h1 className="pt-2 flex justify-center text-3xl font-semibold">
+        <h1 className="flex justify-center pt-2 text-3xl font-semibold">
           Báo cáo thu chi
         </h1>
         <div className="flex justify-center gap-2 text-2xl">
@@ -30,7 +30,7 @@ export default function StatisticsPdfPrint({ pdf, item, startDate, endDate }) {
         {/* <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8"> */}
         {/* <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8 "> */}
         <div className="mx-10 mt-4 shadow ring-1 ring-black ring-opacity-5 md:rounded-lg ">
-          <table className=" min-w-full divide-y divide-gray-300 ">
+          <table className="min-w-full divide-y divide-gray-300 ">
             <thead className="sticky top-0 z-20 rounded-t-lg bg-gray-50">
               <tr className="">
                 <th
@@ -62,7 +62,7 @@ export default function StatisticsPdfPrint({ pdf, item, startDate, endDate }) {
                   Dư kỳ trước
                 </td>
                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                  {item.previousBalance}
+                  {item.previousBalance.toLocaleString('en-US')} VNĐ
                 </td>
               </tr>
 
@@ -74,7 +74,7 @@ export default function StatisticsPdfPrint({ pdf, item, startDate, endDate }) {
                   Thu theo định mức
                 </td>
                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                  {item.totalRevenue}
+                  {item.totalRevenue.toLocaleString('en-US')} VNĐ
                 </td>
               </tr>
 
@@ -86,7 +86,7 @@ export default function StatisticsPdfPrint({ pdf, item, startDate, endDate }) {
                   Số tiền được tài trợ
                 </td>
                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                  {item.totalSposorship}
+                  {item.totalSposorship.toLocaleString('en-US')} VNĐ
                 </td>
               </tr>
 
@@ -98,7 +98,7 @@ export default function StatisticsPdfPrint({ pdf, item, startDate, endDate }) {
                   Số tiền đã chi
                 </td>
                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                  {item.totalExpense}
+                  {item.totalExpense.toLocaleString('en-US')} VNĐ
                 </td>
               </tr>
             </tbody>
@@ -109,7 +109,7 @@ export default function StatisticsPdfPrint({ pdf, item, startDate, endDate }) {
                   Số tiền còn lại
                 </td>
                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                  {item.remainingBalance} VNĐ
+                  {item.remainingBalance.toLocaleString('en-US')} VNĐ
                 </td>
               </tr>
             </tfoot>
@@ -120,7 +120,7 @@ export default function StatisticsPdfPrint({ pdf, item, startDate, endDate }) {
       <button
         type="button"
         onClick={handlePrint}
-        className="fixed z-50 right-32 bottom-60 inline-flex items-center justify-center px-4 py-2 ml-12 text-base font-medium text-black bg-red-400 border border-black rounded-md shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto"
+        className="fixed z-50 inline-flex items-center justify-center px-4 py-2 ml-12 text-base font-medium text-black bg-red-400 border border-black rounded-md shadow-sm right-32 bottom-60 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto"
       >
         Xuất file PDF
       </button>
@@ -129,7 +129,7 @@ export default function StatisticsPdfPrint({ pdf, item, startDate, endDate }) {
         onClick={() => {
           pdf(false);
         }}
-        className="fixed z-50 right-72 bottom-60 inline-flex items-center justify-center px-4 py-2 ml-12 text-base font-medium text-black bg-red-400 border border-black rounded-md shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto"
+        className="fixed z-50 inline-flex items-center justify-center px-4 py-2 ml-12 text-base font-medium text-black bg-red-400 border border-black rounded-md shadow-sm right-72 bottom-60 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto"
       >
         Hủy
       </button>

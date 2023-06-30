@@ -23,7 +23,7 @@ export default function StatisticsTable({ startDate, endDate }) {
   //   return object.year == filterYear;
   // });
   return (
-    <div className="flex flex-col mt-8 overflow-y-scroll h-80vh relative">
+    <div className="relative flex flex-col mt-8 overflow-y-scroll h-80vh">
       {/* <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8"> */}
       <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8 ">
         <div className="shadow ring-1 ring-black ring-opacity-5 md:rounded-lg ">
@@ -40,7 +40,7 @@ export default function StatisticsTable({ startDate, endDate }) {
                   scope="col"
                   className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
                 >
-                  Tên khoản chi
+                  Tên khoản tiền
                 </th>
                 <th
                   scope="col"
@@ -79,7 +79,7 @@ export default function StatisticsTable({ startDate, endDate }) {
                   Số tiền còn lại
                 </td>
                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                  {data.remainingBalance} VNĐ
+                  {data.remainingBalance.toLocaleString('en-US')} VNĐ
                 </td>
 
                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap"></td>
@@ -93,7 +93,7 @@ export default function StatisticsTable({ startDate, endDate }) {
         onClick={() => {
           setPdf(true);
         }}
-        className="fixed right-32 bottom-80 inline-flex items-center justify-center px-4 py-2 ml-12 text-base font-medium text-black bg-red-400 border border-black rounded-md shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto"
+        className="fixed inline-flex items-center justify-center px-4 py-2 ml-12 text-base font-medium text-black bg-red-400 border border-black rounded-md shadow-sm right-32 bottom-80 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto"
       >
         Xuất file PDF
       </button>
