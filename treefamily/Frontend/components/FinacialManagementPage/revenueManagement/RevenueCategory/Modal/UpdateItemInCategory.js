@@ -94,7 +94,7 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
                         disabled: "disabled",
                       }}
                     ></Input>
-                    <Input
+                    {/* <Input
                       {...{
                         className: "sm:col-span-2",
                         title: "Ngày đóng",
@@ -102,7 +102,7 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
                         name: "date",
                         require: "false",
                       }}
-                    ></Input>
+                    ></Input> */}
 
                     <SelectInput
                       {...{
