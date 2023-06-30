@@ -6,6 +6,7 @@ import { HomeIcon, BanknotesIcon, CalendarDaysIcon } from "@heroicons/react/24/o
 
 const navigation = [
   { name: "Quản lý gia phả", href: "/home", icon: HomeIcon, current: false },
+  { name: "Quản lý sự kiện", href: "/eventManagement", icon: CalendarDaysIcon, current: false },
   {
     name: "Quản lý tài chính", href: "", icon: BanknotesIcon, current: false, children: [
       { name: 'Quản lý thu', href: '/financialManagement/revenueManagement', current: false },
@@ -14,14 +15,13 @@ const navigation = [
       { name: 'Báo cáo thu chi', href: '/financialManagement/statistics', current: false },
     ],
   },
-  { name: "Quản lý sự kiện", href: "/eventManagement", icon: CalendarDaysIcon, current: false },
   // { name: "Quản lý phân quyền", href: "/permissionsManagement/userManagement", icon: CalendarDaysIcon, current: false },
   // { name: "Quản lý phân quyền", href: "/permissionsManagement", current: false },
   {
     name: "Quản lý phân quyền", href: "", icon: BanknotesIcon, current: false, children: [
       { name: 'Quản lý phân quyền', href: '/permissionsManagement/permission', current: false },
       { name: 'Quản lý thành viên', href: '/permissionsManagement/userManagement', current: false },
-     
+
     ],
   },
 ];
