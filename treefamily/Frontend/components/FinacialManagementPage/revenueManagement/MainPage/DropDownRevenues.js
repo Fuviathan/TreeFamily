@@ -14,7 +14,21 @@ export default function DropDownRevenues({ item }) {
   const [showDetail, setShowDetail] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-
+  const removeEvent = async (number) => {
+    const endpoint = `http://localhost:8080/revenue-management/delete/${number}`;
+    const options = {
+      method: "DELETE",
+      redirect: "follow",
+    };
+    const response = await fetch(endpoint, options);
+    if (response.status === 204) {
+      alert("Xóa thành công");
+    } else {
+      // const result = await response.json();
+      alert("result")
+    }
+  };
+  console.log(item)
   return (
     <>
       <Menu as="div" className="relative inline-block text-left">
@@ -65,7 +79,7 @@ export default function DropDownRevenues({ item }) {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick={(e) => { setShowDeleteModal(true); e.stopPropagation() }}
+                    onClick={(e) => { removeEvent(item.id), setShowDeleteModal(true); e.stopPropagation() }}
                     className={classNames(
                       active ? "bg-gray-300 text-gray-900" : "text-gray-700",
                       "block px-4 py-2 text-base"

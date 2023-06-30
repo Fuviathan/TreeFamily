@@ -6,6 +6,19 @@ import AnnualRevenuesTable from "./MainPage/AnnualRevenuesTable"
 import AddRevenue from "./MainPage/Modal/AddRevenue"
 
 export default function MainPage() {
+    async function onSubmit() {
+        const endpoint = "http://localhost:8080/revenue-management/create";
+        const options = {
+            method: "GET",
+        };
+        const response = await fetch(endpoint, options);
+        if (response.status === 200) {
+            alert("Thêm khoản thu thành công");
+        } else {
+            const result = await response.json();
+            alert(result.message);
+        }
+    }
     const [addNewRevenue, setAddNewRevenue] = useState(false)
     return (
         <>
@@ -31,7 +44,7 @@ export default function MainPage() {
                             </div>
                             <div className="mt-4 sm:mt-0 sm:ml-8 sm:flex-none">
                                 <button
-                                    onClick={() => setAddNewRevenue(true)}
+                                    onClick={() => onSubmit()}
                                     type="button"
                                     className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                                 >
