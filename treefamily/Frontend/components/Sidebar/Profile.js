@@ -10,8 +10,10 @@ export default function Profile() {
       <Link href="/detailUser" className="flex flex-shrink w-full group">
         <div className="flex items-center">
           <div className="ml-3">
-            <p className="text-sm font-medium text-white">{user?.user.fullName}</p>
-            <p className="text-xs font-medium text-gray-300 group-hover:text-gray-200">
+            <p className="text-base font-medium text-white">{user?.user.fullName}</p>
+            <p className="text-base font-medium text-white">{user?.user.role}</p>
+
+            <p className="text-sm font-medium text-gray-300 group-hover:text-gray-200">
               View profile
             </p>
           </div>
