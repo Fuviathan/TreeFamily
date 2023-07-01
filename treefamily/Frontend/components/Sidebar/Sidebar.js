@@ -19,7 +19,7 @@ const navigation = [
   // { name: "Quản lý phân quyền", href: "/permissionsManagement", current: false },
   {
     name: "Quản lý phân quyền", href: "", icon: BanknotesIcon, current: false, children: [
-      { name: 'Quản lý phân quyền', href: '/permissionsManagement/permission', current: false },
+      { name: 'Quản lý phân quyền', href: '/permissionsManagement', current: false },
       { name: 'Quản lý thành viên', href: '/permissionsManagement/userManagement', current: false },
 
     ],
