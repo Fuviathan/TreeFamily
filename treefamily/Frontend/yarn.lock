@@ -30,6 +30,11 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
+"@balkangraph/familytree.js@^1.8.3":
+  version "1.8.3"
+  resolved "https://registry.npmjs.org/@balkangraph/familytree.js/-/familytree.js-1.8.3.tgz"
+  integrity sha512-Boa814UENPEjhiw1aI80ImiV67RF9gP2Z4OM8/hv6LU+iYOI9Tu2eqihTPlbnFbyYamh22rhdNyvdj9ZFMHDLQ==
+
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.4.0"
   resolved "https://registry.npmjs.org/@eslint-community/eslint-utils/-/eslint-utils-4.4.0.tgz"
