@@ -3,9 +3,9 @@ import { For } from "react-haiku";
 import useSWR from "swr";
 import PermissionItem from "./PermissionItem";
 
-export default function AnnualExpenseTable() {
+export default function PermissionTable() {
   const { data, error } = useSWR(
-    "http://localhost:8080/expense-management/get-all"
+    "http://localhost:8080/permission-management/get-all"
   );
   if (!data) {
     return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;
@@ -36,21 +36,11 @@ export default function AnnualExpenseTable() {
                 >
                   Mô tả nhóm quyền
                 </th>
-                {/* <th
-                  scope="col"
-                  className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
-                >
-                  Người quản lý khoản chi
-                </th> */}
                 <th
                   scope="col"
-                  className="px-3 py-3.5 text-left text-base font-semibold text-gray-900"
+                  className="px-3 w-1/12 py-3.5 text-left text-base font-semibold text-gray-900"
                 >
-                  Thao tác
                 </th>
-                {/* <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                  <span className="sr-only">Edit</span>
-                </th> */}
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">

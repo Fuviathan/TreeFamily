@@ -4,13 +4,29 @@ import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import UpdateSponsor from "./Modal/UpdatePermission";
 import { If } from "react-haiku";
+import ViewPermission from "./Modal/ViewPermission";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Expense({ item }) {
+export default function DropDownPermission({ item }) {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showDetailModal, setShowDetailModal] = useState(false);
+  const removePermission = async (number) => {
+    const endpoint = `http://localhost:8080/permission-management/delete/${number}`;
+    const options = {
+      method: "DELETE",
+      redirect: "follow",
+    };
+    const response = await fetch(endpoint, options);
+    if (response.status === 204) {
+      alert("Xóa thành công");
+    } else {
+      // const result = await response.json();
+      alert("result")
+    }
+  };
   return (
     <>
       <Menu as="div" className="relative inline-block text-left">
@@ -40,9 +56,23 @@ export default function Expense({ item }) {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick={(e) => {
+                    onClick={() => {
+                      setShowDetailModal(true);
+                    }}
+                    className={classNames(
+                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                      "block px-4 py-2 text-base"
+                    )}
+                  >
+                    Xem
+                  </div>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <div
+                    onClick={() => {
                       setShowUpdateModal(true);
-                      e.stopPropagation();
                     }}
                     className={classNames(
                       active ? "bg-gray-300 text-gray-900" : "text-gray-700",
@@ -50,6 +80,21 @@ export default function Expense({ item }) {
                     )}
                   >
                     Sửa
+                  </div>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <div
+                    onClick={() => {
+                      removePermission(item.id);
+                    }}
+                    className={classNames(
+                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                      "block px-4 py-2 text-base"
+                    )}
+                  >
+                    Xóa
                   </div>
                 )}
               </Menu.Item>
@@ -61,6 +106,13 @@ export default function Expense({ item }) {
         <UpdateSponsor
           isVisible={showUpdateModal}
           onClose={() => setShowUpdateModal(false)}
+          item={item}
+        />
+      </If>
+      <If isTrue={showDetailModal}>
+        <ViewPermission
+          isVisible={showDetailModal}
+          onClose={() => setShowDetailModal(false)}
           item={item}
         />
       </If>

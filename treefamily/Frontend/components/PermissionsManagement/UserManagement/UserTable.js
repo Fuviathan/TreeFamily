@@ -5,7 +5,7 @@ import ExpenseItem from "./UserItem";
 
 export default function AnnualExpenseTable() {
   const { data, error } = useSWR(
-    "http://localhost:8080/expense-management/get-all"
+    "http://localhost:8080/member/get-all-accounts"
   );
   if (!data) {
     return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;
@@ -42,15 +42,9 @@ export default function AnnualExpenseTable() {
                 >
                   Vai trò
                 </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3.5 text-left text-base font-semibold text-gray-900z"
-                >
-                  Thao tác
-                </th>
-                {/* <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                <th scope="col" className="w-1/12 relative py-3.5 px-2 sm:pr-6">
                   <span className="sr-only">Edit</span>
-                </th> */}
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">
