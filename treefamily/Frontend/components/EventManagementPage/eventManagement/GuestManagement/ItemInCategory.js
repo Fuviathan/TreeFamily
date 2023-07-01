@@ -7,17 +7,20 @@ export default function ItemInCategory({ item, index }) {
         {index + 1}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.payer}
+        {item.fullName}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.money}
+        {item.mobilePhoneNumber}
       </td>
 
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.date}
+        {item.gender}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.status ? "Đã đóng" : "Chưa đóng"}
+        {item.dateOfBirth}
+      </td>
+      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+        {item.career}
       </td>
       <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
         <DropDownCategory item={item} />
