@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import UserTable from "./UserTable";
 import AddUserPermission from "./Modal/AddUserPermission";
-import SearchBar from "./SearchBar";
 
 export default function MainPage() {
   const [addNewUserPermission, setAddNewUserPermission] = useState(false);
@@ -29,7 +28,6 @@ export default function MainPage() {
                   Báo cáo chi
                 </Link>
               </div> */}
-              <SearchBar></SearchBar>
               <div className="mt-4 sm:mt-0 sm:ml-8 sm:flex-none">
                 <button
                   onClick={() => setAddNewUserPermission(true)}

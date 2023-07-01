@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../UI/Input";
-import SelectInput from "../../../UI/SelectInput";
-import ComboBoxFamily from "./miniComponents/ComboBoxFamily";
 import useSWR from "swr";
 
 export default function AddUserPermission({ isVisible, onClose }) {
@@ -66,7 +64,7 @@ export default function AddUserPermission({ isVisible, onClose }) {
                     Nhập thông tin cho khoản chi
                   </div>
 
-                  <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6 pb-24">
+                  <div className="grid grid-cols-1 pb-24 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <Input
                       {...{
                         className: "sm:col-span-3",
@@ -93,15 +91,6 @@ export default function AddUserPermission({ isVisible, onClose }) {
                         name: "expenseManager",
                       }}
                     ></Input> */}
-
-                    <ComboBoxFamily
-                      {...{
-                        title: "Tên người quản lý khoản chi",
-                        people: data,
-                        className: "sm:col-span-3 ",
-                        name: "expenseManager",
-                      }}
-                    ></ComboBoxFamily>
                   </div>
                 </div>
               </div>
