@@ -9,7 +9,7 @@ export default function RevenueItem({ item, index }) {
     router.push(`revenueManagement/${item.id}`);
   };
   return (
-    <tr className="hover:bg-gray-200 cursor-pointer" onClick={redirect}>
+    <tr className="cursor-pointer hover:bg-gray-200" onClick={redirect}>
       <td className="py-4 pr-10 text-sm font-medium text-left text-gray-900 whitespace-nowrap sm:pl-6 ">
         {index + 1}
       </td>
@@ -24,6 +24,9 @@ export default function RevenueItem({ item, index }) {
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
         {item.status === true ? "Đang mở " : "Đã đóng"}
+      </td>
+      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+        {item.startDate}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
         {item.dueDate}

@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../UI/Input";
-import SelectInput from "../../../UI/SelectInput";
-import ComboBoxFamily from "./miniComponents/ComboBoxFamily";
 import useSWR from "swr";
 
 export default function AddPermission({ isVisible, onClose }) {
@@ -15,11 +13,8 @@ export default function AddPermission({ isVisible, onClose }) {
   }
 
   async function onSubmit(formData) {
-    formData.year = Number(formData.year);
-
-    console.log(formData);
     const JSONdata = JSON.stringify(formData);
-    const endpoint = "http://localhost:8080/expense-management/create";
+    const endpoint = "http://localhost:8080/permission-management/create";
     const options = {
       method: "POST",
       headers: {
@@ -30,7 +25,7 @@ export default function AddPermission({ isVisible, onClose }) {
     };
     const response = await fetch(endpoint, options);
     if (response.status === 200) {
-      alert("Thêm khoản chi mới thành công");
+      alert("Thêm quyền mới thành công");
       onClose();
     } else {
       const result = await response.json();
@@ -59,49 +54,88 @@ export default function AddPermission({ isVisible, onClose }) {
                     as="h2"
                     className="text-base font-semibold leading-7 text-gray-900"
                   >
-                    Thêm khoản chi
+                    Thiết lập nhóm quyền
                   </Dialog.Title>
 
                   <div className="mt-1 text-sm leading-6 text-gray-600">
-                    Nhập thông tin cho khoản chi
+                    Nhập thông tin của nhóm quyền mới
                   </div>
 
-                  <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6 pb-24">
+                  <div className="grid grid-cols-1 pb-24 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <Input
                       {...{
-                        className: "sm:col-span-3",
-                        title: "Năm",
+                        className: "sm:col-span-6",
+                        title: "Tên quyền",
                         type: "text",
-                        name: "year",
-                        minLength: 4,
+                        name: "permissionGroupName",
                       }}
                     ></Input>
-
-                    <Input
-                      {...{
-                        className: "sm:col-span-3",
-                        title: "Tên khoản chi",
-                        type: "text",
-                        name: "expenseName",
-                      }}
-                    ></Input>
-                    {/* <Input
-                      {...{
-                        className: "sm:col-span-3",
-                        title: "Tên người quản lý khoản chi",
-                        type: "text",
-                        name: "expenseManager",
-                      }}
-                    ></Input> */}
-
-                    <ComboBoxFamily
-                      {...{
-                        title: "Tên người quản lý khoản chi",
-                        people: data,
-                        className: "sm:col-span-3 ",
-                        name: "expenseManager",
-                      }}
-                    ></ComboBoxFamily>
+                    <div className='sm:col-span-6'>
+                      <label
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Mô tả nhóm quyền
+                      </label>
+                      <div className="mt-2">
+                        <textarea
+                          {...method.register("permissionsDescription")}
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
+                        />
+                      </div>
+                    </div>
+                    <div className="block text-sm font-medium leading-6 text-gray-900 sm:col-span-2">Các chức năng của quyền:</div>
+                    <div className="sm:col-span-4"></div>
+                    {/* Nhóm quyền quản lý gia phả */}
+                    <div className="block text-base font-medium leading-6 text-gray-900 sm:col-span-2">Quản lý gia phả:</div>
+                    <div className="flex col-span-1">
+                      <div className="text-base font-medium leading-6 text-gray-900">Xem</div>
+                      <input className="w-4 h-4 mt-1.5 ml-2"  {...method.register("viewMebers")} type='checkbox'></input>
+                    </div>
+                    <div className="flex col-span-1">
+                      <div className="text-base font-medium leading-6 text-gray-900">Tạo mới</div>
+                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("createMembers")} type='checkbox'></input>
+                    </div>
+                    <div className="flex col-span-1 ml-8">
+                      <div className="text-base font-medium leading-6 text-gray-900">Sửa</div>
+                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("updateMembers")} type='checkbox'></input>
+                    </div>
+                    <div className="sm:col-span-1"></div>
+                    {/* Nhóm quyền quản lý sự kiện */}
+                    <div className="block text-base font-medium leading-6 text-gray-900 sm:col-span-2">Quản lý sự kiện:</div>
+                    <div className="flex col-span-1">
+                      <div className="text-base font-medium leading-6 text-gray-900">Xem</div>
+                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("viewEvent")} type='checkbox'></input>
+                    </div>
+                    <div className="flex col-span-1">
+                      <div className="text-base font-medium leading-6 text-gray-900">Tạo mới</div>
+                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("createEvent")} type='checkbox'></input>
+                    </div>
+                    <div className="flex col-span-1 ml-8">
+                      <div className="text-base font-medium leading-6 text-gray-900">Sửa</div>
+                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("updateEvent")} type='checkbox'></input>
+                    </div>
+                    <div className="flex col-span-1 ml-8">
+                      <div className="text-base font-medium leading-6 text-gray-900">Xóa</div>
+                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("deleteEvent")} type='checkbox'></input>
+                    </div>
+                    {/* Nhóm quyền quản lý tài chính */}
+                    <div className="block text-base font-medium leading-6 text-gray-900 sm:col-span-2">Quản lý tài chính:</div>
+                    <div className="flex col-span-1">
+                      <div className="text-base font-medium leading-6 text-gray-900">Xem</div>
+                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("viewFinancial")} type='checkbox'></input>
+                    </div>
+                    <div className="flex col-span-1">
+                      <div className="text-base font-medium leading-6 text-gray-900">Tạo mới</div>
+                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("createFinancial")} type='checkbox'></input>
+                    </div>
+                    <div className="flex col-span-1 ml-8">
+                      <div className="text-base font-medium leading-6 text-gray-900">Sửa</div>
+                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("updateFinancial")} type='checkbox'></input>
+                    </div>
+                    <div className="flex col-span-1 ml-8">
+                      <div className="text-base font-medium leading-6 text-gray-900">Sửa</div>
+                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("deleteFinancial")} type='checkbox'></input>
+                    </div>
                   </div>
                 </div>
               </div>

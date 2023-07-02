@@ -15,56 +15,23 @@ export default function ExpenseItem({ item, index }) {
   // };
   return (
     <tr
-      className="cursor-pointer hover:bg-gray-200"
-      //  onClick={redirect}
+      className=""
     >
       <td className="py-4 pr-10 text-sm font-medium text-left text-gray-900 whitespace-nowrap sm:pl-6 ">
         {index + 1}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.year}
+        {item.fullName}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.expenseName}
+        {item.userName}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.expenseManager}
+        {item.role}
       </td>
 
-      <td className="flex py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6 gap-4">
-        {/* <DropDownExpense item={item} /> */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <EyeIcon
-            className="text-gray-400 h-6 mt-1 w-7 hover:text-gray-600"
-            aria-hidden="true"
-          />
-        </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowUpdateModal(true);
-          }}
-        >
-          <PencilIcon
-            className="text-gray-400 h-6 mt-1 w-7 hover:text-gray-600"
-            aria-hidden="true"
-          />
-        </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <TrashIcon
-            className="text-gray-400 h-6 mt-1 w-7 hover:text-gray-600"
-            aria-hidden="true"
-          />
-        </button>
-        {/* <span className="sr-only">, {item.name}</span> */}
+      <td className="gap-4 py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+        <DropDownExpense item={item} />
       </td>
       <If isTrue={showUpdateModal}>
         <UpdateUserPermission

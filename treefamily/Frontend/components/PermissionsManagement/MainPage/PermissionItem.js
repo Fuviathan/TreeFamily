@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DropDownExpense from "./DropDownExpense";
+import DropDownPermission from "./DropDownPermission";
 import { useRouter } from "next/router";
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { If } from "react-haiku";
@@ -12,57 +12,18 @@ export default function PermissionItem({ item, index }) {
   //   router.push(`expenseManagement/${item.id}`);
   // };
   return (
-    <tr
-      className="cursor-pointer hover:bg-gray-200"
-      // onClick={redirect}
-    >
+    <tr>
       <td className="py-4 pr-10 text-sm font-medium text-left text-gray-900 whitespace-nowrap sm:pl-6 ">
         {index + 1}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.year}
+        {item.permissionGroupName}
       </td>
-      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.expenseName}
+      <td className="w-6/12 px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+        {item.permissionsDescription}
       </td>
-      {/* <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.expenseManager}
-      </td> */}
-
-      <td className="flex py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6 gap-4">
-        {/* <DropDownExpense item={item} /> */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <EyeIcon
-            className="text-gray-400 h-6 mt-1 w-7 hover:text-gray-600 "
-            aria-hidden="true"
-          />
-        </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowUpdateModal(true);
-          }}
-        >
-          <PencilIcon
-            className="text-gray-400 h-6 mt-1 w-7 hover:text-gray-600 "
-            aria-hidden="true"
-          />
-        </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <TrashIcon
-            className="text-gray-400 h-6 mt-1 w-7 hover:text-gray-600 "
-            aria-hidden="true"
-          />
-        </button>
-        {/* <span className="sr-only">, {item.name}</span> */}
+      <td className="flex justify-center gap-4 px-2 py-4 text-sm font-medium text-center whitespace-nowrap sm:pr-6">
+        <DropDownPermission item={item} />
       </td>
       <If isTrue={showUpdateModal}>
         <UpdatePermission
