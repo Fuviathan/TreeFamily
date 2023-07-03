@@ -503,41 +503,6 @@ export default function UpdateMember({ isVisible, onClose, person }) {
                         }}
                       ></Input>
                     </If>
-
-                    <div className="mt-6 sm:col-span-4">
-                      <h2 className="text-base font-semibold leading-7 text-gray-900">
-                        Thông tin tài khoản đăng nhập
-                      </h2>
-                    </div>
-
-                    <Input
-                      {...{
-                        data: person.userName,
-                        disabled: "disabled",
-                        className: "sm:col-span-3",
-                        title: "Tên đăng nhập (chỉ xem không thể sửa)",
-                        type: "text",
-                        name: "userName",
-                        minLength: 5,
-                        pattern:
-                          /^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
-                        message: "Vui lòng không chứa ký tự đặc biệt",
-                      }}
-                    ></Input>
-
-                    <Input
-                      {...{
-                        data: person.password,
-                        className: "sm:col-span-3",
-                        title: "Mật khẩu",
-                        type: "password",
-                        name: "password",
-                        minLength: 8,
-                        pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                        message:
-                          " Mật khẩu có độ dài 8 ký tự chứa ít nhất 1 chữ và 1 số",
-                      }}
-                    ></Input>
                   </div>
                 </div>
               </div>

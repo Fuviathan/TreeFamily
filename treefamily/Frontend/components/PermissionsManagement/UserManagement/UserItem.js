@@ -1,12 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { If } from "react-haiku";
-import DropDownExpense from "./DropDownExpense";
+import DropDownUserPermission from "./DropDownUserPermission";
 import UpdateUserPermission from "./Modal/UpdateExpense";
-import { useRouter } from "next/router";
-import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 
-export default function ExpenseItem({ item, index }) {
+export default function UserItem({ item, index }) {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   // const router = useRouter();
@@ -31,7 +29,7 @@ export default function ExpenseItem({ item, index }) {
       </td>
 
       <td className="gap-4 py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-        <DropDownExpense item={item} />
+        <DropDownUserPermission item={item} />
       </td>
       <If isTrue={showUpdateModal}>
         <UpdateUserPermission
