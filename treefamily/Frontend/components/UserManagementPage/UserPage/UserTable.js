@@ -3,13 +3,16 @@ import UserItem from "./UserItem";
 import { For } from "react-haiku";
 import useSWR from "swr";
 
-export default function UserTable() {
-  const { data, error } = useSWR("http://localhost:8080/member/get-all");
+export default function UserTable({ nameSearch }) {
+  const { data, error } = useSWR(
+    `http://localhost:8080/member/search?name=${nameSearch}`
+  );
   if (!data) {
     return (
       <div className="flex flex-col mt-8 h-[80vh] overflow-y-scroll"></div>
     );
   }
+
   return (
     <div className="flex flex-col mt-8 overflow-y-scroll h-80vh">
       {/* <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8"> */}

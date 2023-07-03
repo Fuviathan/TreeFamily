@@ -7,7 +7,10 @@ import AddMember from "./Modal/AddMember";
 import Link from "next/link";
 
 export default function MainPage() {
+  const [nameSearch, setNameSearch] = useState("");
+
   const [addMember, setAddMember] = useState(false);
+  console.log(nameSearch);
   return (
     <>
       <BaseTemplate>
@@ -28,7 +31,7 @@ export default function MainPage() {
                 </button>
               </div>
 
-              <SearchBar></SearchBar>
+              <SearchBar setNameSearch={setNameSearch}></SearchBar>
 
               <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 <button
@@ -49,7 +52,7 @@ export default function MainPage() {
                 </button>
               </div>
             </div>
-            <UserTable />
+            <UserTable nameSearch={nameSearch} />
 
             {/* <If isTrue={addMember === true}>
             <div className="h-screen">
