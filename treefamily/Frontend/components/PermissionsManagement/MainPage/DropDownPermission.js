@@ -2,7 +2,7 @@
 import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import UpdateSponsor from "./Modal/UpdatePermission";
+import UpdatePermission from "./Modal/UpdatePermission";
 import { If } from "react-haiku";
 import ViewPermission from "./Modal/ViewPermission";
 
@@ -23,7 +23,7 @@ export default function DropDownPermission({ item }) {
     if (response.status === 204) {
       alert("Xóa thành công");
     } else {
-      // const result = await response.json();
+      const result = await response.json();
       alert("result")
     }
   };
@@ -103,7 +103,7 @@ export default function DropDownPermission({ item }) {
         </Transition>
       </Menu>
       <If isTrue={showUpdateModal}>
-        <UpdateSponsor
+        <UpdatePermission
           isVisible={showUpdateModal}
           onClose={() => setShowUpdateModal(false)}
           item={item}
