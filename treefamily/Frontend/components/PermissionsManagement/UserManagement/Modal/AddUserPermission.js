@@ -3,37 +3,37 @@ import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../UI/Input";
 import useSWR from "swr";
+import ComboBoxFamily from "../../../UserManagementPage/UserPage/Modal/miniComponents/ComboBoxFamily";
 
 export default function AddUserPermission({ isVisible, onClose }) {
   const method = useForm();
-
-  const { data, error } = useSWR("http://localhost:8080/member/get-all");
-  if (!data) {
-    return;
+  const { data: user, error: userError } = useSWR("http://localhost:8080/member/get-all");
+  if (!user) {
+    return <></>;
   }
 
   async function onSubmit(formData) {
-    formData.year = Number(formData.year);
+    formData.memberId = Number(formData.memberId);
 
     console.log(formData);
-    const JSONdata = JSON.stringify(formData);
-    const endpoint = "http://localhost:8080/expense-management/create";
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSONdata,
-    };
-    const response = await fetch(endpoint, options);
-    if (response.status === 200) {
-      alert("Thêm khoản chi mới thành công");
-      onClose();
-    } else {
-      const result = await response.json();
-      alert(result.message);
-    }
+    // const JSONdata = JSON.stringify(formData);
+    // const endpoint = "http://localhost:8080/expense-management/create";
+    // const options = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //   },
+    //   body: JSONdata,
+    // };
+    // const response = await fetch(endpoint, options);
+    // if (response.status === 200) {
+    //   alert("Thêm khoản chi mới thành công");
+    //   onClose();
+    // } else {
+    //   const result = await response.json();
+    //   alert(result.message);
+    // }
   }
 
   if (!isVisible) return <></>;
@@ -57,20 +57,36 @@ export default function AddUserPermission({ isVisible, onClose }) {
                     as="h2"
                     className="text-base font-semibold leading-7 text-gray-900"
                   >
-                    Thêm khoản chi
+                    Thêm tài khoản thành viên
                   </Dialog.Title>
 
                   <div className="mt-1 text-sm leading-6 text-gray-600">
-                    Nhập thông tin cho khoản chi
+                    Nhập thông tin cho tài khoản thành viên
                   </div>
 
                   <div className="grid grid-cols-1 pb-24 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <ComboBoxFamily
+                      {...{
+                        title: "Thành viên trong gia phả",
+                        people: user,
+                        className: "sm:col-span-3",
+                        name: "memberId",
+                      }}
+                    ></ComboBoxFamily>
+                    <ComboBoxFamily
+                      {...{
+                        title: "Thành viên trong gia phả",
+                        people: user,
+                        className: "sm:col-span-3",
+                        name: "memberId",
+                      }}
+                    ></ComboBoxFamily>
                     <Input
                       {...{
                         className: "sm:col-span-3",
-                        title: "Năm",
+                        title: "Tên tài khoản",
                         type: "text",
-                        name: "year",
+                        name: "userName",
                         minLength: 4,
                       }}
                     ></Input>
@@ -78,19 +94,11 @@ export default function AddUserPermission({ isVisible, onClose }) {
                     <Input
                       {...{
                         className: "sm:col-span-3",
-                        title: "Tên khoản chi",
+                        title: "Mật khẩu",
                         type: "text",
-                        name: "expenseName",
+                        name: "password",
                       }}
                     ></Input>
-                    {/* <Input
-                      {...{
-                        className: "sm:col-span-3",
-                        title: "Tên người quản lý khoản chi",
-                        type: "text",
-                        name: "expenseManager",
-                      }}
-                    ></Input> */}
                   </div>
                 </div>
               </div>

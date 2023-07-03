@@ -5,7 +5,6 @@ import Input from "../../../UI/Input";
 import useSWR from "swr";
 
 export default function ViewPermission({ isVisible, onClose, item }) {
-    console.log(item)
     const method = useForm({
         defaultValues: {
             permissionGroupName: item.permissionGroupName,
@@ -43,11 +42,11 @@ export default function ViewPermission({ isVisible, onClose, item }) {
                                         as="h2"
                                         className="text-base font-semibold leading-7 text-gray-900"
                                     >
-                                        Thiết lập nhóm quyền
+                                        Xem nhóm quyền
                                     </Dialog.Title>
 
                                     <div className="mt-1 text-sm leading-6 text-gray-600">
-                                        Nhập thông tin của nhóm quyền mới
+                                        Xem thông tin của nhóm quyền 
                                     </div>
 
                                     <div className="grid grid-cols-1 pb-24 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">

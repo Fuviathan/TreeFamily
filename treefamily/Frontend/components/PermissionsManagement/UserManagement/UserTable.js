@@ -1,7 +1,7 @@
 import React from "react";
 import { For } from "react-haiku";
 import useSWR from "swr";
-import ExpenseItem from "./UserItem";
+import UserItem from "./UserItem";
 
 export default function AnnualExpenseTable() {
   const { data, error } = useSWR(
@@ -51,7 +51,7 @@ export default function AnnualExpenseTable() {
               <For
                 each={data}
                 render={(item, index) => (
-                  <ExpenseItem item={item} index={index} />
+                  <UserItem item={item} index={index} />
                 )}
               />
             </tbody>
