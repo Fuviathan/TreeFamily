@@ -9,16 +9,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Expense({ item }) {
+export default function DropDownUserPermission({ item }) {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   return (
     <>
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
             className="flex items-center text-gray-400 rounded-full hover:text-gray-600 focus:outline-none"
           >
             <span className="sr-only">Open options</span>
@@ -49,7 +46,39 @@ export default function Expense({ item }) {
                       "block px-4 py-2 text-base"
                     )}
                   >
+                    Xem
+                  </div>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <div
+                    onClick={(e) => {
+                      setShowUpdateModal(true);
+                      e.stopPropagation();
+                    }}
+                    className={classNames(
+                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                      "block px-4 py-2 text-base"
+                    )}
+                  >
                     Sửa
+                  </div>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <div
+                    onClick={(e) => {
+                      setShowUpdateModal(true);
+                      e.stopPropagation();
+                    }}
+                    className={classNames(
+                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                      "block px-4 py-2 text-base"
+                    )}
+                  >
+                    Xóa
                   </div>
                 )}
               </Menu.Item>
