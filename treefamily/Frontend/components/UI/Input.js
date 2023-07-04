@@ -22,11 +22,11 @@ export default function Input(props, { inputType }) {
           name={props.name}
           id={props.name}
           message={props.message}
-          autoComplete="on"
+          // autoComplete="on"
           disabled={props.disabled}
           // placeholder=
           {...register(props.name, {
-            required: props.disabled ? false : true,
+            required: props.disabled || props.required ? false : true,
             minLength: props.minLength,
             pattern: props.pattern,
             // /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/,

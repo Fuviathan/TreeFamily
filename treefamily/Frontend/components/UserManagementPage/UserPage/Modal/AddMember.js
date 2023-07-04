@@ -45,7 +45,7 @@ export default function AddMember({ isVisible, onClose }) {
     formData.momId = Number(formData.momId);
     formData.dadId = Number(formData.dadId);
     formData.partnerId = Number(formData.partnerId);
-    console.log(formData)
+    console.log(formData);
     const JSONdata = JSON.stringify(formData);
     const endpoint = "http://localhost:8080/member/create-member";
     const options = {
@@ -61,7 +61,7 @@ export default function AddMember({ isVisible, onClose }) {
     // console.log(a)
     if (response.status === 200) {
       alert("Thêm thành viên thành công");
-      onClose()
+      onClose();
     } else {
       const result = await response.json();
       alert(result.message);
@@ -146,6 +146,7 @@ export default function AddMember({ isVisible, onClose }) {
 
                     <Input
                       {...{
+                        required: true,
                         className: "sm:col-span-3",
                         title: "Số điện thoại",
                         type: "tel",
@@ -213,10 +214,8 @@ export default function AddMember({ isVisible, onClose }) {
                           disabled: "disabled",
                         }}
                       ></SelectInputFamily> */}
-                      <div className='sm:col-span-3'>
-                        <label
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
+                      <div className="sm:col-span-3">
+                        <label className="block text-sm font-medium leading-6 text-gray-900">
                           Họ tên cha
                         </label>
                         <div className="mt-2">
@@ -236,10 +235,8 @@ export default function AddMember({ isVisible, onClose }) {
                           disabled: "disabled",
                         }}
                       ></SelectInputFamily> */}
-                      <div className='sm:col-span-3'>
-                        <label
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
+                      <div className="sm:col-span-3">
+                        <label className="block text-sm font-medium leading-6 text-gray-900">
                           Họ tên mẹ
                         </label>
                         <div className="mt-2">
