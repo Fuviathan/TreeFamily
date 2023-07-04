@@ -7,14 +7,6 @@ import AddItemInCategory from "./Modal/AddItemInCategory";
 import SelectInput from "../../../UI/SelectInput";
 
 export default function MainPage({ pid }) {
-  const { data, error } = useSWR(
-    `http://localhost:8080/revenue-detail/get-all?idRevenueManagement=${pid}`
-  );
-  // if()
-
-  // const miniData = data.filter((object) => {
-  //   return (object.id = { pid });
-  // });
   // const year = miniData[0]?.year;
   const [addNewRevenue, setAddNewRevenue] = useState(false);
   // Lọc Thành viên đã đóng và chưa đóng
@@ -24,6 +16,13 @@ export default function MainPage({ pid }) {
     setFilterMember(event.target.value);
     console.log(event.target.value);
   };
+
+  const { data, error } = useSWR(
+    `http://localhost:8080/revenue-management/get-by-id/${pid}`
+  );
+  if (!data) {
+    return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;
+  }
 
   return (
     <>
@@ -63,7 +62,7 @@ export default function MainPage({ pid }) {
               </div>
             </div>
             <TableOfASingleCategory
-              data={data}
+              startDate={data.startDate}
               pid={pid}
               filterMember={filterMember}
             />
