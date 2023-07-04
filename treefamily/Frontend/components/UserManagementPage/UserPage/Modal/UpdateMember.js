@@ -66,38 +66,37 @@ export default function UpdateMember({ isVisible, onClose, person }) {
       formData.status = "";
     }
     // Check Dữ liệu cha,mẹ vợ chồng trước khi trả về
-    if (formData.momId === "") {
-      console.log(formData.momId);
+
+    if (formData.momId === null) {
       formData.momId = person.momId;
     } else if (formData.momId != person.momId) {
       console.log(formData.momId);
-      formData.momId = person.momId;
+      formData.momId = formData.momId;
     } else {
       console.log(formData.momId);
       formData.momId = person.momId;
     }
 
-    if (formData.momId === "") {
+    if (formData.dadId === null) {
       formData.dadId = person.dadId;
     } else if (formData.dadId != person.dadId) {
-      formData.dadId = person.dadId;
+      formData.dadId = formData.dadId;
     } else {
       formData.dadId = person.dadId;
     }
-
-    if (formData.momId === "") {
+    console.log(person.partnerId);
+    if (formData.partnerId === null) {
       formData.partnerId = person.partnerId;
     } else if (formData.partnerId != person.partnerId) {
-      formData.partnerId = person.partnerId;
+      formData.partnerId = formData.partnerId;
     } else {
       formData.partnerId = person.partnerId;
     }
 
-    // console.log(data.momId);
-    // console.log(data.dadId);
     formData.momId = Number(formData.momId);
     formData.dadId = Number(formData.dadId);
     formData.partnerId = Number(formData.partnerId);
+
     const JSONdata = JSON.stringify(formData);
     const endpoint = "http://localhost:8080/member/update";
     const options = {
@@ -217,6 +216,7 @@ export default function UpdateMember({ isVisible, onClose, person }) {
 
                     <Input
                       {...{
+                        required: true,
                         data: person.mobilePhoneNumber,
                         className: "sm:col-span-3",
                         title: "Số điện thoại",
