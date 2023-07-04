@@ -18,7 +18,7 @@ FamilyTree.templates.base.defs = `<g transform="matrix(0.05,0,0,0.05,-12,-9)" id
       <g style="cursor: pointer;" id="base_tree_menu_close">
           <circle cx="12.5" cy="12.5" r="12" fill="#F57C00"></circle>
           ${FamilyTree.icon.close(25, 25, "#fff", 0, 0)}
-      </g>            
+      </g>
       <g id="base_up">
           <circle cx="115" cy="30" r="15" fill="#fff" stroke="#b1b9be" stroke-width="1"></circle>
           ${FamilyTree.icon.ft(20, 80, "#b1b9be", 105, -10)}
@@ -38,13 +38,13 @@ FamilyTree.templates.main.defs = `<style>
                                         }
                                         .{randId}.male .bft-edit-form-header, .{randId}.male .bft-img-button{
                                             background-color: #6bb4df;
-                                        }        
+                                        }
                                         .{randId}.male div.bft-img-button:hover{
                                             background-color: #cb4aaf;
                                         }
                                         .{randId}.female .bft-edit-form-header, .{randId}.female .bft-img-button{
                                             background-color: #cb4aaf;
-                                        }        
+                                        }
                                         .{randId}.female div.bft-img-button:hover{
                                             background-color: #6bb4df;
                                         }
@@ -57,25 +57,25 @@ FamilyTree.templates.main.node =
 FamilyTree.templates.main.field_0 =
   "<text " +
   FamilyTree.attr.width +
-  ' ="250" style="font-size: 14px;" font-variant="all-small-caps" fill="white" x="125" y="16" text-anchor="middle">{val}</text>';
+  ' ="250" style="font-size: 14px; font-weight: 700" font-variant="Lucida Bright" fill="white" x="125" y="16" text-anchor="middle">{val}</text>';
 FamilyTree.templates.main.field_1 =
   "<text " +
   FamilyTree.attr.width +
-  ' ="160" data-text-overflow="multiline" style="font-size: 14px;" fill="black" x="100" y="66" text-anchor="start">{val}</text>';
+  ' ="160" data-text-overflow="multiline" style="font-size: 18px; font-weight: 700 ;font-family: Lucida Bright;" fill="black" x="100" y="66" text-anchor="start">{val}</text>';
 FamilyTree.templates.main.field_2 =
   "<text " +
   FamilyTree.attr.width +
-  ' ="160" style="font-size: 10px;" fill="#b1b9be" x="100" y="95" text-anchor="start">{val}</text>';
+  ' ="160" style="font-size: 10px; font-weight: 700 ; opacity:0.7" fill="black" x="100" y="95"  text-anchor="start">{val}</text>';
 FamilyTree.templates.main.field_3 =
   "<text " +
   FamilyTree.attr.width +
-  ' ="60" style="font-size: 12px;" fill="black" x="47" y="112" text-anchor="middle">{val}</text>';
+  ' ="60" style="font-size: 12px; font-weight: 700" fill="black" x="47" y="112" text-anchor="middle">{val}</text>';
 
 FamilyTree.templates.main.field_4 =
   "<text " +
   FamilyTree.attr.width +
   ' ="60" style="font-size: 12px;" fill="black" x="47" y="112" text-anchor="middle">{val}</text>';
-FamilyTree.templates.main.img_0 = `<use xlink:href="#base_img_0_stroke" /> 
+FamilyTree.templates.main.img_0 = `<use xlink:href="#base_img_0_stroke" />
        <circle id="base_img_0_stroke" fill="#b1b9be" cx="45" cy="62" r="37"/>
       <image preserveAspectRatio="xMidYMid slice" clip-path="url(#base_img_0)" xlink:href="{val}" x="10" y="26" width="72" height="72"></image>`;
 FamilyTree.templates.main_male = Object.assign({}, FamilyTree.templates.main);
@@ -83,7 +83,7 @@ FamilyTree.templates.main_male.node =
   '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" stroke-width="3" stroke="url(#hugos_grad_male)" rx="5" ry="5"></rect>' +
   '<rect x="0" y="0" height="20" width="{w}" fill="url(#hugos_grad_male)" stroke-width="1" stroke="url(#hugos_grad_male)" rx="5" ry="5"></rect>' +
   '<line x1="0" y1="20" x2="250" y2="20" stroke-width="5" stroke="url(#hugos_grad_male)"></line>';
-FamilyTree.templates.main_male.img_0 = `<use xlink:href="#base_img_0_stroke" /> 
+FamilyTree.templates.main_male.img_0 = `<use xlink:href="#base_img_0_stroke" />
        <circle id="base_img_0_stroke" fill="#6bb4df" cx="45" cy="62" r="37"/>
       <image preserveAspectRatio="xMidYMid slice" clip-path="url(#base_img_0)" xlink:href="{val}" x="10" y="26" width="72" height="72"></image>`;
 FamilyTree.templates.main_male_child = Object.assign(
@@ -101,7 +101,7 @@ FamilyTree.templates.main_female.node =
   '<rect x="0" y="0" height="{h}" width="{w}" background: "rgb(34,193,195)" fill="#fff" stroke-width="3" stroke="url(#hugo_grad_female)" rx="5" ry="5"></rect>' +
   '<rect x="0" y="0" height="20" width="{w}" fill="url(#hugo_grad_female)" stroke-width="1" stroke="url(#hugo_grad_female)" rx="5" ry="5"></rect>' +
   '<line x1="0" y1="20" x2="250" y2="20" stroke-width="5" stroke="url(#hugo_grad_female)"></line>';
-FamilyTree.templates.main_female.img_0 = `<use xlink:href="#base_img_0_stroke" /> 
+FamilyTree.templates.main_female.img_0 = `<use xlink:href="#base_img_0_stroke" />
        <circle id="base_img_0_stroke" fill="#cb4aaf" cx="45" cy="62" r="37"/>
       <image preserveAspectRatio="xMidYMid slice" clip-path="url(#base_img_0)" xlink:href="{val}" x="10" y="26" width="72" height="72"></image>`;
 FamilyTree.templates.main_female_child = Object.assign(
@@ -119,13 +119,13 @@ FamilyTree.templates.single.defs = `<style>
                                         }
                                         .{randId}.male .bft-edit-form-header, .{randId}.male .bft-img-button{
                                             background-color: #6bb4df;
-                                        }        
+                                        }
                                         .{randId}.male div.bft-img-button:hover{
                                             background-color: #cb4aaf;
                                         }
                                         .{randId}.female .bft-edit-form-header, .{randId}.female .bft-img-button{
                                             background-color: #cb4aaf;
-                                        }        
+                                        }
                                         .{randId}.female div.bft-img-button:hover{
                                             background-color: #6bb4df;
                                         }
@@ -151,7 +151,7 @@ FamilyTree.templates.single_male = Object.assign(
 );
 FamilyTree.templates.single_male.node =
   '<circle cx="100" cy="100" r="100" fill="white" stroke-width="3" stroke="#6bb4df" ></circle>';
-FamilyTree.templates.single_male.img_0 = `<use xlink:href="#base_img_1_stroke"/> 
+FamilyTree.templates.single_male.img_0 = `<use xlink:href="#base_img_1_stroke"/>
        <circle id="base_img_1_stroke" fill="#6bb4df" cx="100" cy="62" r="37"/>
       <image preserveAspectRatio="xMidYMid slice" clip-path="url(#base_img_1)" xlink:href="{val}" x="65" y="26" width="72" height="72"></image>`;
 FamilyTree.templates.single_female = Object.assign(
@@ -160,7 +160,7 @@ FamilyTree.templates.single_female = Object.assign(
 );
 FamilyTree.templates.single_female.node =
   '<circle cx="100" cy="100" r="100" fill="white" stroke-width="3" stroke="#cb4aaf" ></circle>';
-FamilyTree.templates.single_female.img_0 = `<use xlink:href="#base_img_1_stroke"/> 
+FamilyTree.templates.single_female.img_0 = `<use xlink:href="#base_img_1_stroke"/>
        <circle id="base_img_1_stroke" fill="#cb4aaf" cx="100" cy="62" r="37"/>
       <image preserveAspectRatio="xMidYMid slice" clip-path="url(#base_img_1)" xlink:href="{val}" x="65" y="26" width="72" height="72"></image>`;
 
@@ -208,16 +208,18 @@ export default class FamilyTreeChart extends Component {
         expandAll: false,
         fullScreen: true,
       },
-      align: FamilyTree.align.orientation,
+      // layout: FamilyTree.layout.treeLeftOffset,
+
+      align: FamilyTree.align.center,
       anim: { func: FamilyTree.anim.outBack, duration: 500 },
       nodeBinding: {
-        field_0: "name",
-        field_2: "gender",
-        field_1: "phone",
-        field_3: "ddate",
-        field_4: "ddate",
+        field_0: "role",
+        field_2: "bdate",
+        field_1: "name",
+        field_3: "career",
+        // field_4: "ddate",
         img_0: "img",
-        // align: FamilyTree.align.orientation,
+
         // enableSearch: false,
       },
 
@@ -235,6 +237,17 @@ export default class FamilyTreeChart extends Component {
         },
       },
       zoom: { speed: 130, smooth: 10 },
+    });
+
+    this.family.on("render-link", function (sender, args) {
+      if (args.cnode.ppid != undefined) {
+        args.html +=
+          '<use  xlink:href="#heart"  x="' +
+          args.p.xa +
+          '" y="' +
+          args.p.ya +
+          '" />';
+      }
     });
   }
 
