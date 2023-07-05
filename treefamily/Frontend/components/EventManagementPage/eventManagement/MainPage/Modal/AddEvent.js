@@ -13,11 +13,13 @@ export default function AddEvent({ isVisible, onClose }) {
     "http://localhost:8080/expense-management/get-all"
   );
 
-  const { data: user, error: userError } = useSWR("http://localhost:8080/member/get-all");
-  
+  const { data: user, error: userError } = useSWR(
+    "http://localhost:8080/member/get-all-by-age"
+  );
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [organizer, setOrganizer] = useState("");
+  const [isCheckedEvenType, setIsCheckedEvenType] = useState("");
 
   const method = useForm();
 
@@ -27,9 +29,13 @@ export default function AddEvent({ isVisible, onClose }) {
   if (!data) {
     return [];
   }
+
+  const changeTypeEvent = (event) => {
+    setIsCheckedEvenType(event.target.value);
+  };
   async function onSubmit(formData) {
-    formData.startTime = formData.startTime + ":00"
-    formData.endTime = formData.endTime + ":00"
+    formData.startTime = formData.startTime + ":00";
+    formData.endTime = formData.endTime + ":00";
     console.log(formData);
     const JSONdata = JSON.stringify(formData);
     const endpoint = "http://localhost:8080/event-management/create";
@@ -111,7 +117,8 @@ export default function AddEvent({ isVisible, onClose }) {
                         type: "time",
                         name: "startTime",
                       }}
-                    ></Input><Input
+                    ></Input>
+                    <Input
                       {...{
                         className: "sm:col-span-2",
                         title: "Giờ kết thúc",
@@ -139,11 +146,25 @@ export default function AddEvent({ isVisible, onClose }) {
                           { value: "Liên hoan gia đình" },
                           { value: "Lễ tang" },
                           { value: "Sự kiện truyền thống" },
+                          { value: "Khác*" },
                         ],
+                        onChange: changeTypeEvent,
                       }}
                     ></SelectInput>
 
-                    <SelectInput
+                    <If isTrue={isCheckedEvenType === "Khác*"}>
+                      <Input
+                        {...{
+                          data: " ",
+                          className: "sm:col-span-2",
+                          title: "Nhập loại sự kiện",
+                          name: "eventType",
+                          type: "text",
+                        }}
+                      ></Input>
+                    </If>
+
+                    {/* <SelectInput
                       {...{
                         className: "sm:col-span-2",
                         title: "Tình trạng",
@@ -153,11 +174,9 @@ export default function AddEvent({ isVisible, onClose }) {
                           { value: "Đang mở" },
                         ],
                       }}
-                    ></SelectInput>
-                    <div className='sm:col-span-3'>
-                      <label
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
+                    ></SelectInput> */}
+                    <div className="sm:col-span-3">
+                      <label className="block text-sm font-medium leading-6 text-gray-900">
                         Chi tiết sự kiện
                       </label>
                       <div className="mt-2">
@@ -167,10 +186,8 @@ export default function AddEvent({ isVisible, onClose }) {
                         />
                       </div>
                     </div>
-                    <div className='sm:col-span-3'>
-                      <label
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
+                    <div className="sm:col-span-3">
+                      <label className="block text-sm font-medium leading-6 text-gray-900">
                         Chú thích
                       </label>
                       <div className="mt-2">
@@ -180,7 +197,6 @@ export default function AddEvent({ isVisible, onClose }) {
                         />
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -206,7 +222,7 @@ export default function AddEvent({ isVisible, onClose }) {
             <AddExpense
               isVisible={showAddModal}
               onClose={() => setShowAddModal(false)}
-            // item={item}
+              // item={item}
             />
           </If>
         </div>
