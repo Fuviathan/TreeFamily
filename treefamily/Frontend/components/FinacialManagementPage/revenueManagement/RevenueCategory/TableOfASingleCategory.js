@@ -3,14 +3,10 @@ import { For, If } from "react-haiku";
 import useSWR from "swr";
 import ItemInCategory from "./ItemInCategory";
 
-export default function TableOfASingleCategory({
-  pid,
-  startDate,
-  filterMember,
-}) {
+export default function TableOfASingleCategory({ pid, year, filterMember }) {
   console.log(pid);
   const { data, error } = useSWR(
-    `http://localhost:8080/revenue-detail/get-all?idRevenueManagement=${pid}&startDate=${startDate}`
+    `http://localhost:8080/revenue-detail/get-all?idRevenueManagement=${pid}`
   );
   if (!data) {
     return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;

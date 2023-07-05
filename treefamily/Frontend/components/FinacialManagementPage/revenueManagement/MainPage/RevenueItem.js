@@ -23,7 +23,7 @@ export default function RevenueItem({ item, index }) {
         {item.revenuePerPerson} VNĐ
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {item.status}
+        {item.status === true ? "Đang mở " : "Đã đóng"}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
         {item.startDate}
