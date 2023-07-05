@@ -8,14 +8,9 @@ import ComboBoxPermission from "./miniComponents/ComboBoxPermission";
 
 export default function AddUserPermission({ isVisible, onClose }) {
   const method = useForm();
-  const { data: user, error: userError } = useSWR("localhost:8080/member/get-all-by-age");
-  const { data: permission, error: permissionError} = useSWR("http://localhost:8080/permission-management/get-all")
-  if (!user) {
-    return <></>;
-  }
-  if (!permission) {
-    return <></>;
-  }
+  const { data: user, error: userError } = useSWR("http://localhost:8080/member/get-all-by-age");
+  const { data: permission, error: permissionError } = useSWR("http://localhost:8080/permission-management/get-all")
+
   async function onSubmit(formData) {
     formData.memberId = Number(formData.memberId);
     const JSONdata = JSON.stringify(formData);
@@ -37,7 +32,12 @@ export default function AddUserPermission({ isVisible, onClose }) {
       alert(result.message);
     }
   }
-
+  if (!user) {
+    return <></>;
+  }
+  if (!permission) {
+    return <></>;
+  }
   if (!isVisible) return <></>;
   return (
     <Dialog

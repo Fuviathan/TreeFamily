@@ -88,6 +88,7 @@ export default function ViewUserPermission({ isVisible, onClose, item }) {
               <div className="w-full border-t"></div>
               <div className="flex items-center self-end justify-end mt-6 mr-10 gap-x-6">
                 <button
+                  onClick={() => onClose()}
                   type="button"
                   className="px-6 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
