@@ -123,7 +123,7 @@ export default function ViewPermission({ isVisible, onClose, item }) {
                                             <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("updateFinancial")} disabled type='checkbox'></input>
                                         </div>
                                         <div className="flex col-span-1 ml-8">
-                                            <div className="text-base font-medium leading-6 text-gray-900">Sửa</div>
+                                            <div className="text-base font-medium leading-6 text-gray-900">Xóa</div>
                                             <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("deleteFinancial")} disabled type='checkbox'></input>
                                         </div>
                                     </div>

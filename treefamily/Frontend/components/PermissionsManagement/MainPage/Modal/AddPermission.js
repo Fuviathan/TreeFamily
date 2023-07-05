@@ -133,7 +133,7 @@ export default function AddPermission({ isVisible, onClose }) {
                       <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("updateFinancial")} type='checkbox'></input>
                     </div>
                     <div className="flex col-span-1 ml-8">
-                      <div className="text-base font-medium leading-6 text-gray-900">Sửa</div>
+                      <div className="text-base font-medium leading-6 text-gray-900">Xóa</div>
                       <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("deleteFinancial")} type='checkbox'></input>
                     </div>
                   </div>
