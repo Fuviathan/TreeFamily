@@ -2,7 +2,6 @@
 import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-
 import DetailEvent from "./Modal/DetailEvent";
 import UpdateEvent from "./Modal/UpdateEvent";
 import { If } from "react-haiku";

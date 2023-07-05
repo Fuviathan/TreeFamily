@@ -2,9 +2,6 @@
 import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-// import DetailRevenue from "./Modal/DetailRevenue";
-import UpdateItemInCategory from "./Modal/UpdateItemInCategory";
-// import UpdateRevenue from "./Modal/UpdateRevenue";
 import { If } from "react-haiku";
 
 function classNames(...classes) {

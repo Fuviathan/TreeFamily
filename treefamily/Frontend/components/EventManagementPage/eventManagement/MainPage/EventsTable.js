@@ -1,5 +1,4 @@
 import React from "react";
-import RevenueItem from "./EventItem";
 import { For } from "react-haiku";
 import useSWR from "swr";
 import EventItem from "./EventItem";

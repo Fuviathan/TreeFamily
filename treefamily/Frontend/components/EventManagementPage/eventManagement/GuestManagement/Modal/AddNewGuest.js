@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
-import Input from "../../../../UI/Input";
-import SelectInput from "../../../../UI/SelectInput";
 
 export default function AddNewGuest({ isVisible, onClose, id }) {
   const method = useForm({
@@ -35,6 +33,10 @@ export default function AddNewGuest({ isVisible, onClose, id }) {
   }
 
   if (!isVisible) return <></>;
+  const [isChecked, setIsChecked] = useState(false)
+  const handleOnChange = () => {
+    setIsChecked(!isChecked)
+  }
   return (
     <Dialog
       as="div"
@@ -70,17 +72,11 @@ export default function AddNewGuest({ isVisible, onClose, id }) {
                           {...method.register("chooseAll")}
                           className="w-8 h-6 text-indigo-600 border-gray-300 rounded-xl focus:ring-indigo-600"
                           type="checkbox"
+                          checked={isChecked}
+                          onChange={handleOnChange}
                         />
                       </div>
                     </div>
-                    {/* <SelectInput
-                      {...{
-                        className: "sm:col-span-1 mt-2",
-                        name: "gender",
-                        title: "Giới tính",
-                        dataOption: [{ value: "Nam" }, { value: "Nữ" }],
-                      }}
-                    ></SelectInput> */}
                     <div className="mt-2 sm:col-span-1">
                       <label
                         className="block text-sm font-medium leading-6 text-gray-900"
@@ -89,6 +85,7 @@ export default function AddNewGuest({ isVisible, onClose, id }) {
                       </label>
                       <div className="mt-4">
                         <select
+                          disabled = {isChecked}
                           {...method.register('gender')}
                           className="block w-full px-4 py-2 text-gray-900 border-0 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
@@ -111,11 +108,12 @@ export default function AddNewGuest({ isVisible, onClose, id }) {
                         Độ tuổi
                       </label>
                       <div className="grid w-full grid-cols-3">
-                        <input {...method.register('startAge')} type='number' className="col-span-1 px-4 py-2 mt-4 text-gray-900 border-0 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></input>
+                         
+                        <input disabled = {isChecked} {...method.register('startAge')} type='number' className="col-span-1 px-4 py-2 mt-4 text-gray-900 border-0 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></input>
                         <div className="col-span-1 mt-6 text-lg gap-x-6">
                           Đến
                         </div>
-                        <input {...method.register('endAge')} type='number' className="col-span-1 px-4 py-2 mt-4 text-gray-900 border-0 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></input>
+                        <input disabled = {isChecked} {...method.register('endAge')} type='number' className="col-span-1 px-4 py-2 mt-4 text-gray-900 border-0 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></input>
                       </div>
 
                     </div>

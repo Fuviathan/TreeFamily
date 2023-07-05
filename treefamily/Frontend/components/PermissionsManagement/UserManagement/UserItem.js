@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { If } from "react-haiku";
 import DropDownUserPermission from "./DropDownUserPermission";
-import UpdateUserPermission from "./Modal/UpdateExpense";
+import UpdateUserPermission from "./Modal/UpdateUserPermission";
 
 export default function UserItem({ item, index }) {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
