@@ -1,16 +1,24 @@
 import BaseTemplate from "../components/BaseTemplate";
 import FamilyTreChart from "../components/UserManagementPage/FamilyTreeChart";
+import { useState } from "react";
 import useSWR from "swr";
+
 export default function displayTypeTree() {
-  const { data, error } = useSWR("http://localhost:8080/member/get-all");
-  if (!data) {
+  const { data: fetchedData, error: fetchError } = useSWR(
+    "http://localhost:8080/member/get-all"
+  );
+
+  if (!fetchedData) {
     return (
       <div className="flex flex-col mt-8 h-[80vh] overflow-y-scroll"></div>
     );
   }
+
+  const sortedData = [...fetchedData].sort((a, b) => a.id - b.id);
   const imgNam = "https://cdn-icons-png.flaticon.com/512/3233/3233483.png";
   const imgNu = "https://cdn-icons-png.flaticon.com/512/3233/3233486.png";
-  let dataCv = data.map((member, index) => {
+
+  let dataCv = sortedData.map((member, index) => {
     if (
       member.dadId === null ||
       member.momId === null ||
@@ -30,11 +38,9 @@ export default function displayTypeTree() {
             : "female",
         career: member.career,
         bdate: `Ngày sinh: ${member.dateOfBirth}`,
-
-        // tags: ["family_single_female"],
         img: member.gender === "Nam" ? imgNam : imgNu,
       };
-    } else if (index > 0 && data[index - 1].partnerId === member.id) {
+    } else if (index > 0 && sortedData[index - 1].partnerId === member.id) {
       return {
         id: member.id,
         role: member.role,
@@ -48,8 +54,6 @@ export default function displayTypeTree() {
             : "female",
         career: member.career,
         bdate: `Ngày sinh: ${member.dateOfBirth}`,
-
-        // tags: ["family_single_female"],
         img: member.gender === "Nam" ? imgNam : imgNu,
       };
     } else {
@@ -69,12 +73,11 @@ export default function displayTypeTree() {
         career: member.career,
         bdate: `Ngày sinh: ${member.dateOfBirth}`,
         img: member.gender === "Nam" ? imgNam : imgNu,
-        // tags: ["family_single_female"],
       };
     }
   });
+
   console.log(dataCv);
-  // return <AddMember></AddMember>;
 
   return (
     <BaseTemplate>
@@ -85,7 +88,7 @@ export default function displayTypeTree() {
       >
         <a href="/home">Xem dạng bảng</a>
       </button>
-      <FamilyTreChart nodes={dataCv}></FamilyTreChart>
+      <FamilyTreChart nodes={dataCv.slice()}></FamilyTreChart>
     </BaseTemplate>
   );
 }
