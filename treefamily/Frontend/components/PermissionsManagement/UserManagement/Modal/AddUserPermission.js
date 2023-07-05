@@ -4,36 +4,38 @@ import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../UI/Input";
 import useSWR from "swr";
 import ComboBoxFamily from "../../../UserManagementPage/UserPage/Modal/miniComponents/ComboBoxFamily";
+import ComboBoxPermission from "./miniComponents/ComboBoxPermission";
 
 export default function AddUserPermission({ isVisible, onClose }) {
   const method = useForm();
-  const { data: user, error: userError } = useSWR("http://localhost:8080/member/get-all");
+  const { data: user, error: userError } = useSWR("localhost:8080/member/get-all-by-age");
+  const { data: permission, error: permissionError} = useSWR("http://localhost:8080/permission-management/get-all")
   if (!user) {
     return <></>;
   }
-
+  if (!permission) {
+    return <></>;
+  }
   async function onSubmit(formData) {
     formData.memberId = Number(formData.memberId);
-
-    console.log(formData);
-    // const JSONdata = JSON.stringify(formData);
-    // const endpoint = "http://localhost:8080/expense-management/create";
-    // const options = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //   },
-    //   body: JSONdata,
-    // };
-    // const response = await fetch(endpoint, options);
-    // if (response.status === 200) {
-    //   alert("Thêm khoản chi mới thành công");
-    //   onClose();
-    // } else {
-    //   const result = await response.json();
-    //   alert(result.message);
-    // }
+    const JSONdata = JSON.stringify(formData);
+    const endpoint = "http://localhost:8080/member/sign-up";
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSONdata,
+    };
+    const response = await fetch(endpoint, options);
+    if (response.status === 200) {
+      alert("Thêm tài khoản mới thành công");
+      onClose();
+    } else {
+      const result = await response.json();
+      alert(result.message);
+    }
   }
 
   if (!isVisible) return <></>;
@@ -73,14 +75,14 @@ export default function AddUserPermission({ isVisible, onClose }) {
                         name: "memberId",
                       }}
                     ></ComboBoxFamily>
-                    <ComboBoxFamily
+                    <ComboBoxPermission
                       {...{
-                        title: "Thành viên trong gia phả",
-                        people: user,
+                        title: "Quyền",
+                        people: permission,
                         className: "sm:col-span-3",
-                        name: "memberId",
+                        name: "role",
                       }}
-                    ></ComboBoxFamily>
+                    ></ComboBoxPermission>
                     <Input
                       {...{
                         className: "sm:col-span-3",

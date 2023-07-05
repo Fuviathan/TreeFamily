@@ -2,15 +2,32 @@
 import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import UpdateSponsor from "./Modal/UpdateExpense";
+import UpdateUserPermission from "./Modal/UpdateUserPermission";
 import { If } from "react-haiku";
+import ViewUserPermission from "./Modal/ViewUserPermission";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+const removeUserPermission = async (name) => {
+  const endpoint = `http://localhost:8080/member/delete-account?userName=${name}`;
+  const options = {
+    method: "DELETE",
+    redirect: "follow",
+  };
+  const response = await fetch(endpoint, options);
+  if (response.status === 204) {
+    alert("Xóa thành công");
+  } else {
+    const result = await response.json();
+    alert(result)
+  }
+};
+
 export default function DropDownUserPermission({ item }) {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showDetailModal, setShowDetailModal] = useState(false);
   return (
     <>
       <Menu as="div" className="relative inline-block text-left">
@@ -37,9 +54,8 @@ export default function DropDownUserPermission({ item }) {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick={(e) => {
-                      setShowUpdateModal(true);
-                      e.stopPropagation();
+                    onClick={() => {
+                      setShowDetailModal(true);
                     }}
                     className={classNames(
                       active ? "bg-gray-300 text-gray-900" : "text-gray-700",
@@ -53,9 +69,8 @@ export default function DropDownUserPermission({ item }) {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick={(e) => {
+                    onClick={() => {
                       setShowUpdateModal(true);
-                      e.stopPropagation();
                     }}
                     className={classNames(
                       active ? "bg-gray-300 text-gray-900" : "text-gray-700",
@@ -69,9 +84,8 @@ export default function DropDownUserPermission({ item }) {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick={(e) => {
-                      setShowUpdateModal(true);
-                      e.stopPropagation();
+                    onClick={() => {
+                      removeUserPermission(item.userName)
                     }}
                     className={classNames(
                       active ? "bg-gray-300 text-gray-900" : "text-gray-700",
@@ -87,9 +101,16 @@ export default function DropDownUserPermission({ item }) {
         </Transition>
       </Menu>
       <If isTrue={showUpdateModal}>
-        <UpdateSponsor
+        <UpdateUserPermission
           isVisible={showUpdateModal}
           onClose={() => setShowUpdateModal(false)}
+          item={item}
+        />
+      </If>
+      <If isTrue={showDetailModal}>
+        <ViewUserPermission
+          isVisible={showDetailModal}
+          onClose={() => setShowDetailModal(false)}
           item={item}
         />
       </If>
