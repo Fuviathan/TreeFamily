@@ -3,15 +3,22 @@ import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../../UI/Input";
 import ComboBoxFamily from "../../../../UserManagementPage/UserPage/Modal/miniComponents/ComboBoxFamily";
-import useSWR from 'swr'
+import { If } from "react-haiku";
+import SelectInput from "../../../../UI/SelectInput";
+import useSWR from "swr";
 
 export default function UpdateEvent({ isVisible, onClose, item }) {
-  const { data: user, error: userError } = useSWR("http://localhost:8080/member/get-all");
+  const [isCheckedEvenType, setIsCheckedEvenType] = useState("");
+
+  const { data: user, error: userError } = useSWR(
+    "http://localhost:8080/member/get-all-by-age"
+  );
   const method = useForm({
     defaultValues: {
       id: item.id,
       year: item.year,
       eventDate: item.eventDate,
+      memberId: item.memberId,
       revenueName: item.revenueName,
       address: item.address,
       eventType: item.eventType,
@@ -22,6 +29,10 @@ export default function UpdateEvent({ isVisible, onClose, item }) {
       startTime: item.startTime,
     },
   });
+
+  const changeTypeEvent = (event) => {
+    setIsCheckedEvenType(event.target.value);
+  };
 
   async function onSubmit(formData) {
     formData.id = Number(formData.id);
@@ -46,7 +57,7 @@ export default function UpdateEvent({ isVisible, onClose, item }) {
     }
   }
   if (!user) {
-    return <></>
+    return <></>;
   }
   return (
     <Dialog
@@ -90,6 +101,7 @@ export default function UpdateEvent({ isVisible, onClose, item }) {
                     ></Input>
                     <ComboBoxFamily
                       {...{
+                        data: item.memberId,
                         title: "Người quản lý sự kiện",
                         people: user,
                         className: "sm:col-span-2",
@@ -136,26 +148,59 @@ export default function UpdateEvent({ isVisible, onClose, item }) {
                         name: "address",
                       }}
                     ></Input>
-                    <Input
+                    <SelectInput
                       {...{
+                        // data: item.eventType,
                         className: "sm:col-span-2",
                         title: "Loại sự kiện",
-                        type: "text",
                         name: "eventType",
+                        dataOption: [
+                          { value: "Hội thảo" },
+                          { value: "Lễ kỷ niệm" },
+                          { value: "Họp gia đình" },
+                          { value: "Liên hoan gia đình" },
+                          { value: "Lễ tang" },
+                          { value: "Sự kiện truyền thống" },
+                          { value: "Khác*" },
+                          {
+                            value: `${
+                              item.eventType !== "Hội thảo" &&
+                              item.eventType !== "Lễ kỷ niệm" &&
+                              item.eventType !== "Họp gia đình" &&
+                              item.eventType !== "Liên hoan gia đình" &&
+                              item.eventType !== "Lễ tang" &&
+                              item.eventType !== "Sự kiện truyền thống"
+                                ? item.eventType
+                                : ""
+                            }`,
+                          },
+                        ],
+                        onChange: changeTypeEvent,
                       }}
-                    ></Input>
-                    <Input
+                    ></SelectInput>
+
+                    <If isTrue={isCheckedEvenType === "Khác*"}>
+                      <Input
+                        {...{
+                          data: "",
+                          className: "sm:col-span-2",
+                          title: "Nhập loại sự kiện",
+                          name: "eventType",
+                          type: "text",
+                        }}
+                      ></Input>
+                    </If>
+
+                    {/* <Input
                       {...{
                         className: "sm:col-span-2",
                         title: "Tình trạng",
                         type: "text",
                         name: "status",
                       }}
-                    ></Input>
-                    <div className='sm:col-span-3'>
-                      <label
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
+                    ></Input> */}
+                    <div className="sm:col-span-3">
+                      <label className="block text-sm font-medium leading-6 text-gray-900">
                         Chi tiết sự kiện
                       </label>
                       <div className="mt-2">
@@ -165,10 +210,8 @@ export default function UpdateEvent({ isVisible, onClose, item }) {
                         />
                       </div>
                     </div>
-                    <div className='sm:col-span-3'>
-                      <label
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
+                    <div className="sm:col-span-3">
+                      <label className="block text-sm font-medium leading-6 text-gray-900">
                         Chú thích
                       </label>
                       <div className="mt-2">
