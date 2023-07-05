@@ -3,7 +3,7 @@ import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { useFormContext } from "react-hook-form";
 
-export default function ComboBoxFamily(props) {
+export default function ComboBoxPermission(props) {
   const people = props.people;
   const { register, setValue } = useFormContext({});
 
@@ -19,7 +19,7 @@ export default function ComboBoxFamily(props) {
       ? people
       : people.filter((person) =>
           removeVietnameseAccent(
-            person.fullName.toLowerCase().replace(/\s+/g, "")
+            person.permissionGroupName.toLowerCase().replace(/\s+/g, "")
           ).includes(
             removeVietnameseAccent(query.toLowerCase().replace(/\s+/g, ""))
           )
@@ -40,7 +40,7 @@ export default function ComboBoxFamily(props) {
 
   const handleSelectedChange = (value) => {
     setSelected(value);
-    setValue(props.name, value.fullName);
+    setValue(props.name, value.permissionGroupName);
   };
 
   return (
@@ -63,7 +63,7 @@ export default function ComboBoxFamily(props) {
               <Combobox.Input
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 px-4"
                 // className="w-full py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 border-none focus:ring-0"
-                displayValue={(person) => person.fullName}
+                displayValue={(person) => person.permissionGroupName}
                 onChange={(event) => setQuery(event.target.value)}
 
                 // defaultValue={props.data}
@@ -105,7 +105,7 @@ export default function ComboBoxFamily(props) {
                               selected ? "font-medium" : "font-normal"
                             }`}
                           >
-                            {person.fullName}
+                            {person.permissionGroupName}
                           </span>
                           {selected ? (
                             <span

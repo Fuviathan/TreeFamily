@@ -2,50 +2,29 @@ import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../UI/Input";
-import SelectInput from "../../../UI/SelectInput";
+import useSWR from "swr";
+import ComboBoxFamily from "../../../UserManagementPage/UserPage/Modal/miniComponents/ComboBoxFamily";
+import ComboBoxPermission from "./miniComponents/ComboBoxPermission";
 
-export default function UpdateUserPermission({ isVisible, onClose, item }) {
+export default function ViewUserPermission({ isVisible, onClose, item }) {
   const method = useForm({
     defaultValues: {
-      id: item.id,
-      year: item.year,
-      expenseName: item.expenseName,
-      expenseManager: item.expenseManager,
+      role: item.role,
+      fullName: item.fullName,
+      userName: item.userName,
+      password: item.password,
     },
   });
-  async function onSubmit(formData) {
-    formData.id = Number(formData.id);
-    formData.year = Number(formData.year);
-    const JSONdata = JSON.stringify(formData);
-    const endpoint = "http://localhost:8080/expense-management/update";
-    const options = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSONdata,
-    };
-    const response = await fetch(endpoint, options);
-    if (response.status === 200) {
-      alert("Sửa khoản thu thành công");
-      onClose();
-    } else {
-      const result = await response.json();
-      alert(result.message);
-    }
-  }
+  async function onSubmit(formData) {}
+  if (!isVisible) return <></>;
   return (
     <Dialog
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
       as="div"
       className="fixed inset-0 z-20"
       open={isVisible}
       onClose={onClose}
     >
-      <div className="fixed inset-0 flex px-4 pt-4 pb-20 text-center bg-gray-500 bg-opacity-75 sm:block sm:p-0">
+      <div className="fixed inset-0 flex px-4 pt-4 pb-20 text-center bg-gray-500 bg-opacity-75 sm:block sm:p-0 ">
         <div className="z-20 flex items-center justify-center h-full ">
           <FormProvider {...method}>
             <form
@@ -58,37 +37,49 @@ export default function UpdateUserPermission({ isVisible, onClose, item }) {
                     as="h2"
                     className="text-base font-semibold leading-7 text-gray-900"
                   >
-                    Sửa khoản chi
+                    Thêm tài khoản thành viên
                   </Dialog.Title>
 
                   <div className="mt-1 text-sm leading-6 text-gray-600">
-                    Sửa các thông tin của khoản chi
+                    Nhập thông tin cho tài khoản thành viên
                   </div>
 
-                  <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <Input
+                  <div className="grid grid-cols-1 pb-24 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
+                  <Input
                       {...{
                         className: "sm:col-span-3",
-                        title: "Năm",
+                        title: "Tên thành viên",
                         type: "text",
-                        name: "year",
-                        minLength: 4,
+                        name: "fullName",
+                        disabled: "disabled"
                       }}
                     ></Input>
                     <Input
                       {...{
                         className: "sm:col-span-3",
-                        title: "Tên khoản chi",
+                        title: "Vai trò",
                         type: "text",
-                        name: "expenseName",
+                        name: "role",
+                        disabled: "disabled"
                       }}
                     ></Input>
                     <Input
                       {...{
                         className: "sm:col-span-3",
-                        title: "Tên người quản lý khoản chi",
+                        title: "Tên tài khoản",
                         type: "text",
-                        name: "expenseManager",
+                        name: "userName",
+                        disabled: "disabled"
+                      }}
+                    ></Input>
+
+                    <Input
+                      {...{
+                        className: "sm:col-span-3",
+                        title: "Mật khẩu",
+                        type: "text",
+                        name: "password",
+                        disabled: "disabled"
                       }}
                     ></Input>
                   </div>
@@ -98,16 +89,9 @@ export default function UpdateUserPermission({ isVisible, onClose, item }) {
               <div className="flex items-center self-end justify-end mt-6 mr-10 gap-x-6">
                 <button
                   type="button"
-                  onClick={() => onClose()}
-                  className="px-3 py-2 text-sm font-semibold text-red-500 bg-white border border-red-500 rounded-md shadow-sm hover:bg-red-500 hover:text-white "
-                >
-                  Hủy bỏ
-                </button>
-                <button
-                  type="submit"
                   className="px-6 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Lưu
+                  Đóng
                 </button>
               </div>
             </form>

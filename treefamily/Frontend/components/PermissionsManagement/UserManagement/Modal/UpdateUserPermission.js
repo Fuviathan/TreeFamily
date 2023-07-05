@@ -6,9 +6,16 @@ import useSWR from "swr";
 import ComboBoxFamily from "../../../UserManagementPage/UserPage/Modal/miniComponents/ComboBoxFamily";
 import ComboBoxPermission from "./miniComponents/ComboBoxPermission";
 
-export default function AddUserPermission({ isVisible, onClose }) {
-  const method = useForm();
-  const { data: user, error: userError } = useSWR("localhost:8080/member/get-all-by-age");
+export default function UpdateUserPermission({ isVisible, onClose, item }) {
+  const method = useForm({
+    defaultValues: {
+      role: item.role,
+      userName: item.userName,
+      password: item.password,
+      memberId: item.memberId,
+    },
+  });
+  const { data: user, error: userError } = useSWR("http://localhost:8080/member/get-all-by-age");
   const { data: permission, error: permissionError} = useSWR("http://localhost:8080/permission-management/get-all")
   if (!user) {
     return <></>;
@@ -19,7 +26,7 @@ export default function AddUserPermission({ isVisible, onClose }) {
   async function onSubmit(formData) {
     formData.memberId = Number(formData.memberId);
     const JSONdata = JSON.stringify(formData);
-    const endpoint = "http://localhost:8080/member/sign-up";
+    const endpoint = "http://localhost:8080/member/update-account";
     const options = {
       method: "POST",
       headers: {
@@ -30,7 +37,7 @@ export default function AddUserPermission({ isVisible, onClose }) {
     };
     const response = await fetch(endpoint, options);
     if (response.status === 200) {
-      alert("Thêm tài khoản mới thành công");
+      alert("Sửa tài khoản thành công");
       onClose();
     } else {
       const result = await response.json();
@@ -59,7 +66,7 @@ export default function AddUserPermission({ isVisible, onClose }) {
                     as="h2"
                     className="text-base font-semibold leading-7 text-gray-900"
                   >
-                    Thêm tài khoản thành viên
+                    Sửa tài khoản thành viên
                   </Dialog.Title>
 
                   <div className="mt-1 text-sm leading-6 text-gray-600">
@@ -73,6 +80,7 @@ export default function AddUserPermission({ isVisible, onClose }) {
                         people: user,
                         className: "sm:col-span-3",
                         name: "memberId",
+                        data: item.memberId,
                       }}
                     ></ComboBoxFamily>
                     <ComboBoxPermission
