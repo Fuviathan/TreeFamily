@@ -7,7 +7,6 @@ export default function TableOfGuests({ pid }) {
   const { data, error } = useSWR(
     `http://localhost:8080/guest-management/get-all-an-event?eventManagementId=${pid}`
   );
-  console.log(data)
   if (!Array.isArray(data)) {
     return (
       <div className="flex flex-col mt-8 overflow-y-scroll h-80vh">
