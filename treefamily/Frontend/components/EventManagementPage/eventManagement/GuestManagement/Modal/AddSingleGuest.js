@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
-import useSWR from 'swr'
+import useSWR from "swr";
 import ComboBoxFamily from "../../../../UserManagementPage/UserPage/Modal/miniComponents/ComboBoxFamily";
 
 export default function AddSingleGuest({ isVisible, onClose, id }) {
@@ -10,28 +10,32 @@ export default function AddSingleGuest({ isVisible, onClose, id }) {
       eventManagementId: id,
     },
   });
-  const { data: user, error: userError } = useSWR("http://localhost:8080/member/get-all-by-age");
+  const { data: user, error: userError } = useSWR(
+    "http://localhost:8080/member/get-all"
+  );
   async function onSubmit(formData) {
-    formData.eventManagementId = Number(formData.eventManagementId)
-    console.log(formData)
-    // const JSONdata = JSON.stringify(formData);
-    // const endpoint = "http://localhost:8080/guest-management/set-up-guest";
-    // const options = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //   },
-    //   body: JSONdata,
-    // };
-    // const response = await fetch(endpoint, options);
-    // if (response.status === 200) {
-    //   alert("Thêm khách mời thành công");
-    //   onClose();
-    // } else {
-    //   const result = await response.json();
-    //   alert(result.message);
-    // }
+    formData.eventManagementId = Number(formData.eventManagementId);
+    formData.memberId = Number(formData.memberId);
+    console.log(formData);
+    const JSONdata = JSON.stringify(formData);
+    console.log(JSONdata);
+    const endpoint = "http://localhost:8080/guest-management/create";
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSONdata,
+    };
+    const response = await fetch(endpoint, options);
+    if (response.status === 200) {
+      alert("Thêm khách mời thành công");
+      onClose();
+    } else {
+      const result = await response.json();
+      alert(result.message);
+    }
   }
   if (!user) {
     return <></>;
