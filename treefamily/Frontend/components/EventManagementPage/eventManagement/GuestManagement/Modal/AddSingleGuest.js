@@ -1,41 +1,39 @@
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
-import Input from "../../../UI/Input";
-import useSWR from "swr";
-import ComboBoxFamily from "../../../UserManagementPage/UserPage/Modal/miniComponents/ComboBoxFamily";
-import ComboBoxPermission from "./miniComponents/ComboBoxPermission";
+import useSWR from 'swr'
+import ComboBoxFamily from "../../../../UserManagementPage/UserPage/Modal/miniComponents/ComboBoxFamily";
 
-export default function AddUserPermission({ isVisible, onClose }) {
-  const method = useForm();
+export default function AddSingleGuest({ isVisible, onClose, id }) {
+  const method = useForm({
+    defaultValues: {
+      eventManagementId: id,
+    },
+  });
   const { data: user, error: userError } = useSWR("http://localhost:8080/member/get-all-by-age");
-  const { data: permission, error: permissionError } = useSWR("http://localhost:8080/permission-management/get-all")
-
   async function onSubmit(formData) {
-    formData.memberId = Number(formData.memberId);
-    const JSONdata = JSON.stringify(formData);
-    const endpoint = "http://localhost:8080/member/sign-up";
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSONdata,
-    };
-    const response = await fetch(endpoint, options);
-    if (response.status === 200) {
-      alert("Thêm tài khoản mới thành công");
-      onClose();
-    } else {
-      const result = await response.json();
-      alert(result.message);
-    }
+    formData.eventManagementId = Number(formData.eventManagementId)
+    console.log(formData)
+    // const JSONdata = JSON.stringify(formData);
+    // const endpoint = "http://localhost:8080/guest-management/set-up-guest";
+    // const options = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //   },
+    //   body: JSONdata,
+    // };
+    // const response = await fetch(endpoint, options);
+    // if (response.status === 200) {
+    //   alert("Thêm khách mời thành công");
+    //   onClose();
+    // } else {
+    //   const result = await response.json();
+    //   alert(result.message);
+    // }
   }
   if (!user) {
-    return <></>;
-  }
-  if (!permission) {
     return <></>;
   }
   if (!isVisible) return <></>;
@@ -59,11 +57,11 @@ export default function AddUserPermission({ isVisible, onClose }) {
                     as="h2"
                     className="text-base font-semibold leading-7 text-gray-900"
                   >
-                    Thêm tài khoản thành viên
+                    Thêm khách mời
                   </Dialog.Title>
 
                   <div className="mt-1 text-sm leading-6 text-gray-600">
-                    Nhập thông tin cho tài khoản thành viên
+                    Lựa chọn khách mời cần thêm
                   </div>
 
                   <div className="grid grid-cols-1 pb-24 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -71,41 +69,15 @@ export default function AddUserPermission({ isVisible, onClose }) {
                       {...{
                         title: "Thành viên trong gia phả",
                         people: user,
-                        className: "sm:col-span-3",
+                        className: "sm:col-span-6",
                         name: "memberId",
                       }}
                     ></ComboBoxFamily>
-                    <ComboBoxPermission
-                      {...{
-                        title: "Quyền",
-                        people: permission,
-                        className: "sm:col-span-3",
-                        name: "role",
-                      }}
-                    ></ComboBoxPermission>
-                    <Input
-                      {...{
-                        className: "sm:col-span-3",
-                        title: "Tên tài khoản",
-                        type: "text",
-                        name: "userName",
-                        minLength: 4,
-                      }}
-                    ></Input>
-
-                    <Input
-                      {...{
-                        className: "sm:col-span-3",
-                        title: "Mật khẩu",
-                        type: "text",
-                        name: "password",
-                      }}
-                    ></Input>
                   </div>
                 </div>
               </div>
               <div className="w-full border-t"></div>
-              <div className="flex items-center self-end justify-end mt-6 mr-10 gap-x-6">
+              <div className="flex items-center mt-6 mr-10 justify-evenly gap-x-6">
                 <button
                   type="button"
                   onClick={() => onClose()}
