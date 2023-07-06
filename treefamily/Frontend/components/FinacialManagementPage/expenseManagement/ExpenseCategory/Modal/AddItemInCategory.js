@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../../UI/Input";
+import useSWR from "swr";
+import ComboBoxFamily from "../../MainPage/Modal/miniComponents/ComboBoxFamily";
 import SelectInput from "../../../../UI/SelectInput";
 
 export default function AddRevenue({ isVisible, onClose, id }) {
@@ -10,6 +12,15 @@ export default function AddRevenue({ isVisible, onClose, id }) {
       expenseManagementId: id,
     },
   });
+
+  const { data: member, error: memberError } = useSWR(
+    "http://localhost:8080/member/get-all-by-age"
+  );
+
+  if (!member) {
+    return <></>;
+  }
+
   async function onSubmit(formData) {
     formData.expenseMoney = Number(formData.expenseMoney);
     formData.expenseManagementId = Number(formData.expenseManagementId);
@@ -65,19 +76,27 @@ export default function AddRevenue({ isVisible, onClose, id }) {
                     <Input
                       {...{
                         className: "sm:col-span-3",
-                        title: "Tên khoản chi",
+                        title: "Tên khoản giao dịch",
                         type: "text",
                         name: "expenseName",
                       }}
                     ></Input>
-                    <Input
+                    {/* <Input
                       {...{
                         className: "sm:col-span-3",
                         title: "Người nhận",
                         name: "receiver",
                         type: "text",
                       }}
-                    ></Input>
+                    ></Input> */}
+                    <ComboBoxFamily
+                      {...{
+                        title: "Người nhận",
+                        people: member,
+                        className: "sm:col-span-3",
+                        name: "receiver",
+                      }}
+                    ></ComboBoxFamily>
                     <Input
                       {...{
                         className: "sm:col-span-3",
@@ -97,6 +116,7 @@ export default function AddRevenue({ isVisible, onClose, id }) {
                     ></Input>
                     <Input
                       {...{
+                        required: true,
                         className: "sm:col-span-6",
                         title: "Chú thích",
                         type: "text",

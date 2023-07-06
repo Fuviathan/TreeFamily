@@ -28,7 +28,7 @@ export default function StatisticsTable({ startDate, endDate }) {
       <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8 ">
         <div className="shadow ring-1 ring-black ring-opacity-5 md:rounded-lg ">
           <table className="min-w-full divide-y divide-gray-300 ">
-            <thead className="sticky top-0 z-20 rounded-t-lg bg-gray-50">
+            <thead className="sticky top-0  rounded-t-lg bg-gray-50">
               <tr className="">
                 <th
                   scope="col"
@@ -79,7 +79,7 @@ export default function StatisticsTable({ startDate, endDate }) {
                   Số tiền còn lại
                 </td>
                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                  {data.remainingBalance.toLocaleString('en-US')} VNĐ
+                  {data.remainingBalance.toLocaleString("en-US")} VNĐ
                 </td>
 
                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap"></td>
@@ -93,7 +93,8 @@ export default function StatisticsTable({ startDate, endDate }) {
         onClick={() => {
           setPdf(true);
         }}
-        className="fixed inline-flex items-center justify-center px-4 py-2 ml-12 text-base font-medium text-black bg-red-400 border border-black rounded-md shadow-sm right-32 bottom-80 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto"
+        // className="bg-black w-4"
+        className=" ml-auto mt-8 mr-8 justify-center px-4 py-3 text-base font-medium text-black bg-red-400 border border-black rounded-md shadow-sm right-32 bottom-80 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 w-48"
       >
         Xuất file PDF
       </button>

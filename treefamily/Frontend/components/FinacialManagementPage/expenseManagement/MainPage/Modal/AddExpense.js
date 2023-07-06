@@ -3,11 +3,34 @@ import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../../UI/Input";
 import SelectInput from "../../../../UI/SelectInput";
+import ComboBoxFamily from "./miniComponents/ComboBoxFamily";
+import useSWR from "swr";
+import ComboBoxEvent from "./miniComponents/ComboBoxEvent";
 
 export default function AddExpense({ isVisible, onClose }) {
   const method = useForm();
+  const { data: member, error: memberError } = useSWR(
+    "http://localhost:8080/member/get-all-by-age"
+  );
+  const { data: nameEvent, error: evenError } = useSWR(
+    "http://localhost:8080/event-management/get-all"
+  );
+  if (!member) {
+    return <></>;
+  }
+  if (!nameEvent) {
+    return <></>;
+  }
+  console.log(member);
   async function onSubmit(formData) {
     formData.year = Number(formData.year);
+    console.log(formData.revenueName);
+    const foundID = nameEvent.filter(
+      (event) => event.revenueName === formData.expenseName
+    );
+    const result = foundID.length > 0 ? foundID[0].id : null;
+    console.log(result);
+    formData.eventManagementId = result;
 
     console.log(formData);
     const JSONdata = JSON.stringify(formData);
@@ -49,19 +72,19 @@ export default function AddExpense({ isVisible, onClose }) {
                 <div className="pb-12 border-gray-900/10">
                   <Dialog.Title
                     as="h2"
-                    className="text-base font-semibold leading-7 text-gray-900"
+                    className="text-base font-semibold leading-7 text-gray-900 "
                   >
                     Thêm khoản chi
                   </Dialog.Title>
 
-                  <div className="mt-1 text-sm leading-6 text-gray-600">
+                  <div className="mt-1 text-sm leading-6 text-gray-600 px-48 ">
                     Nhập thông tin cho khoản chi
                   </div>
 
-                  <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
+                  <div className="grid grid-cols-1 pb-24 mt-10 gap-x-8 gap-y-8 sm:grid-cols-6 ">
                     <Input
                       {...{
-                        className: "sm:col-span-3",
+                        className: "sm:col-span-3 ",
                         title: "Năm",
                         type: "text",
                         name: "year",
@@ -69,22 +92,40 @@ export default function AddExpense({ isVisible, onClose }) {
                       }}
                     ></Input>
 
-                    <Input
+                    {/* <Input
                       {...{
                         className: "sm:col-span-3",
                         title: "Tên khoản chi",
                         type: "text",
                         name: "expenseName",
                       }}
-                    ></Input>
-                    <Input
+                    ></Input> */}
+
+                    <ComboBoxEvent
+                      {...{
+                        title: "Tên khoản chi",
+                        people: nameEvent,
+                        className: "sm:col-span-3",
+                        name: "expenseName",
+                      }}
+                    ></ComboBoxEvent>
+                    {/* <Input
                       {...{
                         className: "sm:col-span-3",
                         title: "Tên người quản lý khoản chi",
                         type: "text",
                         name: "expenseManager",
                       }}
-                    ></Input>
+                    ></Input> */}
+
+                    <ComboBoxFamily
+                      {...{
+                        title: "Tên người quản lý khoản chi",
+                        people: member,
+                        className: "sm:col-span-3",
+                        name: "expenseManager",
+                      }}
+                    ></ComboBoxFamily>
                   </div>
                 </div>
               </div>

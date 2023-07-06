@@ -19,9 +19,14 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
     formData.id = Number(formData.id);
     formData.year = Number(formData.year);
     formData.revenuePerPerson = Number(formData.revenuePerPerson);
+    if (formData.status === "Đã đóng") {
+      formData.status = false;
+    } else {
+      formData.status = true;
+    }
     console.log(formData);
     const JSONdata = JSON.stringify(formData);
-    const endpoint = "http://localhost:8080/revenue-management/update";
+    const endpoint = "http://localhost:8080/financial-sponorship/update";
     const options = {
       method: "PUT",
       headers: {
@@ -111,8 +116,7 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
                         name: "status",
                         dataOption: [
                           { value: "Đã đóng" },
-                          { value: "Đang diễn ra" },
-                          { value: "Sắp diễn ra" },
+                          { value: "Đang mở" },
                         ],
                       }}
                     ></SelectInput>
