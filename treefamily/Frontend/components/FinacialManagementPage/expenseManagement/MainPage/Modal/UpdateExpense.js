@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../../UI/Input";
-import SelectInput from "../../../../UI/SelectInput";
+import ComboBoxFamily from "./miniComponents/ComboBoxFamily";
+import ComboBoxEvent from "./miniComponents/ComboBoxEvent";
+import useSWR from "swr";
 
 export default function UpdateExpense({ isVisible, onClose, item }) {
   const method = useForm({
@@ -13,9 +15,37 @@ export default function UpdateExpense({ isVisible, onClose, item }) {
       expenseManager: item.expenseManager,
     },
   });
+  const { data: member, error: memberError } = useSWR(
+    "http://localhost:8080/member/get-all-by-age"
+  );
+  const { data: nameEvent, error: evenError } = useSWR(
+    "http://localhost:8080/event-management/get-all"
+  );
+  if (!member) {
+    return <></>;
+  }
+  if (!nameEvent) {
+    return <></>;
+  }
+
+  // Lấy id người quản lý để chạy thông tin cây
+  const foundIdName = member.filter(
+    (name) => name.fullName === item.expenseManager
+  );
+  const expenseManagerID = foundIdName.length > 0 ? foundIdName[0].id : null;
+
   async function onSubmit(formData) {
     formData.id = Number(formData.id);
     formData.year = Number(formData.year);
+
+    const foundID = nameEvent.filter(
+      (event) => event.revenueName === formData.expenseName
+    );
+    const result = foundID.length > 0 ? foundID[0].id : null;
+    console.log(result);
+    formData.eventManagementId = result;
+
+    console.log(formData);
     const JSONdata = JSON.stringify(formData);
     const endpoint = "http://localhost:8080/expense-management/update";
     const options = {
@@ -61,12 +91,12 @@ export default function UpdateExpense({ isVisible, onClose, item }) {
                     Sửa khoản chi
                   </Dialog.Title>
 
-                  <div className="mt-1 text-sm leading-6 text-gray-600">
+                  <div className="mt-1 text-sm leading-6 text-gray-600 px-48">
                     Sửa các thông tin của khoản chi
                   </div>
 
                   <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
-                  <Input
+                    <Input
                       {...{
                         className: "sm:col-span-3",
                         title: "Năm",
@@ -75,23 +105,34 @@ export default function UpdateExpense({ isVisible, onClose, item }) {
                         minLength: 4,
                       }}
                     ></Input>
-                    <Input
+                    {/* <Input
                       {...{
                         className: "sm:col-span-3",
                         title: "Tên khoản chi",
                         type: "text",
                         name: "expenseName",
                       }}
-                    ></Input>
-                    <Input
+                    ></Input> */}
+                    <ComboBoxFamily
                       {...{
-                        className: "sm:col-span-3",
+                        data: expenseManagerID,
                         title: "Tên người quản lý khoản chi",
-                        type: "text",
+                        people: member,
+                        className: "sm:col-span-2",
                         name: "expenseManager",
                       }}
-                    ></Input>
+                    ></ComboBoxFamily>
+                    <ComboBoxEvent
+                      {...{
+                        dataEvent: item.expenseName,
+                        title: "Tên sự kiện chi",
+                        people: nameEvent,
+                        className: "sm:col-span-2",
+                        name: "expenseName",
+                      }}
+                    ></ComboBoxEvent>
                   </div>
+                  <div></div>
                 </div>
               </div>
               <div className="w-full border-t"></div>

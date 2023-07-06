@@ -3,6 +3,8 @@ import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../../UI/Input";
 import SelectInput from "../../../../UI/SelectInput";
+import ComboBoxFamily from "../../../expenseManagement/MainPage/Modal/miniComponents/ComboBoxFamily";
+import useSWR from "swr";
 
 export default function AddRevenue({ isVisible, onClose, id }) {
   const method = useForm({
@@ -10,6 +12,15 @@ export default function AddRevenue({ isVisible, onClose, id }) {
       financialSponsorshipId: id,
     },
   });
+
+  const { data: member, error: memberError } = useSWR(
+    "http://localhost:8080/member/get-all-by-age"
+  );
+
+  if (!member) {
+    return <></>;
+  }
+
   async function onSubmit(formData) {
     formData.sponsorshipMoney = Number(formData.sponsorshipMoney);
     formData.financialSponsorshipId = Number(formData.financialSponsorshipId);
@@ -63,14 +74,23 @@ export default function AddRevenue({ isVisible, onClose, id }) {
                   </div>
 
                   <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <Input
+                    {/* <Input
                       {...{
                         className: "sm:col-span-4",
                         title: "Tên nhà tài trợ",
                         type: "text",
                         name: "sponsorsName",
                       }}
-                    ></Input>
+                    ></Input> */}
+
+                    <ComboBoxFamily
+                      {...{
+                        title: "Tên nhà tài trợ",
+                        people: member,
+                        className: "sm:col-span-4",
+                        name: "sponsorsName",
+                      }}
+                    ></ComboBoxFamily>
                     <SelectInput
                       {...{
                         className: "sm:col-span-2",

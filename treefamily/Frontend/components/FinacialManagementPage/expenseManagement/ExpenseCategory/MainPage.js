@@ -7,12 +7,12 @@ import AddItemInCategory from "./Modal/AddItemInCategory";
 
 export default function MainPage({ pid }) {
   const { data, error } = useSWR(
-    `localhost:8080/expense-detail/get-all?expenseManagementId=${pid}`
+    `http://localhost:8080/expense-detail/get-all?expenseManagementId=${pid}`
   );
   // const miniData = data.filter((object) => {
   //   return (object.id = { pid });
   // });
- 
+
   const [addNewRevenue, setAddNewRevenue] = useState(false);
 
   return (

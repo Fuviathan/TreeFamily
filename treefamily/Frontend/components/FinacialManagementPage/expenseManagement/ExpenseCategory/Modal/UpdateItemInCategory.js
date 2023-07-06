@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../../UI/Input";
+import useSWR from "swr";
+import ComboBoxFamily from "../../MainPage/Modal/miniComponents/ComboBoxFamily";
 import SelectInput from "../../../../UI/SelectInput";
 
 export default function UpdateRevenue({ isVisible, onClose, item }) {
@@ -16,10 +18,23 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
       expenseManagementId: item.expenseManagementId,
     },
   });
+
+  const { data: member, error: memberError } = useSWR(
+    "http://localhost:8080/member/get-all-by-age"
+  );
+
+  if (!member) {
+    return <></>;
+  }
+
+  // Lấy id người nhận
+  const foundIdName = member.filter((name) => name.fullName === item.receiver);
+  const memberID = foundIdName.length > 0 ? foundIdName[0].id : null;
+
   async function onSubmit(formData) {
     formData.id = Number(formData.id);
     formData.expenseManagementId = Number(formData.expenseManagementId);
-    formData.expenseMoney = Number(formData.expenseMoney)
+    formData.expenseMoney = Number(formData.expenseMoney);
     const JSONdata = JSON.stringify(formData);
     const endpoint = "http://localhost:8080/expense-detail/update";
     const options = {
@@ -78,14 +93,23 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
                         name: "expenseName",
                       }}
                     ></Input>
-                    <Input
+                    {/* <Input
                       {...{
                         className: "sm:col-span-3",
                         title: "Người nhận",
                         name: "receiver",
                         type: "text",
                       }}
-                    ></Input>
+                    ></Input> */}
+                    <ComboBoxFamily
+                      {...{
+                        data: memberID,
+                        title: "Người nhận",
+                        people: member,
+                        className: "sm:col-span-3",
+                        name: "receiver",
+                      }}
+                    ></ComboBoxFamily>
                     <Input
                       {...{
                         className: "sm:col-span-3",
@@ -99,7 +123,7 @@ export default function UpdateRevenue({ isVisible, onClose, item }) {
                       {...{
                         className: "sm:col-span-3",
                         title: "Số tiền chi",
-                        type: "text",
+                        type: "number",
                         name: "expenseMoney",
                       }}
                     ></Input>
