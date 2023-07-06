@@ -45,6 +45,19 @@ export default function UpdateMember({ isVisible, onClose, person }) {
   const { data: data1, error: error1 } = useSWR(
     "http://localhost:8080/member/get-all"
   );
+
+  const { data: namePermission, error: errorPermission } = useSWR(
+    "http://localhost:8080/permission-management/get-all"
+  );
+
+  if (!namePermission) {
+    return <></>;
+  }
+
+  // Convert dữ liệu từ api sang kiểu mảng để truyền vào option
+  const dataOption = namePermission.map((name) => ({
+    value: name.permissionGroupName,
+  }));
   const dataMember = data1;
   console.log(dataMember);
   if (!data1) {
@@ -194,10 +207,7 @@ export default function UpdateMember({ isVisible, onClose, person }) {
                         className: "sm:col-span-2",
                         name: "role",
                         title: "Vai trò",
-                        dataOption: [
-                          { value: "Trưởng họ" },
-                          { value: "Thành viên" },
-                        ],
+                        dataOption: dataOption,
                       }}
                     ></SelectInput>
 

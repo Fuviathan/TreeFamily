@@ -36,6 +36,19 @@ export default function AddMember({ isVisible, onClose }) {
 
   const { data, error } = useSWR("http://localhost:8080/member/get-all");
 
+  const { data: namePermission, error: errorPermission } = useSWR(
+    "http://localhost:8080/permission-management/get-all"
+  );
+
+  if (!namePermission) {
+    return <></>;
+  }
+
+  // Convert dữ liệu từ api sang kiểu mảng để truyền vào option
+  const dataOption = namePermission.map((name) => ({
+    value: name.permissionGroupName,
+  }));
+
   async function onSubmit(formData) {
     if (formData.status === true) {
       formData.status = "Đã mất";
@@ -124,11 +137,7 @@ export default function AddMember({ isVisible, onClose }) {
                         className: "sm:col-span-2",
                         name: "role",
                         title: "Vai trò",
-                        dataOption: [
-                          { value: "Ông tổ" },
-                          { value: "Trưởng họ" },
-                          { value: "Thành viên" },
-                        ],
+                        dataOption: dataOption,
                       }}
                     ></SelectInput>
 
