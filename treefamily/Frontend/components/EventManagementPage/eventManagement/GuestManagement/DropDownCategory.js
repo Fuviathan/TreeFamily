@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DropDownRevenues({ item }) {
+export default function DropDownRevenues({ item, permission }) {
   const removeGuestMember = async (number) => {
     const endpoint = `http://localhost:8080/guest-management/delete/${number}`;
     const options = {
@@ -46,23 +46,25 @@ export default function DropDownRevenues({ item }) {
         >
           <Menu.Items className="absolute right-0 z-20 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ">
             <div className="flex flex-col py-1">
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick = {() => removeGuestMember(item.id)}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
-                    )}
-                  >
-                    Xóa
-                  </div>
-                )}
-              </Menu.Item>
+              <If isTrue={permission?.user.deleteEvent}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={() => removeGuestMember(item.id)}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base"
+                      )}
+                    >
+                      Xóa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
             </div>
           </Menu.Items>
         </Transition>
-      </Menu> 
+      </Menu>
     </>
   );
 }

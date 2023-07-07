@@ -3,7 +3,7 @@ import { For } from "react-haiku";
 import useSWR from "swr";
 import EventItem from "./EventItem";
 
-export default function EventsTable() {
+export default function EventsTable({ permission }) {
   const { data, error } = useSWR("http://localhost:8080/event-management/get-all");
   if (!data) {
     return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;
@@ -67,7 +67,7 @@ export default function EventsTable() {
               <For
                 each={data}
                 render={(item, index) => (
-                  <EventItem item={item} index={index} />
+                  <EventItem item={item} index={index} permission={permission}/>
                 )}
               />
             </tbody>

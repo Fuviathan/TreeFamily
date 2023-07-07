@@ -3,7 +3,7 @@ import { For, If } from "react-haiku";
 import useSWR from "swr";
 import ItemInCategory from "./ItemInCategory";
 
-export default function TableOfGuests({ pid }) {
+export default function TableOfGuests({ pid, permission }) {
   const { data, error } = useSWR(
     `http://localhost:8080/guest-management/get-all-an-event?eventManagementId=${pid}`
   );
@@ -121,7 +121,7 @@ export default function TableOfGuests({ pid }) {
                 <For
                   each={data}
                   render={(item, index) => (
-                    <ItemInCategory item={item} index={index} />
+                    <ItemInCategory item={item} index={index} permission={permission}/>
                   )}
                 />
               </If>

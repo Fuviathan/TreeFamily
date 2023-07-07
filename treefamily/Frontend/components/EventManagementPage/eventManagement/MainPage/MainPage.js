@@ -4,8 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import EventsTable from "./EventsTable";
 import AddEvent from "./Modal/AddEvent";
+import { useSession } from "next-auth/react";
+
 
 export default function MainPage() {
+  const { data: session, status } = useSession()
   const [addNewEvent, setAddNewEvent] = useState(false);
   return (
     <>
@@ -19,18 +22,21 @@ export default function MainPage() {
                   Danh sách các sự kiện
                 </h1>
               </div>
-
-              <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <button
-                  onClick={() => setAddNewEvent(true)}
-                  type="button"
-                  className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                >
-                  Thêm sự kiện
-                </button>
-              </div>
+              <If isTrue={session?.user.createEvent}>
+                <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                  <button
+                    onClick={() => setAddNewEvent(true)}
+                    type="button"
+                    className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                  >
+                    Thêm sự kiện
+                  </button>
+                </div>
+              </If>
             </div>
-            <EventsTable />
+            <If isTrue={session?.user.viewEvent}>
+              <EventsTable permission={session}/>
+            </If>
           </div>
         </div>
         <If isTrue={addNewEvent}>
