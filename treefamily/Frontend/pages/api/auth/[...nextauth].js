@@ -17,7 +17,7 @@ export const authOptions = {
       session.user = token.user
       return session
     }
-    
+
   },
   providers: [
     CredentialsProvider({
@@ -29,7 +29,7 @@ export const authOptions = {
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
         userName: { label: "Username", type: "text", placeholder: "Username" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password", placeholder: "Password" }
       },
       async authorize(credentials, req) {
         const { userName, password } = credentials;
@@ -44,11 +44,14 @@ export const authOptions = {
           })
         })
         const user = await res.json()
-        
-        if (res.ok && user ) {
+        console.log(user)
+        if (res.ok && user) {
           return user;
         }
-        else return null
+        else {
+          // throw new Error( JSON.stringify({ errors: user, status: false }))
+          return null
+        }
       }
     })
   ],
