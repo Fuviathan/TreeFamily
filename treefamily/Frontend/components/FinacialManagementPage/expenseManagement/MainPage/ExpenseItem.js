@@ -2,7 +2,7 @@ import React from "react";
 import DropDownExpense from "./DropDownExpense";
 import { useRouter } from "next/router";
 
-export default function ExpenseItem({ item, index }) {
+export default function ExpenseItem({ item, index, permission }) {
   const router = useRouter();
   const redirect = () => {
     router.push(`expenseManagement/${item.id}`);
@@ -24,7 +24,7 @@ export default function ExpenseItem({ item, index }) {
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
       </td>
       <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-        <DropDownExpense item={item} />
+        <DropDownExpense item={item} permission={permission}/>
         <span className="sr-only">, {item.name}</span>
       </td>
     </tr>

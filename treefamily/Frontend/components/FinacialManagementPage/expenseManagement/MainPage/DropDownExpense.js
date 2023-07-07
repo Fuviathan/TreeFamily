@@ -2,14 +2,14 @@
 import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import UpdateSponsor from "./Modal/UpdateExpense";
+import UpdateExpense from "./Modal/UpdateExpense";
 import { If } from "react-haiku";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Expense({ item }) {
+export default function Expense({ item, permission }) {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -53,44 +53,48 @@ export default function Expense({ item }) {
         >
           <Menu.Items className="absolute right-0 z-20 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ">
             <div className="flex flex-col py-1">
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick={(e) => {
-                      setShowUpdateModal(true);
-                      e.stopPropagation();
-                    }}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
-                    )}
-                  >
-                    Sửa
-                  </div>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick={(e) => {
-                      removeEvent(item.id), setShowDeleteModal(true);
-                      e.stopPropagation();
-                    }}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
-                    )}
-                  >
-                    Xóa
-                  </div>
-                )}
-              </Menu.Item>
+              <If isTrue={permission?.user.updateFinancial}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={(e) => {
+                        setShowUpdateModal(true);
+                        e.stopPropagation();
+                      }}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base"
+                      )}
+                    >
+                      Sửa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
+              <If isTrue={permission?.user.deleteFinancial}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={(e) => {
+                        removeEvent(item.id), setShowDeleteModal(true);
+                        e.stopPropagation();
+                      }}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base"
+                      )}
+                    >
+                      Xóa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
             </div>
           </Menu.Items>
         </Transition>
       </Menu>
       <If isTrue={showUpdateModal}>
-        <UpdateSponsor
+        <UpdateExpense
           isVisible={showUpdateModal}
           onClose={() => setShowUpdateModal(false)}
           item={item}

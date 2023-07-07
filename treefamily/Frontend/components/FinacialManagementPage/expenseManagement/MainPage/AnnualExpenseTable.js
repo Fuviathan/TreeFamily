@@ -3,7 +3,7 @@ import { For } from "react-haiku";
 import useSWR from "swr";
 import ExpenseItem from "./ExpenseItem";
 
-export default function AnnualExpenseTable() {
+export default function AnnualExpenseTable({ permission }) {
   const { data, error } = useSWR(
     "http://localhost:8080/expense-management/get-all"
   );
@@ -57,7 +57,7 @@ export default function AnnualExpenseTable() {
               <For
                 each={data}
                 render={(item, index) => (
-                  <ExpenseItem item={item} index={index} />
+                  <ExpenseItem item={item} index={index} permission={permission}/>
                 )}
               />
             </tbody>
