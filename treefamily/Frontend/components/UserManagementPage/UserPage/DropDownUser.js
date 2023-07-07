@@ -10,7 +10,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DropDownUser({ person }) {
+export default function DropDownUser({ person, permission }) {
+  console.log(permission)
   const [showDetail, setShowDetail] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false)
   return (
@@ -47,19 +48,22 @@ export default function DropDownUser({ person }) {
                   </div>
                 )}
               </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick={() => setShowUpdateModal(true)}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
-                    )}
-                  >
-                    Sửa
-                  </div>
-                )}
-              </Menu.Item>
+              <If isTrue={permission?.user.updateMembers}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={() => setShowUpdateModal(true)}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base"
+                      )}
+                    >
+                      Sửa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
+
             </div>
           </Menu.Items>
         </Transition>
