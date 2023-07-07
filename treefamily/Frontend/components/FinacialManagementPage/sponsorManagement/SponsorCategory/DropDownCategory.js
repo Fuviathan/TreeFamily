@@ -11,7 +11,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DropDownRevenues({ item }) {
+export default function DropDownCategory({ item }) {
   // const [showDetail, setShowDetail] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
@@ -22,12 +22,12 @@ export default function DropDownRevenues({ item }) {
       redirect: "follow",
     };
     const response = await fetch(endpoint, options);
-    if (response.status === 200) {
+    if (response.status === 204) {
       alert("Xóa thành công");
       onClose();
     } else {
-      // const result = await response.json();
-      alert("Xóa thành công");
+      const result = await response.json();
+      alert(result.message);
     }
   };
   return (
