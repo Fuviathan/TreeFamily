@@ -3,9 +3,11 @@ import { If } from "react-haiku";
 import { useState } from "react";
 import Link from 'next/link'
 import AnnualRevenuesTable from "./MainPage/AnnualRevenuesTable"
+import { useSession } from "next-auth/react";
 import AddRevenue from "./MainPage/Modal/AddRevenue"
 
 export default function MainPage() {
+    const { data: session, status } = useSession()
     async function onSubmit() {
         const endpoint = "http://localhost:8080/revenue-management/create";
         const options = {
@@ -42,17 +44,21 @@ export default function MainPage() {
                                     Báo cáo thu
                                 </Link>
                             </div>
-                            <div className="mt-4 sm:mt-0 sm:ml-8 sm:flex-none">
-                                <button
-                                    onClick={() => onSubmit()}
-                                    type="button"
-                                    className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                                >
-                                    Thêm mức thu hằng năm
-                                </button>
-                            </div>
+                            <If isTrue={session?.user.createFinancial}>
+                                <div className="mt-4 sm:mt-0 sm:ml-8 sm:flex-none">
+                                    <button
+                                        onClick={() => onSubmit()}
+                                        type="button"
+                                        className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                                    >
+                                        Thêm mức thu hằng năm
+                                    </button>
+                                </div>
+                            </If>
                         </div>
-                        <AnnualRevenuesTable />
+                        <If isTrue={session?.user.viewFinancial}>
+                            <AnnualRevenuesTable permission={session}/>
+                        </If>
                     </div>
                 </div>
                 <If isTrue={addNewRevenue}>

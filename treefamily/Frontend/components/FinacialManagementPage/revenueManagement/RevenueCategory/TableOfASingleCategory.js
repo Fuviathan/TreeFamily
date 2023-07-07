@@ -8,7 +8,6 @@ export default function TableOfASingleCategory({
   startDate,
   filterMember,
 }) {
-  console.log(pid);
   const { data, error } = useSWR(
     `http://localhost:8080/revenue-detail/get-all?idRevenueManagement=${pid}&startDate=${startDate}`
   );

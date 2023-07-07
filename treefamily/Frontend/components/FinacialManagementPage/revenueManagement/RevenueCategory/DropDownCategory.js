@@ -6,12 +6,15 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import UpdateItemInCategory from "./Modal/UpdateItemInCategory";
 // import UpdateRevenue from "./Modal/UpdateRevenue";
 import { If } from "react-haiku";
+import { useSession } from "next-auth/react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function DropDownRevenues({ item }) {
+  const { data: session, status } = useSession()
+  console.log(session)
   // const [showDetail, setShowDetail] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   return (
@@ -53,22 +56,24 @@ export default function DropDownRevenues({ item }) {
                   </div>
                 )}
               </Menu.Item> */}
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick={(e) => {
-                      setShowUpdateModal(true);
-                      e.stopPropagation();
-                    }}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
-                    )}
-                  >
-                    Sửa
-                  </div>
-                )}
-              </Menu.Item>
+              <If isTrue={session?.user.updateFinancial}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={(e) => {
+                        setShowUpdateModal(true);
+                        e.stopPropagation();
+                      }}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base"
+                      )}
+                    >
+                      Sửa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
             </div>
           </Menu.Items>
         </Transition>
