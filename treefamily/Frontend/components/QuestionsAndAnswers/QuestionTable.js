@@ -12,10 +12,12 @@ export default function QuestionTable({ permission }) {
   const { data: userData, error: userError } = useSWR(
     isConditionalMet1 ? `http://localhost:8080/question/get-all-for-a-member/${permission?.user.memberId}` : null
   )
-  if (!data && !userData) {
+  if (!data && isConditionalMet2) {
     return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;
   }
-
+  if (!userData && isConditionalMet1) {
+    return <div className="flex flex-col mt-8 overflow-y-scroll h-80vh"></div>;
+  }
   return (
     <div className="flex flex-col mt-8 overflow-y-scroll h-80vh">
       {/* <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8"> */}

@@ -6,7 +6,6 @@ import useSWR from "swr"
 
 export default function ViewAnsweredQuestion({ isVisible, onClose, item }) {
     const { data, error } = useSWR(`http://localhost:8080/answer/get-by-questionid/${item.id}`)
-    if (!data) return null
     const method = useForm({
         defaultValues: {
             id: data?.question.id,
@@ -15,11 +14,12 @@ export default function ViewAnsweredQuestion({ isVisible, onClose, item }) {
             member_id: data?.question.memberId,
             content: data?.question.content,
             sendDate: data?.question.sendDate,
-            contentResponse: data.contentResponse,
-            sendDateResponse: data.sendDateResponse,
-            respondersId: data.respondersId,
+            contentResponse: data?.contentResponse,
+            sendDateResponse: data?.sendDateResponse,
+            respondersId: data?.respondersId,
         },
     });
+    if (!data) return <></>
     async function onSubmit(formData) {
     }
     if (!isVisible) return <></>;

@@ -146,7 +146,7 @@ export default function DropDownQuestion({ item, permission, fullName }) {
                   )}
                 </Menu.Item>
               </If>
-              <If isTrue={permission?.user.role !== "Trưởng họ"}>
+              <If isTrue={permission?.user.role !== "Trưởng họ" && item.status !== "Đã phản hồi"}>
                 <Menu.Item>
                   {({ active }) => (
                     <div
@@ -207,14 +207,14 @@ export default function DropDownQuestion({ item, permission, fullName }) {
       <If isTrue={showDetailModal3}>
         <ViewAnsweredQuestion
           isVisible={showDetailModal3}
-          onClose={() => setShowDetailModal1(false)}
+          onClose={() => setShowDetailModal3(false)}
           item={item}
         />
       </If>
       <If isTrue={showDetailModal4}>
         <ViewQuestion
           isVisible={showDetailModal4}
-          onClose={() => setShowDetailModal1(false)}
+          onClose={() => setShowDetailModal4(false)}
           item={item}
         />
       </If>
