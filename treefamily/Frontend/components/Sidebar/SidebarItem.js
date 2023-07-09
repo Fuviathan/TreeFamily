@@ -7,13 +7,13 @@ function classNames(...classes) {
 }
 
 export default function SidebarItem({ item }) {
-  // const { asPath } = useRouter()
-  // if (asPath.startsWith(item.href)) {
-  //   item.current=true
-  // }
-  // if (!asPath.startsWith(item.href)) {
-  //   item.current=false
-  // }
+  const { asPath } = useRouter();
+  if (asPath.startsWith(item.href)) {
+    item.current = true;
+  }
+  if (!asPath.startsWith(item.href)) {
+    item.current = false;
+  }
   return (
     <Link
       href={item.href}
@@ -26,8 +26,10 @@ export default function SidebarItem({ item }) {
     >
       <item.icon
         className={classNames(
-          item.current ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
-          'mr-3 flex-shrink-0 h-6 w-6'
+          item.current
+            ? "text-gray-300"
+            : "text-gray-400 group-hover:text-gray-300",
+          "mr-3 flex-shrink-0 h-6 w-6"
         )}
         aria-hidden="true"
       />
