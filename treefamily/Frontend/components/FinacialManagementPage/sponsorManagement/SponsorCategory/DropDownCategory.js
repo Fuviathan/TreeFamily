@@ -11,12 +11,12 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DropDownCategory({ item }) {
+export default function DropDownCategory({ item, permission }) {
   // const [showDetail, setShowDetail] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   const removeSponsor = async (number) => {
-    const endpoint = `http://localhost:8080/sponsorship-detail/delete/${item.id}`;
+    const endpoint = `http://localhost:8080/sponsorship-detail/delete/${number}`;
     const options = {
       method: "DELETE",
       redirect: "follow",
@@ -72,40 +72,43 @@ export default function DropDownCategory({ item }) {
                   </div>
                 )}
               </Menu.Item> */}
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick={(e) => {
-                      setShowUpdateModal(true);
-                      e.stopPropagation();
-                    }}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
-                    )}
-                  >
-                    Sửa
-                  </div>
-                )}
-              </Menu.Item>
-
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick={(e) => {
-                      // setShowUpdateModal(true);
-                      removeSponsor(item.id);
-                      e.stopPropagation();
-                    }}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
-                    )}
-                  >
-                    Xóa
-                  </div>
-                )}
-              </Menu.Item>
+              <If isTrue={permission?.user.updateFinancial}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={(e) => {
+                        setShowUpdateModal(true);
+                        e.stopPropagation();
+                      }}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base"
+                      )}
+                    >
+                      Sửa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
+              <If isTrue={permission?.user.deleteFinancial}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={(e) => {
+                        // setShowUpdateModal(true);
+                        removeSponsor(item.id);
+                        e.stopPropagation();
+                      }}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base"
+                      )}
+                    >
+                      Xóa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
             </div>
           </Menu.Items>
         </Transition>
