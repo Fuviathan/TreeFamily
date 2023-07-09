@@ -7,13 +7,13 @@ function classNames(...classes) {
 }
 
 export default function SidebarItem({ item }) {
-  // const { asPath } = useRouter()
-  // if (asPath.startsWith(item.href)) {
-  //   item.current=true
-  // }
-  // if (!asPath.startsWith(item.href)) {
-  //   item.current=false
-  // }
+  const { asPath } = useRouter()
+  if (asPath.startsWith(item.href)) {
+    item.current=true
+  }
+  if (!asPath.startsWith(item.href)) {
+    item.current=false
+  }
   return (
     <Link
       href={item.href}
