@@ -11,7 +11,6 @@ function classNames(...classes) {
 }
 
 export default function DropDownUser({ person, permission }) {
-  console.log(permission)
   const [showDetail, setShowDetail] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false)
   return (

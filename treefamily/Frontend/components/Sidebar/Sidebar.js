@@ -6,8 +6,10 @@ import {
   HomeIcon,
   BanknotesIcon,
   CalendarDaysIcon,
-  UserGroupIcon,
+  UsersIcon,
+  QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
+import { useSession } from "next-auth/react";
 
 const navigation = [
   { name: "Quản lý gia phả", href: "/home", icon: HomeIcon, current: false },
@@ -45,12 +47,54 @@ const navigation = [
       },
     ],
   },
-  // { name: "Quản lý phân quyền", href: "/permissionsManagement/userManagement", icon: CalendarDaysIcon, current: false },
-  // { name: "Quản lý phân quyền", href: "/permissionsManagement", current: false },
+  {
+    name: "Giải đáp thắc mắc",
+    href: "/questionsAndAnswers/questionsAndAnswers",
+    icon: QuestionMarkCircleIcon,
+    current: false,
+  },
+];
+
+const adminNavigation = [
+  { name: "Quản lý gia phả", href: "/home", icon: HomeIcon, current: false },
+  {
+    name: "Quản lý sự kiện",
+    href: "/eventManagement",
+    icon: CalendarDaysIcon,
+    current: false,
+  },
+  {
+    name: "Quản lý tài chính",
+    href: "",
+    icon: BanknotesIcon,
+    current: false,
+    children: [
+      {
+        name: "Quản lý thu",
+        href: "/financialManagement/revenueManagement",
+        current: false,
+      },
+      {
+        name: "Quản lý tài trợ",
+        href: "/financialManagement/sponsorManagement",
+        current: false,
+      },
+      {
+        name: "Quản lý chi",
+        href: "/financialManagement/expenseManagement",
+        current: false,
+      },
+      {
+        name: "Báo cáo thu chi",
+        href: "/financialManagement/statistics",
+        current: false,
+      },
+    ],
+  },
   {
     name: "Quản lý phân quyền",
     href: "",
-    icon: UserGroupIcon,
+    icon: UsersIcon,
     current: false,
     children: [
       {
@@ -65,18 +109,16 @@ const navigation = [
       },
     ],
   },
-];
-
-const adminNavigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-  { name: "Documents", href: "#", current: false },
-  { name: "Reports", href: "#", current: false },
+  {
+    name: "Giải đáp thắc mắc",
+    href: "/questionsAndAnswers/questionsAndAnswers",
+    icon: QuestionMarkCircleIcon,
+    current: false,
+  },
 ];
 
 export default function Sidebar() {
+  const { data: session, status } = useSession();
   return (
     <div className="flex flex-row w-1/6 h-full">
       <div className="flex flex-col flex-1 h-screen min-h-0 bg-gray-800">
@@ -92,19 +134,36 @@ export default function Sidebar() {
             className="flex-1 px-2 mt-5 space-y-1 bg-gray-800"
             aria-label="Sidebar"
           >
-            <For
-              each={navigation}
-              render={(item, index) => (
-                <>
-                  <If isTrue={!item.children}>
-                    <SidebarItem item={item} />
-                  </If>
-                  <If isTrue={item.children}>
-                    <SidebarItemWithChildren item={item} />
-                  </If>
-                </>
-              )}
-            />
+            <If isTrue={session?.user.role === "Trưởng họ"}>
+              <For
+                each={adminNavigation}
+                render={(item, index) => (
+                  <>
+                    <If isTrue={!item.children}>
+                      <SidebarItem item={item} />
+                    </If>
+                    <If isTrue={item.children}>
+                      <SidebarItemWithChildren item={item} />
+                    </If>
+                  </>
+                )}
+              />
+            </If>
+            <If isTrue={session?.user.role !== "Trưởng họ"}>
+              <For
+                each={navigation}
+                render={(item, index) => (
+                  <>
+                    <If isTrue={!item.children}>
+                      <SidebarItem item={item} />
+                    </If>
+                    <If isTrue={item.children}>
+                      <SidebarItemWithChildren item={item} />
+                    </If>
+                  </>
+                )}
+              />
+            </If>
           </nav>
         </div>
         <Profile />
