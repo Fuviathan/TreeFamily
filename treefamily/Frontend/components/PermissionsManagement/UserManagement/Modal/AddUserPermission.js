@@ -92,12 +92,11 @@ export default function AddUserPermission({ isVisible, onClose }) {
                         minLength: 4,
                       }}
                     ></Input>
-
                     <Input
                       {...{
                         className: "sm:col-span-3",
                         title: "Mật khẩu",
-                        type: "text",
+                        type: "password",
                         name: "password",
                       }}
                     ></Input>
