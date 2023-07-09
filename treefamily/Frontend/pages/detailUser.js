@@ -5,9 +5,11 @@ import DetailCard from "../components/DetailPage/DetailCard";
 import useSWR from "swr"
 import UpdateUserDetail from "../components/DetailPage/Modal/UpdateUserDetail";
 import { If } from "react-haiku";
+import ChangeAccount from "../components/DetailPage/Modal/ChangeAccount";
 
 export default function detailUser() {
   const [showUpdateModal, setShowUpdateModal] = useState(false)
+  const [showChangeModal, setShowChangeModal] = useState(false)
   const { data: userData, error } = useSession();
   const { data: user, error: userError } = useSWR(`http://localhost:8080/member/get-by-id-member?id=${userData?.user.memberId}`)
   if (!user || !userData) {
@@ -45,11 +47,11 @@ export default function detailUser() {
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-6 sm:flex-none">
                 <button
-                  // onClick={() => setAddNewGuest(true)}
+                  onClick={() => setShowChangeModal(true)}
                   type="button"
                   className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                 >
-                  Đổi mật khẩu
+                  Sửa thông tin tài khoản
                 </button>
               </div>
             </div>
@@ -60,6 +62,9 @@ export default function detailUser() {
         </BaseTemplate >
         <If isTrue={showUpdateModal}>
           <UpdateUserDetail isVisible={showUpdateModal} onClose={() => setShowUpdateModal(false)} person={user} />
+        </If>
+        <If isTrue={showChangeModal}>
+          <ChangeAccount isVisible={showChangeModal} onClose={() => setShowChangeModal(false)} person={userData?.user} />
         </If>
       </>
     );

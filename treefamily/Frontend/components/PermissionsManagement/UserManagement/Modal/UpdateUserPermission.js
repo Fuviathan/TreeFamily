@@ -105,7 +105,7 @@ export default function UpdateUserPermission({ isVisible, onClose, item }) {
                       {...{
                         className: "sm:col-span-3",
                         title: "Mật khẩu",
-                        type: "text",
+                        type: "password",
                         name: "password",
                       }}
                     ></Input>

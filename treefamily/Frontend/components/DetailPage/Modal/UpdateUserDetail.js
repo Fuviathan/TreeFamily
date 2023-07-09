@@ -1,15 +1,11 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { If } from "react-haiku";
 import { Dialog } from "@headlessui/react";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../UI/Input";
 import SelectInput from "../../UI/SelectInput";
-import SelectInputFamily from "../../UI/SelectInputFamily";
 import useSWR from "swr";
 import ComboBoxFamily from "../../UserManagementPage/UserPage/Modal/miniComponents/ComboBoxFamily";
-import CheckBoxInput from "../../UI/CheckBoxInput";
-
-// Demo nhập chọn thông tin bố mẹ gửi id form
 
 export default function UpdateUserDetail({ isVisible, onClose, person }) {
   const method = useForm({
