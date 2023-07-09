@@ -4,25 +4,14 @@ import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../UI/Input";
 import useSWR from "swr";
 
-export default function UpdatePermission({ isVisible, onClose, item }) {
-  const method = useForm({
-    defaultValues: {
-      id: item.id,
-      permissionGroupName: item.permissionGroupName,
-      permissionsDescription: item.permissionsDescription,
-      viewMebers: item.viewMebers,
-      createMembers: item.createMembers,
-      updateMembers: item.updateMembers,
-      viewFinancial: item.viewFinancial,
-      createFinancial: item.createFinancial,
-      updateFinancial: item.updateFinancial,
-      deleteFinancial: item.deleteFinancial,
-      viewEvent: item.viewEvent,
-      createEvent: item.createEvent,
-      updateEvent: item.updateEvent,
-      deleteEvent: item.deleteEvent,
-    },
-  });
+export default function DeletePermission({ isVisible, onClose }) {
+  const method = useForm();
+
+  const { data, error } = useSWR("http://localhost:8080/member/get-all");
+  if (!data) {
+    return;
+  }
+
   async function onSubmit(formData) {
     if (
       formData.updateEvent === true ||
@@ -43,10 +32,13 @@ export default function UpdatePermission({ isVisible, onClose, item }) {
     if (formData.updateMembers === true || formData.createMembers === true) {
       formData.viewMebers = true;
     }
+
+    // console.log(formData);
+
     const JSONdata = JSON.stringify(formData);
-    const endpoint = "http://localhost:8080/permission-management/update";
+    const endpoint = "http://localhost:8080/permission-management/create";
     const options = {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -55,13 +47,14 @@ export default function UpdatePermission({ isVisible, onClose, item }) {
     };
     const response = await fetch(endpoint, options);
     if (response.status === 200) {
-      alert("Sửa sự kiện thành công");
+      alert("Thêm quyền mới thành công");
       onClose();
     } else {
       const result = await response.json();
       alert(result.message);
     }
   }
+
   if (!isVisible) return <></>;
   return (
     <Dialog
@@ -74,8 +67,8 @@ export default function UpdatePermission({ isVisible, onClose, item }) {
         <div className="z-20 flex items-center justify-center h-full ">
           <FormProvider {...method}>
             <form
-              onSubmit={method.handleSubmit(onSubmit)}
               className="z-20 flex flex-col items-center max-w-3xl py-4 m-auto bg-white border-2 border-solid border-slate-300"
+              onSubmit={method.handleSubmit(onSubmit)}
             >
               <div className="w-full px-10 space-y-12 overflow-y-auto">
                 <div className="pb-12 border-gray-900/10">
