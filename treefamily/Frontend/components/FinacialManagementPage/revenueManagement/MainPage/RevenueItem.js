@@ -2,7 +2,7 @@ import React from "react";
 import DropDownRevenues from "./DropDownRevenues";
 import { useRouter } from "next/router";
 
-export default function RevenueItem({ item, index }) {
+export default function RevenueItem({ item, index, permission }) {
   const router = useRouter();
   const redirect = () => {
     console.log(item.id);
@@ -32,7 +32,7 @@ export default function RevenueItem({ item, index }) {
         {item.dueDate}
       </td>
       <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-        <DropDownRevenues item={item} />
+        <DropDownRevenues item={item} permission={permission}/>
         <span className="sr-only">, {item.name}</span>
       </td>
     </tr>

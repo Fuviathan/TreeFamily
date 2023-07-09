@@ -1,9 +1,9 @@
 import React from "react";
 import UserItem from "./UserItem";
-import { For } from "react-haiku";
+import { If, For } from "react-haiku";
 import useSWR from "swr";
 
-export default function UserTable({ nameSearch }) {
+export default function UserTable({ nameSearch, permission }) {
   const { data, error } = useSWR(
     `http://localhost:8080/member/search?name=${nameSearch}`
   );
@@ -81,15 +81,16 @@ export default function UserTable({ nameSearch }) {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">
-              <For
-                each={data}
-                render={(person, index) => <UserItem person={person} />}
-              />
+              <If isTrue={permission?.user.viewMembers}>
+                <For
+                  each={data}
+                  render={(person, index) => <UserItem person={person} permission={permission} />}
+                />
+              </If>
             </tbody>
           </table>
         </div>
       </div>
-      {/* </div> */}
     </div>
   );
 }

@@ -4,7 +4,6 @@ import { useState } from "react";
 import TableOfASingleCategory from "./TableOfASingleCategory";
 import useSWR from "swr";
 import AddItemInCategory from "./Modal/AddItemInCategory";
-import SelectInput from "../../../UI/SelectInput";
 
 export default function MainPage({ pid }) {
   // const year = miniData[0]?.year;

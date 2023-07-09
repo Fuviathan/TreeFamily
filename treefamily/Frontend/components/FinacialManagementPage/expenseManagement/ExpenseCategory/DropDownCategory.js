@@ -11,8 +11,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DropDownRevenues({ item }) {
-  // const [showDetail, setShowDetail] = useState(false);
+export default function DropDownRevenues({ item, permission }) {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   const removeExpense = async () => {
@@ -56,40 +55,43 @@ export default function DropDownRevenues({ item }) {
         >
           <Menu.Items className="absolute right-0 z-20 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ">
             <div className="flex flex-col py-1">
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick={(e) => {
-                      setShowUpdateModal(true);
-                      e.stopPropagation();
-                    }}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
-                    )}
-                  >
-                    Sửa
-                  </div>
-                )}
-              </Menu.Item>
-
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick={(e) => {
-                      // setShowUpdateModal(true);
-                      removeExpense(item.id);
-                      e.stopPropagation();
-                    }}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
-                    )}
-                  >
-                    Xóa
-                  </div>
-                )}
-              </Menu.Item>
+              <If isTrue={permission?.user.updateFinancial}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={(e) => {
+                        setShowUpdateModal(true);
+                        e.stopPropagation();
+                      }}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base"
+                      )}
+                    >
+                      Sửa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
+              <If isTrue={permission?.user.deleteFinancial}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={(e) => {
+                        // setShowUpdateModal(true);
+                        removeExpense(item.id);
+                        e.stopPropagation();
+                      }}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base"
+                      )}
+                    >
+                      Xóa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
             </div>
           </Menu.Items>
         </Transition>

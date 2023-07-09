@@ -3,7 +3,7 @@ import DropDownEvent from "./DropDownEvent";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
-export default function EventItem({ item, index }) {
+export default function EventItem({ item, index, permission }) {
   const router = useRouter();
   const redirect = () => {
     router.push(`eventManagement/${item.id}`);
@@ -61,7 +61,7 @@ export default function EventItem({ item, index }) {
         {item.status}
       </td>
       <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-        <DropDownEvent item={item} redirect={redirect} />
+        <DropDownEvent item={item} redirect={redirect} permission={permission}/>
         <span className="sr-only">, {item.name}</span>
       </td>
     </tr>

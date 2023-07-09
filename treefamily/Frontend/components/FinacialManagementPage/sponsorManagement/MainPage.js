@@ -4,8 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import AnnualSponsorTable from "./MainPage/AnnualSponsorTable";
 import AddSponSor from "./MainPage/Modal/AddSponsor";
+import { useSession } from "next-auth/react";
 
 export default function MainPage() {
+  const { data: session, status } = useSession()
+  console.log(session)
   const [addNewSponsor, setAddNewSponsor] = useState(false);
   return (
     <>
@@ -29,18 +32,21 @@ export default function MainPage() {
                   Báo cáo tài trợ
                 </Link>
               </div>
-
-              <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <button
-                  onClick={() => setAddNewSponsor(true)}
-                  type="button"
-                  className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                >
-                  Thêm đợt tài trợ
-                </button>
-              </div>
+              <If isTrue={session?.user.createFinancial}>
+                <div className="mt-4 sm:mt-0 sm:ml-8 sm:flex-none">
+                  <button
+                    onClick={() => setAddNewSponsor(true)}
+                    type="button"
+                    className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                  >
+                    Thêm đợt tài trợ
+                  </button>
+                </div>
+              </If>
             </div>
-            <AnnualSponsorTable />
+            <If isTrue={session?.user.viewFinancial}>
+              <AnnualSponsorTable permission={session}/>
+            </If>
           </div>
         </div>
         <If isTrue={addNewSponsor}>

@@ -3,9 +3,16 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
 export default function LoginForm() {
-  const { callbackUrl } = useRouter().query
+  const router = useRouter()
   const { register, handleSubmit } = useForm();
-  const onSubmit = data => signIn("credentials", {userName: data.username, password: data.password, callbackUrl: '/home'})
+  const onSubmit = data => signIn("credentials", {userName: data.username, password: data.password, redirect: false})
+  .then(({ ok, error }) => {
+    if (ok) {
+      router.push("/home")
+    } else {
+      alert("Username hoặc mật khẩu không chính xác")
+    }
+  }) 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-fig">
       <main className="flex items-center justify-center flex-1 h-screen px-20">

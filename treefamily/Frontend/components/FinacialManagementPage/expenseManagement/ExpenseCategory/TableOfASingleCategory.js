@@ -3,7 +3,7 @@ import { For, If } from "react-haiku";
 import useSWR from "swr";
 import ItemInCategory from "./ItemInCategory";
 
-export default function TableOfASingleCategory({ pid, year }) {
+export default function TableOfASingleCategory({ pid, permission }) {
   const { data, error } = useSWR(
     `http://localhost:8080/expense-detail/get-all?expenseManagementId=${pid}`
   );
@@ -63,7 +63,7 @@ export default function TableOfASingleCategory({ pid, year }) {
                 <For
                   each={miniData}
                   render={(item, index) => (
-                    <ItemInCategory item={item} index={index} />
+                    <ItemInCategory item={item} index={index} permission={permission}/>
                   )}
                 />
               </If>

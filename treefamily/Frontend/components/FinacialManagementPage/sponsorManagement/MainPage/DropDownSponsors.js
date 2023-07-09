@@ -10,7 +10,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DropDownRevenues({ item }) {
+export default function DropDownRevenues({ item, permission }) {
   const [showDetail, setShowDetail] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -67,38 +67,42 @@ export default function DropDownRevenues({ item }) {
                   </div>
                 )}
               </Menu.Item> */}
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick={(e) => {
-                      setShowUpdateModal(true);
-                      e.stopPropagation();
-                    }}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
-                    )}
-                  >
-                    Sửa
-                  </div>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick={(e) => {
-                      removeEvent(item.id), setShowDeleteModal(true);
-                      e.stopPropagation();
-                    }}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base"
-                    )}
-                  >
-                    Xóa
-                  </div>
-                )}
-              </Menu.Item>
+              <If isTrue={permission?.user.updateFinancial}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={(e) => {
+                        setShowUpdateModal(true);
+                        e.stopPropagation();
+                      }}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base"
+                      )}
+                    >
+                      Sửa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
+              <If isTrue={permission?.user.deleteFinancial}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={(e) => {
+                        removeEvent(item.id), setShowDeleteModal(true);
+                        e.stopPropagation();
+                      }}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base"
+                      )}
+                    >
+                      Xóa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
             </div>
           </Menu.Items>
         </Transition>

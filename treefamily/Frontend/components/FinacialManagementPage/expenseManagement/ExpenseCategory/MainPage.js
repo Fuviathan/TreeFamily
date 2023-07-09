@@ -4,11 +4,10 @@ import { useState } from "react";
 import TableOfASingleCategory from "./TableOfASingleCategory";
 import useSWR from "swr";
 import AddItemInCategory from "./Modal/AddItemInCategory";
+import { useSession } from "next-auth/react";
 
 export default function MainPage({ pid }) {
-  const { data, error } = useSWR(
-    `http://localhost:8080/expense-detail/get-all?expenseManagementId=${pid}`
-  );
+  const { data: session, status } = useSession()
   // const miniData = data.filter((object) => {
   //   return (object.id = { pid });
   // });
@@ -27,18 +26,19 @@ export default function MainPage({ pid }) {
                   Danh sách các giao dịch
                 </h1>
               </div>
-
-              <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <button
-                  onClick={() => setAddNewRevenue(true)}
-                  type="button"
-                  className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                >
-                  Thêm giao dịch
-                </button>
-              </div>
+              <If isTrue={session?.user.createFinancial}>
+                <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                  <button
+                    onClick={() => setAddNewRevenue(true)}
+                    type="button"
+                    className="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                  >
+                    Thêm giao dịch
+                  </button>
+                </div>
+              </If>
             </div>
-            <TableOfASingleCategory pid={pid} />
+            <TableOfASingleCategory pid={pid} permission={session}/>
           </div>
         </div>
         <If isTrue={addNewRevenue}>

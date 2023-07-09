@@ -3,11 +3,10 @@ import { For, If } from "react-haiku";
 import useSWR from "swr";
 import ItemInCategory from "./ItemInCategory";
 
-export default function TableOfASingleCategory({ pid, year }) {
+export default function TableOfASingleCategory({ pid, permission }) {
   const { data, error } = useSWR(
     `http://localhost:8080/sponsorship-detail/get-all?financialSponsorshipId=${pid}`
   );
-  console.log(data);
 
   let miniData = data?.sponsorsipDetailList;
 
@@ -126,7 +125,7 @@ export default function TableOfASingleCategory({ pid, year }) {
                 <For
                   each={miniData}
                   render={(item, index) => (
-                    <ItemInCategory item={item} index={index} />
+                    <ItemInCategory item={item} index={index} permission={permission}/>
                   )}
                 />
               </If>

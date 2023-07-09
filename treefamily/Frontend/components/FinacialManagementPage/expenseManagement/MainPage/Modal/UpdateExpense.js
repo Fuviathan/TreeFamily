@@ -91,7 +91,7 @@ export default function UpdateExpense({ isVisible, onClose, item }) {
                     Sửa khoản chi
                   </Dialog.Title>
 
-                  <div className="mt-1 text-sm leading-6 text-gray-600 px-48">
+                  <div className="px-48 mt-1 text-sm leading-6 text-gray-600">
                     Sửa các thông tin của khoản chi
                   </div>
 

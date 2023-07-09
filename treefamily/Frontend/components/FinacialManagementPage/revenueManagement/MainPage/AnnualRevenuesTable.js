@@ -3,7 +3,7 @@ import RevenueItem from "./RevenueItem";
 import { For } from "react-haiku";
 import useSWR from "swr";
 
-export default function AnnualRevenuesTable() {
+export default function AnnualRevenuesTable({ permission }) {
   const { data, error } = useSWR(
     "http://localhost:8080/revenue-management/get-all"
   );
@@ -69,7 +69,7 @@ export default function AnnualRevenuesTable() {
               <For
                 each={data}
                 render={(item, index) => (
-                  <RevenueItem item={item} index={index} />
+                  <RevenueItem item={item} index={index} permission={permission}/>
                 )}
               />
             </tbody>

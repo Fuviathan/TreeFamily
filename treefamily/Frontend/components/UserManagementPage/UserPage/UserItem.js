@@ -1,7 +1,7 @@
 import React from "react";
 import DropDownUser from "./DropDownUser";
 
-export default function UserItem({ person }) {
+export default function UserItem({ person, permission }) {
   return (
     <tr>
       <td className="py-4 pr-10 text-sm font-medium text-center text-gray-900 whitespace-nowrap sm:pl-6 ">
@@ -33,7 +33,7 @@ export default function UserItem({ person }) {
       </td>
       <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
         <a href="#" className="text-indigo-600 hover:text-indigo-900">
-          <DropDownUser person={person}/>
+          <DropDownUser person={person} permission={permission}/>
           <span className="sr-only">, {person.name}</span>
         </a>
       </td>

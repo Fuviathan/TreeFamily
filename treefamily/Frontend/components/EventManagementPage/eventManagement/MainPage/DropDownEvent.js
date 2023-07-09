@@ -10,11 +10,10 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DropDownEvent({ item, redirect }) {
+export default function DropDownEvent({ item, redirect, permission }) {
   const [showDetail, setShowDetail] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-
   const removeEvent = async (number) => {
     const endpoint = `http://localhost:8080/event-management/delete/${number}`;
     const options = {
@@ -71,7 +70,7 @@ export default function DropDownEvent({ item, redirect }) {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick = {() => setShowDetail(true)}
+                    onClick={() => setShowDetail(true)}
                     className={classNames(
                       active ? "bg-gray-300 text-gray-900" : "text-gray-700",
                       "block px-4 py-2 text-base cursor-pointer"
@@ -81,32 +80,36 @@ export default function DropDownEvent({ item, redirect }) {
                   </div>
                 )}
               </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick = {() => setShowUpdateModal(true)}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base cursor-pointer"
-                    )}
-                  >
-                    Sửa
-                  </div>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick={(e) => removeEvent(item.id)}
-                    className={classNames(
-                      active ? "bg-gray-300 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-base cursor-pointer"
-                    )}
-                  >
-                    Xóa
-                  </div>
-                )}
-              </Menu.Item>
+              <If isTrue={permission?.user.updateEvent}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={() => setShowUpdateModal(true)}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base cursor-pointer"
+                      )}
+                    >
+                      Sửa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
+              <If isTrue={permission?.user.deleteEvent}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      onClick={(e) => removeEvent(item.id)}
+                      className={classNames(
+                        active ? "bg-gray-300 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-base cursor-pointer"
+                      )}
+                    >
+                      Xóa
+                    </div>
+                  )}
+                </Menu.Item>
+              </If>
             </div>
           </Menu.Items>
         </Transition>
