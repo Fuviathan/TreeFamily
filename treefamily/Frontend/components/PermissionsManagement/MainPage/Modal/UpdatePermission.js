@@ -55,7 +55,7 @@ export default function UpdatePermission({ isVisible, onClose, item }) {
     };
     const response = await fetch(endpoint, options);
     if (response.status === 200) {
-      alert("Sửa sự kiện thành công");
+      alert("Sửa quyền thành công");
       onClose();
     } else {
       const result = await response.json();
