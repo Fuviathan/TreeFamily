@@ -13,6 +13,28 @@ export default function AddPermission({ isVisible, onClose }) {
   }
 
   async function onSubmit(formData) {
+    if (
+      formData.updateEvent === true ||
+      formData.createEvent === true ||
+      formData.deleteEvent === true
+    ) {
+      formData.viewEvent = true;
+    }
+
+    if (
+      formData.updateFinancial === true ||
+      formData.createFinancial === true ||
+      formData.deleteFinancial === true
+    ) {
+      formData.viewFinancial = true;
+    }
+
+    if (formData.updateMembers === true || formData.createMembers === true) {
+      formData.viewMebers = true;
+    }
+
+    // console.log(formData);
+
     const JSONdata = JSON.stringify(formData);
     const endpoint = "http://localhost:8080/permission-management/create";
     const options = {
@@ -70,10 +92,8 @@ export default function AddPermission({ isVisible, onClose }) {
                         name: "permissionGroupName",
                       }}
                     ></Input>
-                    <div className='sm:col-span-6'>
-                      <label
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
+                    <div className="sm:col-span-6">
+                      <label className="block text-sm font-medium leading-6 text-gray-900">
                         Mô tả nhóm quyền
                       </label>
                       <div className="mt-2">
@@ -83,58 +103,132 @@ export default function AddPermission({ isVisible, onClose }) {
                         />
                       </div>
                     </div>
-                    <div className="block text-sm font-medium leading-6 text-gray-900 sm:col-span-2">Các chức năng của quyền:</div>
+                    <div className="block text-sm font-medium leading-6 text-gray-900 sm:col-span-2">
+                      Các chức năng của quyền:
+                    </div>
                     <div className="sm:col-span-4"></div>
                     {/* Nhóm quyền quản lý gia phả */}
-                    <div className="block text-base font-medium leading-6 text-gray-900 sm:col-span-2">Quản lý gia phả:</div>
-                    <div className="flex col-span-1">
-                      <div className="text-base font-medium leading-6 text-gray-900">Xem</div>
-                      <input className="w-4 h-4 mt-1.5 ml-2"  {...method.register("viewMebers")} type='checkbox'></input>
+                    <div className="block text-base font-medium leading-6 text-gray-900 sm:col-span-2">
+                      Quản lý gia phả:
                     </div>
                     <div className="flex col-span-1">
-                      <div className="text-base font-medium leading-6 text-gray-900">Tạo mới</div>
-                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("createMembers")} type='checkbox'></input>
+                      <div className="text-base font-medium leading-6 text-gray-900">
+                        Xem
+                      </div>
+                      <input
+                        className="w-4 h-4 mt-1.5 ml-2"
+                        {...method.register("viewMebers")}
+                        type="checkbox"
+                      ></input>
+                    </div>
+                    <div className="flex col-span-1">
+                      <div className="text-base font-medium leading-6 text-gray-900">
+                        Tạo mới
+                      </div>
+                      <input
+                        className="w-4 h-4 mt-1.5 ml-2"
+                        {...method.register("createMembers")}
+                        type="checkbox"
+                      ></input>
                     </div>
                     <div className="flex col-span-1 ml-8">
-                      <div className="text-base font-medium leading-6 text-gray-900">Sửa</div>
-                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("updateMembers")} type='checkbox'></input>
+                      <div className="text-base font-medium leading-6 text-gray-900">
+                        Sửa
+                      </div>
+                      <input
+                        className="w-4 h-4 mt-1.5 ml-2"
+                        {...method.register("updateMembers")}
+                        type="checkbox"
+                      ></input>
                     </div>
                     <div className="sm:col-span-1"></div>
                     {/* Nhóm quyền quản lý sự kiện */}
-                    <div className="block text-base font-medium leading-6 text-gray-900 sm:col-span-2">Quản lý sự kiện:</div>
-                    <div className="flex col-span-1">
-                      <div className="text-base font-medium leading-6 text-gray-900">Xem</div>
-                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("viewEvent")} type='checkbox'></input>
+                    <div className="block text-base font-medium leading-6 text-gray-900 sm:col-span-2">
+                      Quản lý sự kiện:
                     </div>
                     <div className="flex col-span-1">
-                      <div className="text-base font-medium leading-6 text-gray-900">Tạo mới</div>
-                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("createEvent")} type='checkbox'></input>
+                      <div className="text-base font-medium leading-6 text-gray-900">
+                        Xem
+                      </div>
+                      <input
+                        className="w-4 h-4 mt-1.5 ml-2"
+                        {...method.register("viewEvent")}
+                        type="checkbox"
+                      ></input>
+                    </div>
+                    <div className="flex col-span-1">
+                      <div className="text-base font-medium leading-6 text-gray-900">
+                        Tạo mới
+                      </div>
+                      <input
+                        className="w-4 h-4 mt-1.5 ml-2"
+                        {...method.register("createEvent")}
+                        type="checkbox"
+                      ></input>
                     </div>
                     <div className="flex col-span-1 ml-8">
-                      <div className="text-base font-medium leading-6 text-gray-900">Sửa</div>
-                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("updateEvent")} type='checkbox'></input>
+                      <div className="text-base font-medium leading-6 text-gray-900">
+                        Sửa
+                      </div>
+                      <input
+                        className="w-4 h-4 mt-1.5 ml-2"
+                        {...method.register("updateEvent")}
+                        type="checkbox"
+                      ></input>
                     </div>
                     <div className="flex col-span-1 ml-8">
-                      <div className="text-base font-medium leading-6 text-gray-900">Xóa</div>
-                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("deleteEvent")} type='checkbox'></input>
+                      <div className="text-base font-medium leading-6 text-gray-900">
+                        Xóa
+                      </div>
+                      <input
+                        className="w-4 h-4 mt-1.5 ml-2"
+                        {...method.register("deleteEvent")}
+                        type="checkbox"
+                      ></input>
                     </div>
                     {/* Nhóm quyền quản lý tài chính */}
-                    <div className="block text-base font-medium leading-6 text-gray-900 sm:col-span-2">Quản lý tài chính:</div>
-                    <div className="flex col-span-1">
-                      <div className="text-base font-medium leading-6 text-gray-900">Xem</div>
-                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("viewFinancial")} type='checkbox'></input>
+                    <div className="block text-base font-medium leading-6 text-gray-900 sm:col-span-2">
+                      Quản lý tài chính:
                     </div>
                     <div className="flex col-span-1">
-                      <div className="text-base font-medium leading-6 text-gray-900">Tạo mới</div>
-                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("createFinancial")} type='checkbox'></input>
+                      <div className="text-base font-medium leading-6 text-gray-900">
+                        Xem
+                      </div>
+                      <input
+                        className="w-4 h-4 mt-1.5 ml-2"
+                        {...method.register("viewFinancial")}
+                        type="checkbox"
+                      ></input>
+                    </div>
+                    <div className="flex col-span-1">
+                      <div className="text-base font-medium leading-6 text-gray-900">
+                        Tạo mới
+                      </div>
+                      <input
+                        className="w-4 h-4 mt-1.5 ml-2"
+                        {...method.register("createFinancial")}
+                        type="checkbox"
+                      ></input>
                     </div>
                     <div className="flex col-span-1 ml-8">
-                      <div className="text-base font-medium leading-6 text-gray-900">Sửa</div>
-                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("updateFinancial")} type='checkbox'></input>
+                      <div className="text-base font-medium leading-6 text-gray-900">
+                        Sửa
+                      </div>
+                      <input
+                        className="w-4 h-4 mt-1.5 ml-2"
+                        {...method.register("updateFinancial")}
+                        type="checkbox"
+                      ></input>
                     </div>
                     <div className="flex col-span-1 ml-8">
-                      <div className="text-base font-medium leading-6 text-gray-900">Xóa</div>
-                      <input className="w-4 h-4 mt-1.5 ml-2" {...method.register("deleteFinancial")} type='checkbox'></input>
+                      <div className="text-base font-medium leading-6 text-gray-900">
+                        Xóa
+                      </div>
+                      <input
+                        className="w-4 h-4 mt-1.5 ml-2"
+                        {...method.register("deleteFinancial")}
+                        type="checkbox"
+                      ></input>
                     </div>
                   </div>
                 </div>
