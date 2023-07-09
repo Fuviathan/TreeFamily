@@ -4,12 +4,9 @@ import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../UI/Input";
 import useSWR from "swr";
 import ComboBoxFamily from "../../../UserManagementPage/UserPage/Modal/miniComponents/ComboBoxFamily";
-import SelectInput from "../../../UI/SelectInput";
 import ComboBoxPermission from "./miniComponents/ComboBoxPermission";
 
 export default function UpdateUserPermission({ isVisible, onClose, item }) {
-  const [showPassword, setShowPassword] = useState(false);
-
   const method = useForm({
     defaultValues: {
       role: item.role,
@@ -18,30 +15,14 @@ export default function UpdateUserPermission({ isVisible, onClose, item }) {
       memberId: item.memberId,
     },
   });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = method;
-  const { data: user, error: userError } = useSWR(
-    "http://localhost:8080/member/get-all-by-age"
-  );
-  const { data: permission, error: permissionError } = useSWR(
-    "http://localhost:8080/permission-management/get-all"
-  );
+  const { data: user, error: userError } = useSWR("http://localhost:8080/member/get-all-by-age");
+  const { data: permission, error: permissionError} = useSWR("http://localhost:8080/permission-management/get-all")
   if (!user) {
     return <></>;
   }
   if (!permission) {
     return <></>;
   }
-
-  // Convert dữ liệu từ api sang kiểu mảng để truyền vào option
-  const dataOption = permission.map((name) => ({
-    value: name.permissionGroupName,
-  }));
-
   async function onSubmit(formData) {
     formData.memberId = Number(formData.memberId);
     const JSONdata = JSON.stringify(formData);
@@ -77,10 +58,10 @@ export default function UpdateUserPermission({ isVisible, onClose, item }) {
           <FormProvider {...method}>
             <form
               className="z-20 flex flex-col items-center max-w-3xl py-4 m-auto bg-white border-2 border-solid border-slate-300"
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={method.handleSubmit(onSubmit)}
             >
               <div className="w-full px-10 space-y-12 overflow-y-auto">
-                <div className=" border-gray-900/10">
+                <div className="pb-12 border-gray-900/10">
                   <Dialog.Title
                     as="h2"
                     className="text-base font-semibold leading-7 text-gray-900"
@@ -102,24 +83,14 @@ export default function UpdateUserPermission({ isVisible, onClose, item }) {
                         data: item.memberId,
                       }}
                     ></ComboBoxFamily>
-                    {/* <ComboBoxPermission
+                    <ComboBoxPermission
                       {...{
                         title: "Quyền",
                         people: permission,
                         className: "sm:col-span-3",
                         name: "role",
                       }}
-                    ></ComboBoxPermission> */}
-
-                    <SelectInput
-                      {...{
-                        data: item.role,
-                        className: "sm:col-span-3",
-                        name: "role",
-                        title: "Vai trò",
-                        dataOption: dataOption,
-                      }}
-                    ></SelectInput>
+                    ></ComboBoxPermission>
                     <Input
                       {...{
                         className: "sm:col-span-3",
@@ -130,52 +101,14 @@ export default function UpdateUserPermission({ isVisible, onClose, item }) {
                       }}
                     ></Input>
 
-                    {/* <Input
+                    <Input
                       {...{
                         className: "sm:col-span-3",
                         title: "Mật khẩu",
                         type: "password",
                         name: "password",
                       }}
-                    ></Input> */}
-
-                    <div className="sm:col-span-3 flex flex-col">
-                      <label className="block text-sm font-medium leading-6 text-gray-900">
-                        Mật khẩu
-                      </label>
-                      <div className="mt-2 flex items-center">
-                        <input
-                          type={showPassword ? "text" : "password"} // Sử dụng type "text" khi showPassword là true
-                          {...register("password", {
-                            required: "Mật khẩu không được để trống",
-                            validate: {
-                              secure_password: (v) =>
-                                v.match(
-                                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-                                ) !== null ||
-                                "Mật khẩu phải có ít nhất 8 ký tự, bao gồm 1 chữ hoa, 1 chữ thường và 1 số",
-                            },
-                          })}
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
-                        />
-                      </div>
-                      {errors.password && (
-                        <span className="block mt-2 text-left text-red-500 w-48 opacity-80">
-                          {errors.password.message}
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="col-span-3"></div>
-
-                    <label className="ml-2 text-sm text-gray-600 flex items-center whitespace-nowrap">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox mr-1"
-                        onChange={(e) => setShowPassword(e.target.checked)}
-                      />
-                      <span>Hiển thị mật khẩu</span>
-                    </label>
+                    ></Input>
                   </div>
                 </div>
               </div>
