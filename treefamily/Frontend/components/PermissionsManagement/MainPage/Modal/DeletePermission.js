@@ -2,59 +2,40 @@ import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import Input from "../../../UI/Input";
+import ComboBoxPermission from "./miniComponents/ComboBoxPermission";
 import useSWR from "swr";
 
-export default function DeletePermission({ isVisible, onClose }) {
-  const method = useForm();
+export default function DeletePermission({ isVisible, onClose, item }) {
+  const method = useForm({
+    defaultValues: {
+      id: item.id,
+    },
+  });
 
-  const { data, error } = useSWR("http://localhost:8080/member/get-all");
-  if (!data) {
-    return;
+  const { data: permission, error: permissionError } = useSWR(
+    "http://localhost:8080/permission-management/get-all"
+  );
+  if (!permission) {
+    return <></>;
   }
 
   async function onSubmit(formData) {
-    if (
-      formData.updateEvent === true ||
-      formData.createEvent === true ||
-      formData.deleteEvent === true
-    ) {
-      formData.viewEvent = true;
-    }
-
-    if (
-      formData.updateFinancial === true ||
-      formData.createFinancial === true ||
-      formData.deleteFinancial === true
-    ) {
-      formData.viewFinancial = true;
-    }
-
-    if (formData.updateMembers === true || formData.createMembers === true) {
-      formData.viewMebers = true;
-    }
-
-    // console.log(formData);
-
     const JSONdata = JSON.stringify(formData);
-    const endpoint = "http://localhost:8080/permission-management/create";
+    formData.id = item.id;
+    const endpoint = `http://localhost:8080/permission-management/delete?id=${item.id}&idPermissionReplace=${formData.idPermissionReplace}`;
     const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSONdata,
+      method: "DELETE",
+      redirect: "follow",
     };
     const response = await fetch(endpoint, options);
-    if (response.status === 200) {
-      alert("Thêm quyền mới thành công");
-      onClose();
+    if (response.status === 204) {
+      alert("Xóa thành công");
     } else {
       const result = await response.json();
-      alert(result.message);
+      alert("result");
     }
+    onClose();
   }
-
   if (!isVisible) return <></>;
   return (
     <Dialog
@@ -67,169 +48,46 @@ export default function DeletePermission({ isVisible, onClose }) {
         <div className="z-20 flex items-center justify-center h-full ">
           <FormProvider {...method}>
             <form
-              className="z-20 flex flex-col items-center max-w-3xl py-4 m-auto bg-white border-2 border-solid border-slate-300"
               onSubmit={method.handleSubmit(onSubmit)}
+              className="z-20 flex flex-col items-center max-w-3xl py-4 m-auto bg-white border-2 border-solid border-slate-300"
             >
               <div className="w-full px-10 space-y-12 overflow-y-auto">
-                <div className="pb-12 border-gray-900/10">
+                <div className="pb-12 px-24 border-gray-900/10">
                   <Dialog.Title
                     as="h2"
                     className="text-base font-semibold leading-7 text-gray-900"
                   >
-                    Thiết lập nhóm quyền
+                    Xóa nhóm quyền - Thành viên
                   </Dialog.Title>
 
                   <div className="mt-1 text-sm leading-6 text-gray-600">
-                    Nhập thông tin của nhóm quyền mới
+                    Nhập thông tin xóa
                   </div>
 
-                  <div className="grid grid-cols-1 pb-24 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <Input
+                  <div className="grid grid-cols-1  mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    {/* <div className="sm:col-span-6"> */}
+                    <label className="block text-sm font-medium leading-6 text-gray-900 sm:col-span-3">
+                      Chuyển quyền sở hữu<br></br> sang nhóm quyền khác{" "}
+                      <strong className="text-red-500">(*)</strong>
+                    </label>
+
+                    <ComboBoxPermission
                       {...{
-                        className: "sm:col-span-6",
-                        title: "Tên quyền",
-                        type: "text",
-                        name: "permissionGroupName",
+                        title: "",
+                        people: permission,
+                        className: "sm:col-span-3 ",
+                        name: "idPermissionReplace",
                       }}
-                    ></Input>
-                    <div className="sm:col-span-6">
-                      <label className="block text-sm font-medium leading-6 text-gray-900">
-                        Mô tả nhóm quyền
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          {...method.register("permissionsDescription")}
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
-                        />
-                      </div>
-                    </div>
-                    <div className="block text-sm font-medium leading-6 text-gray-900 sm:col-span-2">
-                      Các chức năng của quyền:
-                    </div>
-                    <div className="sm:col-span-4"></div>
-                    {/* Nhóm quyền quản lý gia phả */}
-                    <div className="block text-base font-medium leading-6 text-gray-900 sm:col-span-2">
-                      Quản lý gia phả:
-                    </div>
-                    <div className="flex col-span-1">
-                      <div className="text-base font-medium leading-6 text-gray-900">
-                        Xem
-                      </div>
-                      <input
-                        className="w-4 h-4 mt-1.5 ml-2"
-                        {...method.register("viewMebers")}
-                        type="checkbox"
-                      ></input>
-                    </div>
-                    <div className="flex col-span-1">
-                      <div className="text-base font-medium leading-6 text-gray-900">
-                        Tạo mới
-                      </div>
-                      <input
-                        className="w-4 h-4 mt-1.5 ml-2"
-                        {...method.register("createMembers")}
-                        type="checkbox"
-                      ></input>
-                    </div>
-                    <div className="flex col-span-1 ml-8">
-                      <div className="text-base font-medium leading-6 text-gray-900">
-                        Sửa
-                      </div>
-                      <input
-                        className="w-4 h-4 mt-1.5 ml-2"
-                        {...method.register("updateMembers")}
-                        type="checkbox"
-                      ></input>
-                    </div>
-                    <div className="sm:col-span-1"></div>
-                    {/* Nhóm quyền quản lý sự kiện */}
-                    <div className="block text-base font-medium leading-6 text-gray-900 sm:col-span-2">
-                      Quản lý sự kiện:
-                    </div>
-                    <div className="flex col-span-1">
-                      <div className="text-base font-medium leading-6 text-gray-900">
-                        Xem
-                      </div>
-                      <input
-                        className="w-4 h-4 mt-1.5 ml-2"
-                        {...method.register("viewEvent")}
-                        type="checkbox"
-                      ></input>
-                    </div>
-                    <div className="flex col-span-1">
-                      <div className="text-base font-medium leading-6 text-gray-900">
-                        Tạo mới
-                      </div>
-                      <input
-                        className="w-4 h-4 mt-1.5 ml-2"
-                        {...method.register("createEvent")}
-                        type="checkbox"
-                      ></input>
-                    </div>
-                    <div className="flex col-span-1 ml-8">
-                      <div className="text-base font-medium leading-6 text-gray-900">
-                        Sửa
-                      </div>
-                      <input
-                        className="w-4 h-4 mt-1.5 ml-2"
-                        {...method.register("updateEvent")}
-                        type="checkbox"
-                      ></input>
-                    </div>
-                    <div className="flex col-span-1 ml-8">
-                      <div className="text-base font-medium leading-6 text-gray-900">
-                        Xóa
-                      </div>
-                      <input
-                        className="w-4 h-4 mt-1.5 ml-2"
-                        {...method.register("deleteEvent")}
-                        type="checkbox"
-                      ></input>
-                    </div>
-                    {/* Nhóm quyền quản lý tài chính */}
-                    <div className="block text-base font-medium leading-6 text-gray-900 sm:col-span-2">
-                      Quản lý tài chính:
-                    </div>
-                    <div className="flex col-span-1">
-                      <div className="text-base font-medium leading-6 text-gray-900">
-                        Xem
-                      </div>
-                      <input
-                        className="w-4 h-4 mt-1.5 ml-2"
-                        {...method.register("viewFinancial")}
-                        type="checkbox"
-                      ></input>
-                    </div>
-                    <div className="flex col-span-1">
-                      <div className="text-base font-medium leading-6 text-gray-900">
-                        Tạo mới
-                      </div>
-                      <input
-                        className="w-4 h-4 mt-1.5 ml-2"
-                        {...method.register("createFinancial")}
-                        type="checkbox"
-                      ></input>
-                    </div>
-                    <div className="flex col-span-1 ml-8">
-                      <div className="text-base font-medium leading-6 text-gray-900">
-                        Sửa
-                      </div>
-                      <input
-                        className="w-4 h-4 mt-1.5 ml-2"
-                        {...method.register("updateFinancial")}
-                        type="checkbox"
-                      ></input>
-                    </div>
-                    <div className="flex col-span-1 ml-8">
-                      <div className="text-base font-medium leading-6 text-gray-900">
-                        Xóa
-                      </div>
-                      <input
-                        className="w-4 h-4 mt-1.5 ml-2"
-                        {...method.register("deleteFinancial")}
-                        type="checkbox"
-                      ></input>
-                    </div>
+                    ></ComboBoxPermission>
+
+                    <Dialog.Title
+                      as="h8"
+                      className="sm:col-span-6 text-left text-base font-semibold leading-7 text-gray-900 border rounded-xl border-indigo-400 pb-12 px-2"
+                    >
+                      <strong className="text-indigo-400">Thông tin:</strong>
+                      <br></br>Tất cả thành viên thuộc nhóm quyền cần xóa sẽ
+                      được chuyển sang quyền sở hữu khác theo chuyển ở trên
+                    </Dialog.Title>
                   </div>
                 </div>
               </div>
